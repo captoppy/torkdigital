@@ -3,177 +3,228 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Account — Lvl Up Digital</title>
+  <title>My Account — Tork Digital</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />family=Outfit:wght@300;400;500;600<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />family=JetBrains+Mono:wght@400;500<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:         #f8f7f4;
-      --white:      #ffffff;
-      --blue:       #1a4fd6;
-      --blue-dark:  #1340b0;
-      --blue-light: #eef2fd;
-      --blue-mid:   #c7d4f7;
-      --gold:       #c9a84c;
-      --gold-light: #fdf6e3;
-      --gold-mid:   #f0dfa0;
-      --border:     #e2e0d8;
-      --text:       #111111;
-      --muted:      #666666;
-      --faint:      #aaaaaa;
-      --green:      #16a34a;
-      --green-light: #dcfce7;
-      --obsidian:   #0f172a;
+      --bg:          #0A0F1A;
+      --bg-2:        #0f1626;
+      --bg-3:        #161e33;
+      --surface:     #131a2c;
+      --white:       #F2F5FF;
+      --blue:        #0066FF;
+      --blue-glow:   rgba(0,102,255,0.4);
+      --purple:      #7C3AEA;
+      --gradient:    linear-gradient(135deg, #0066FF 0%, #7C3AEA 100%);
+      --green:       #16a34a;
+      --green-light: rgba(22,163,74,0.12);
+      --text:        #F2F5FF;
+      --muted:       #8b94a8;
+      --faint:       #4a5468;
+      --border:      rgba(242,245,255,0.08);
+      --border-lit:  rgba(242,245,255,0.16);
     }
 
-    html { scroll-behavior: smooth; }
     body {
       background: var(--bg); color: var(--text);
-      font-family: 'Archivo', sans-serif; font-size: 16px;
+      font-family: 'Outfit', sans-serif; font-size: 16px;
       line-height: 1.6; -webkit-font-smoothing: antialiased;
     }
 
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(248,247,244,0.95); backdrop-filter: blur(10px);
+      background: rgba(10,15,26,0.85); backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2rem; height: 60px;
+      padding: 0 2.5rem; height: 64px;
     }
     .logo {
-      font-family: 'Archivo Black', sans-serif; font-size: 1.15rem;
-      letter-spacing: -0.5px; display: flex; align-items: center; gap: 9px;
-      text-decoration: none; color: var(--text);
+      font-family: 'Exo 2', sans-serif; font-weight: 500; font-size: 1.1rem;
+      letter-spacing: -0.5px; text-decoration: none;
+      display: flex; align-items: center; gap: 10px;
     }
-    .logo-icon {
-      width: 28px; height: 28px; background: var(--blue); border-radius: 7px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .logo-icon svg { width: 14px; height: 14px; stroke: #fff; }
+    .logo-tork { color: var(--white); }
+    .logo-digital { color: var(--blue); }
     .nav-right { display: flex; align-items: center; gap: 1rem; }
-    .nav-client-name { font-size: 0.85rem; color: var(--muted); }
-    .btn-ghost {
-      border: 1px solid var(--border); border-radius: 8px; padding: 0.4rem 1rem;
-      font-size: 0.875rem; color: var(--muted); background: var(--white);
-      cursor: pointer; transition: all 0.2s; text-decoration: none; font-family: 'Archivo', sans-serif;
+    .client-name {
+      font-size: 0.85rem; color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
     }
-    .btn-ghost:hover { border-color: var(--blue); color: var(--blue); }
+    .btn-back {
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 0.45rem 1rem; font-size: 0.85rem; color: var(--muted);
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-back:hover { border-color: var(--blue); color: var(--white); }
 
-    .page { max-width: 860px; margin: 0 auto; padding: 6rem 2rem 4rem; }
+    .page { max-width: 880px; margin: 0 auto; padding: 6rem 2.5rem 4rem; }
 
-    /* TAB NAV */
+    .page-header { margin-bottom: 2rem; }
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+      letter-spacing: 2.5px; text-transform: uppercase; color: var(--blue);
+      margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px;
+    }
+    .eyebrow::before { content: ''; display: block; width: 18px; height: 1px; background: currentColor; }
+    h2 {
+      font-family: 'Exo 2', sans-serif; font-weight: 500;
+      font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: -0.8px;
+      line-height: 1.15; margin-bottom: 0.5rem;
+    }
+    .page-sub { color: var(--muted); font-size: 0.95rem; font-weight: 300; }
+
+    /* TABS */
     .tabs {
       display: flex; gap: 0; margin-bottom: 2.5rem;
-      border-bottom: 2px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
     .tab {
-      padding: 0.75rem 1.5rem; font-size: 0.9rem; font-weight: 600;
+      padding: 0.85rem 1.5rem; font-size: 0.875rem; font-weight: 400;
       color: var(--muted); cursor: pointer; border: none; background: none;
-      font-family: 'Archivo', sans-serif; border-bottom: 2px solid transparent;
-      margin-bottom: -2px; transition: all 0.15s;
+      font-family: 'Outfit', sans-serif;
+      border-bottom: 2px solid transparent; margin-bottom: -1px;
+      transition: all 0.2s;
     }
-    .tab:hover { color: var(--text); }
+    .tab:hover { color: var(--white); }
     .tab.active { color: var(--blue); border-bottom-color: var(--blue); }
 
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
-    /* PAGE HEADER */
-    .page-header { margin-bottom: 2rem; }
-    .section-label {
-      font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem;
-      letter-spacing: 3px; text-transform: uppercase; color: var(--blue); margin-bottom: 0.5rem;
-    }
-    h2 {
-      font-family: 'Archivo Black', sans-serif;
-      font-size: clamp(1.6rem, 3vw, 2rem); letter-spacing: -0.75px; margin-bottom: 0.5rem;
-    }
-    .page-sub { color: var(--muted); font-size: 0.95rem; }
-
     /* CARDS */
     .card {
-      background: var(--white); border: 1px solid var(--border);
+      background: var(--surface); border: 1px solid var(--border);
       border-radius: 14px; padding: 1.75rem; margin-bottom: 1.25rem;
     }
-    .card h3 { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--faint); margin-bottom: 1.25rem; }
+    .card h3 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; font-weight: 500; text-transform: uppercase;
+      letter-spacing: 1.5px; color: var(--faint); margin-bottom: 1.25rem;
+    }
 
     .status-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
     .status-badge {
       display: inline-flex; align-items: center; gap: 6px;
-      font-size: 0.8rem; font-weight: 700; padding: 0.35rem 0.85rem;
-      border-radius: 100px; font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.3px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 500;
+      padding: 0.4rem 0.85rem; border-radius: 100px;
+      letter-spacing: 0.5px; text-transform: uppercase;
     }
-    .status-badge.active { background: var(--green-light); color: var(--green); }
-    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+    .status-badge.active {
+      background: var(--green-light); color: #4ade80;
+      border: 1px solid rgba(22,163,74,0.3);
+    }
+    .status-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: currentColor;
+      box-shadow: 0 0 8px currentColor;
+    }
 
     .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; }
-    .info-item label { font-size: 0.75rem; color: var(--faint); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 0.25rem; }
-    .info-item p { font-size: 0.95rem; color: var(--text); font-weight: 500; }
+    .info-item label {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--faint);
+      font-weight: 500; text-transform: uppercase; letter-spacing: 1px;
+      display: block; margin-bottom: 0.25rem;
+    }
+    .info-item p { font-size: 0.95rem; color: var(--white); font-weight: 400; }
     .info-item a { color: var(--blue); text-decoration: none; font-size: 0.9rem; }
     .info-item a:hover { text-decoration: underline; }
 
     .btn-primary {
       display: inline-flex; align-items: center; gap: 8px;
-      background: var(--blue); color: #fff;
-      font-family: 'Archivo Black', sans-serif; font-size: 0.9rem;
-      padding: 0.75rem 1.5rem; border-radius: 10px; border: none;
-      cursor: pointer; text-decoration: none; transition: background 0.15s;
+      background: var(--gradient); color: var(--white);
+      font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 0.875rem;
+      padding: 0.75rem 1.4rem; border-radius: 10px; border: none;
+      cursor: pointer; text-decoration: none; transition: all 0.2s;
     }
-    .btn-primary:hover { background: var(--blue-dark); }
+    .btn-primary:hover { box-shadow: 0 6px 20px var(--blue-glow); transform: translateY(-1px); }
     .btn-primary svg { width: 14px; height: 14px; }
 
-    /* TICKET FORM */
+    /* FORM */
     .form-group { margin-bottom: 1.25rem; }
-    label.field-label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--muted); margin-bottom: 0.5rem; }
-    input[type=text], input[type=email], select, textarea {
-      width: 100%; background: var(--white); border: 1px solid var(--border);
-      border-radius: 10px; padding: 0.75rem 1rem; color: var(--text);
-      font-family: 'Archivo', sans-serif; font-size: 0.9rem;
-      outline: none; transition: border-color 0.2s; appearance: none;
+    .field-label {
+      display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+      font-weight: 500; color: var(--muted); margin-bottom: 0.5rem;
+      letter-spacing: 1px; text-transform: uppercase;
     }
-    input:focus, select:focus, textarea:focus { border-color: var(--blue); }
-    input::placeholder, textarea::placeholder { color: var(--faint); }
+    input[type=text], input[type=email], select, textarea {
+      width: 100%; background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: 9px; padding: 0.78rem 1rem; color: var(--white);
+      font-family: 'Outfit', sans-serif; font-size: 0.9rem;
+      outline: none; transition: all 0.2s; appearance: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,102,255,0.1);
+    }
+    input::placeholder, textarea::placeholder { color: var(--faint); font-weight: 300; }
     textarea { resize: vertical; min-height: 120px; }
     select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23aaa' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238b94a8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; cursor: pointer;
     }
+    select option { background: var(--bg-3); color: var(--white); }
     .submit-btn {
       display: flex; align-items: center; justify-content: center; gap: 8px;
-      width: 100%; background: var(--blue); color: #fff;
-      font-family: 'Archivo Black', sans-serif; font-size: 0.95rem;
-      padding: 1rem; border-radius: 10px; border: none; cursor: pointer; transition: background 0.15s;
+      width: 100%; background: var(--gradient); color: var(--white);
+      font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 0.95rem;
+      padding: 1rem; border-radius: 10px; border: none; cursor: pointer; transition: all 0.2s;
     }
-    .submit-btn:hover { background: var(--blue-dark); }
+    .submit-btn:hover { box-shadow: 0 8px 24px var(--blue-glow); transform: translateY(-1px); }
     .submit-btn svg { width: 15px; height: 15px; }
 
     .success-state { display: none; text-align: center; padding: 3rem 1rem; }
     .success-state.show { display: block; }
     .success-icon {
-      width: 52px; height: 52px; background: var(--blue-light); border: 1px solid var(--blue-mid);
-      border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem;
+      width: 52px; height: 52px; border-radius: 50%;
+      background: rgba(0,102,255,0.12); border: 1px solid rgba(0,102,255,0.3);
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem;
     }
     .success-icon svg { width: 22px; height: 22px; stroke: var(--blue); }
-    .success-state h3 { font-family: 'Archivo Black', sans-serif; font-size: 1.4rem; margin-bottom: 0.5rem; }
-    .success-state p { color: var(--muted); font-size: 0.9rem; max-width: 380px; margin: 0 auto 1.5rem; }
+    .success-state h3 { font-family: 'Exo 2', sans-serif; font-size: 1.4rem; font-weight: 500; margin-bottom: 0.5rem; }
+    .success-state p { color: var(--muted); font-size: 0.9rem; font-weight: 300; max-width: 380px; margin: 0 auto 1.5rem; }
     .btn-reset {
       background: none; border: 1px solid var(--border); color: var(--muted);
-      font-family: 'Archivo', sans-serif; font-size: 0.85rem;
+      font-family: 'Outfit', sans-serif; font-size: 0.85rem;
       padding: 0.5rem 1.25rem; border-radius: 8px; cursor: pointer; transition: all 0.2s;
     }
     .btn-reset:hover { border-color: var(--blue); color: var(--blue); }
 
     .hourly-note {
-      background: var(--gold-light); border: 1px solid var(--gold-mid);
+      background: rgba(124,58,234,0.08); border: 1px solid rgba(124,58,234,0.2);
       border-radius: 10px; padding: 0.85rem 1rem;
-      font-size: 0.82rem; color: var(--muted); margin-top: 1rem;
+      font-size: 0.8rem; color: var(--muted); margin-top: 1rem; font-weight: 300;
     }
-    .hourly-note strong { color: var(--gold); }
+    .hourly-note strong { color: var(--purple); font-weight: 500; }
+
+    .file-note {
+      font-size: 0.78rem; color: var(--faint); text-align: center; margin-top: 1rem; font-weight: 300;
+    }
+    .file-note a { color: var(--blue); text-decoration: none; }
+    .file-note a:hover { text-decoration: underline; }
+
+    /* TABLE */
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      text-align: left; padding: 0.6rem 0;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+      font-weight: 500; color: var(--faint);
+      text-transform: uppercase; letter-spacing: 1.5px;
+      border-bottom: 1px solid var(--border);
+    }
+    td { padding: 0.85rem 0; border-bottom: 1px solid var(--border); font-size: 0.875rem; color: var(--muted); }
+    td:last-child, th:last-child { text-align: right; }
+    td.amount, th.amount { text-align: right; font-family: 'JetBrains Mono', monospace; color: var(--white); }
+    .paid-pill {
+      display: inline-block;
+      background: var(--green-light); color: #4ade80;
+      border: 1px solid rgba(22,163,74,0.3);
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 500;
+      padding: 0.2rem 0.6rem; border-radius: 100px; letter-spacing: 0.5px; text-transform: uppercase;
+    }
 
     footer {
-      border-top: 1px solid var(--border); max-width: 860px; margin: 0 auto; padding: 2rem;
+      border-top: 1px solid var(--border); max-width: 880px; margin: 0 auto; padding: 2rem 2.5rem;
       display: flex; justify-content: space-between; align-items: center;
       font-size: 0.8rem; color: var(--faint); flex-wrap: wrap; gap: 1rem;
     }
@@ -182,48 +233,53 @@
 
     @media (max-width: 600px) {
       .tab { padding: 0.75rem 1rem; font-size: 0.8rem; }
+      nav { padding: 0 1.5rem; }
     }
   </style>
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0066FF"/>
+      <stop offset="100%" stop-color="#7C3AEA"/>
+    </linearGradient>
+  </defs>
+</svg>
+
 <nav>
   <a href="index.html" class="logo">
-    <div class="logo-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
-    </div>
-    Lvl Up Digital
+    <img src="/images/logotorkdigital.png" alt="Tork Digital" style="height:30px;width:auto" />
   </a>
   <div class="nav-right">
-    <span class="nav-client-name" id="client-name-display">Smith Electrical</span>
-    <a href="index.html" class="btn-ghost">← Back to site</a>
+    <span class="client-name" id="client-name-display">Smith Electrical</span>
+    <a href="index.html" class="btn-back">← Back to site</a>
   </div>
 </nav>
 
 <div class="page">
 
   <div class="page-header">
-    <p class="section-label">Client Portal</p>
+    <p class="eyebrow">Client Portal</p>
     <h2>My Account</h2>
     <p class="page-sub">Manage your subscription, billing, and support requests.</p>
   </div>
 
-  <!-- TABS -->
   <div class="tabs">
-    <button class="tab active" onclick="switchTab('overview')">Overview</button>
-    <button class="tab" onclick="switchTab('request')">Submit a Request</button>
-    <button class="tab" onclick="switchTab('billing')">Billing</button>
+    <button class="tab active" onclick="switchTab(event,'overview')">Overview</button>
+    <button class="tab" onclick="switchTab(event,'request')">Submit a Request</button>
+    <button class="tab" onclick="switchTab(event,'billing')">Billing</button>
   </div>
 
-  <!-- ── OVERVIEW TAB ── -->
+  <!-- OVERVIEW -->
   <div class="tab-panel active" id="tab-overview">
-
     <div class="card">
       <h3>Subscription</h3>
       <div class="status-row" style="margin-bottom:1.5rem">
         <div>
-          <p style="font-size:1rem;font-weight:600">Monthly Hosting Plan</p>
-          <p style="font-size:0.85rem;color:var(--muted)">A$29 / month · Founding rate</p>
+          <p style="font-size:1rem;font-weight:500">Monthly Hosting Plan</p>
+          <p style="font-size:0.85rem;color:var(--muted);font-weight:300">TBA · Founding rate</p>
         </div>
         <span class="status-badge active">
           <span class="status-dot"></span>
@@ -231,74 +287,48 @@
         </span>
       </div>
       <div class="info-grid">
-        <div class="info-item">
-          <label>Next billing date</label>
-          <p>15 Aug 2025</p>
-        </div>
-        <div class="info-item">
-          <label>Member since</label>
-          <p>15 Jan 2025</p>
-        </div>
-        <div class="info-item">
-          <label>Plan</label>
-          <p>Monthly (founding rate)</p>
-        </div>
+        <div class="info-item"><label>Next billing</label><p>15 Aug 2025</p></div>
+        <div class="info-item"><label>Member since</label><p>15 Jan 2025</p></div>
+        <div class="info-item"><label>Plan</label><p>Monthly (founding)</p></div>
       </div>
     </div>
 
     <div class="card">
       <h3>Your Website</h3>
       <div class="info-grid">
-        <div class="info-item">
-          <label>Live URL</label>
-          <a href="https://smithelectrical.com.au" target="_blank">smithelectrical.com.au ↗</a>
-        </div>
+        <div class="info-item"><label>Live URL</label><a href="https://smithelectrical.com.au" target="_blank">smithelectrical.com.au ↗</a></div>
         <div class="info-item">
           <label>Status</label>
-          <p style="display:flex;align-items:center;gap:6px;color:var(--green)">
-            <span style="width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block"></span>
+          <p style="display:flex;align-items:center;gap:6px;color:#4ade80">
+            <span style="width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 6px #4ade80;display:inline-block"></span>
             Online
           </p>
         </div>
       </div>
     </div>
-
   </div>
 
-  <!-- ── REQUEST TAB ── -->
+  <!-- REQUEST -->
   <div class="tab-panel" id="tab-request">
-
     <div class="success-state" id="success-state">
       <div class="success-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
       <h3>Request Submitted</h3>
-      <p>We'll be in touch shortly. Additional work is always quoted before we start — no surprises.</p>
-      <button class="btn-reset" onclick="resetForm()">Submit Another Request</button>
+      <p>We'll be in touch shortly. Additional work is always quoted before we start.</p>
+      <button class="btn-reset" onclick="resetForm()">Submit another</button>
     </div>
 
-    <!--
-      NETLIFY SETUP:
-      1. Deploy to Netlify — auto-detects data-netlify="true" at build time
-      2. Netlify Dashboard → Forms → client-request → Form notifications
-         → Add notification → Email → your address → Save
-    -->
-    <form
-      id="request-form"
-      name="client-request"
-      method="POST"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
-      onsubmit="handleFormSubmit(event)"
-    >
+    <form id="request-form" name="client-request" method="POST" data-netlify="true"
+      netlify-honeypot="bot-field" onsubmit="handleFormSubmit(event)">
       <input type="hidden" name="form-name" value="client-request" />
       <input name="bot-field" style="display:none" aria-hidden="true" />
 
       <div class="form-group">
-        <label class="field-label" for="type">Request Type *</label>
+        <label class="field-label" for="type">Request Type</label>
         <select id="type" name="request-type" required>
           <option value="" disabled selected>Select a category</option>
-          <option value="content-update">Content Update (text, photos, prices)</option>
+          <option value="content-update">Content Update</option>
           <option value="new-page">New Page or Section</option>
           <option value="technical">Technical Issue / Bug</option>
           <option value="design-change">Design Change</option>
@@ -307,7 +337,7 @@
       </div>
 
       <div class="form-group">
-        <label class="field-label" for="desc">What do you need? *</label>
+        <label class="field-label" for="desc">What do you need?</label>
         <textarea id="desc" name="description" placeholder="Describe your request in as much detail as possible. The more context, the faster we can help." required></textarea>
       </div>
 
@@ -317,25 +347,23 @@
       </button>
 
       <div class="hourly-note">
-        <strong>Note:</strong> Some requests may require an hourly rate depending on the scope of work. We'll always confirm before we proceed.
+        <strong>Note:</strong> Some requests may require an hourly rate depending on scope. We'll always confirm before we proceed.
       </div>
 
-      <p style="font-size:0.78rem;color:var(--faint);text-align:center;margin-top:1rem">
-        Need to attach a file or screenshot? Simply include it in a follow-up email to <a href="mailto:hello@lvlupdigital.com.au" style="color:var(--blue)">hello@lvlupdigital.com.au</a>
+      <p class="file-note">
+        Need to attach a file? Email it through to <a href="mailto:hello@torkdigital.com.au">hello@torkdigital.com.au</a>
       </p>
     </form>
-
   </div>
 
-  <!-- ── BILLING TAB ── -->
+  <!-- BILLING -->
   <div class="tab-panel" id="tab-billing">
-
     <div class="card">
       <h3>Payment Method</h3>
       <div class="status-row">
         <div>
-          <p style="font-weight:600">Visa ending in 4242</p>
-          <p style="font-size:0.85rem;color:var(--muted)">Expires 09/27</p>
+          <p style="font-weight:500">Visa ending in 4242</p>
+          <p style="font-size:0.85rem;color:var(--muted);font-weight:300">Expires 09/27</p>
         </div>
         <button class="btn-primary" onclick="openBillingPortal()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
@@ -346,93 +374,85 @@
 
     <div class="card">
       <h3>Recent Invoices</h3>
-      <table style="width:100%;font-size:0.875rem;border-collapse:collapse">
+      <table>
         <thead>
-          <tr style="border-bottom:1px solid var(--border)">
-            <th style="text-align:left;padding:0.5rem 0;color:var(--faint);font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:1px">Date</th>
-            <th style="text-align:left;padding:0.5rem 0;color:var(--faint);font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:1px">Description</th>
-            <th style="text-align:right;padding:0.5rem 0;color:var(--faint);font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:1px">Amount</th>
-            <th style="text-align:right;padding:0.5rem 0;color:var(--faint);font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:1px">Status</th>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th class="amount">Amount</th>
+            <th>Status</th>
           </tr>
         </thead>
-        <tbody id="invoices-body">
-          <tr style="border-bottom:1px solid var(--border)">
-            <td style="padding:0.75rem 0;color:var(--muted)">1 Jul 2025</td>
-            <td style="padding:0.75rem 0">Monthly Hosting</td>
-            <td style="padding:0.75rem 0;text-align:right;font-family:'IBM Plex Mono',monospace">A$29.00</td>
-            <td style="padding:0.75rem 0;text-align:right"><span style="background:var(--green-light);color:var(--green);font-size:0.75rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:100px">Paid</span></td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border)">
-            <td style="padding:0.75rem 0;color:var(--muted)">1 Jun 2025</td>
-            <td style="padding:0.75rem 0">Monthly Hosting</td>
-            <td style="padding:0.75rem 0;text-align:right;font-family:'IBM Plex Mono',monospace">A$29.00</td>
-            <td style="padding:0.75rem 0;text-align:right"><span style="background:var(--green-light);color:var(--green);font-size:0.75rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:100px">Paid</span></td>
+        <tbody>
+          <tr>
+            <td>1 Jul 2025</td>
+            <td>Monthly Hosting</td>
+            <td class="amount">TBA</td>
+            <td><span class="paid-pill">Paid</span></td>
           </tr>
           <tr>
-            <td style="padding:0.75rem 0;color:var(--muted)">15 Jan 2025</td>
-            <td style="padding:0.75rem 0">Website Build</td>
-            <td style="padding:0.75rem 0;text-align:right;font-family:'IBM Plex Mono',monospace">A$499.00</td>
-            <td style="padding:0.75rem 0;text-align:right"><span style="background:var(--green-light);color:var(--green);font-size:0.75rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:100px">Paid</span></td>
+            <td>1 Jun 2025</td>
+            <td>Monthly Hosting</td>
+            <td class="amount">TBA</td>
+            <td><span class="paid-pill">Paid</span></td>
+          </tr>
+          <tr>
+            <td>15 Jan 2025</td>
+            <td>Website Build</td>
+            <td class="amount">TBA</td>
+            <td><span class="paid-pill">Paid</span></td>
           </tr>
         </tbody>
       </table>
-      <p style="font-size:0.8rem;color:var(--faint);margin-top:1rem">Full invoice history available in your Stripe portal.</p>
+      <p style="font-size:0.78rem;color:var(--faint);margin-top:1rem;font-weight:300">Full invoice history available in your Stripe portal.</p>
     </div>
 
     <div style="text-align:center;padding:1rem 0">
-      <button class="btn-ghost" onclick="openBillingPortal()" style="font-size:0.85rem">
+      <button class="btn-back" onclick="openBillingPortal()" style="font-size:0.85rem;background:none">
         Open Full Billing Portal in Stripe →
       </button>
     </div>
-
   </div>
 
 </div>
 
 <footer>
-  <div class="logo">
-    <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg></div>
-    Lvl Up Digital
-  </div>
+  <a href="index.html" class="logo">
+    <img src="/images/logotorkdigital.png" alt="Tork Digital" style="height:26px;width:auto;opacity:0.85" />
+  </a>
   <div style="display:flex;gap:1.5rem">
-    <a href="mailto:hello@lvlupdigital.com.au">hello@lvlupdigital.com.au</a>
-    <a href="tel:+61400000000">0400 000 000</a>
+    <a href="mailto:hello@torkdigital.com.au">hello@torkdigital.com.au</a>
+    <a href="terms.html">Terms &amp; Conditions</a>
   </div>
-  <span>© 2025 Lvl Up Digital Pty Ltd</span>
+  <span>© 2025 Tork Digital</span>
 </footer>
 
 <script>
-  function switchTab(name) {
+  function switchTab(e, name) {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     document.getElementById('tab-' + name).classList.add('active');
-    event.target.classList.add('active');
+    e.target.classList.add('active');
   }
-
   function handleFormSubmit(e) {
     e.preventDefault();
-    fetch('/', { method: 'POST', body: new URLSearchParams(new FormData(e.target)).toString(), headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
-      .then(r => {
-        if (r.ok) {
-          document.getElementById('request-form').style.display = 'none';
-          document.getElementById('success-state').classList.add('show');
-        } else { throw new Error(); }
-      })
-      .catch(() => alert('Submit failed. Please email hello@lvlupdigital.com.au directly.'));
+    fetch('/', {
+      method: 'POST',
+      body: new URLSearchParams(new FormData(e.target)).toString(),
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    }).then(r => {
+      if (r.ok) {
+        document.getElementById('request-form').style.display = 'none';
+        document.getElementById('success-state').classList.add('show');
+      } else { throw new Error(); }
+    }).catch(() => alert('Submit failed — email hello@torkdigital.com.au directly.'));
   }
-
   function resetForm() {
     document.getElementById('request-form').reset();
     document.getElementById('request-form').style.display = 'block';
     document.getElementById('success-state').classList.remove('show');
   }
-
   function openBillingPortal() {
-    // PRODUCTION: call /.netlify/functions/create-portal with the client's Stripe customer ID
-    // fetch('/.netlify/functions/create-portal', {
-    //   method: 'POST', headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ customerId: 'cus_STRIPE_CUSTOMER_ID' })
-    // }).then(r => r.json()).then(({ url }) => window.location.href = url);
     alert('Stripe billing portal placeholder — wire up your Netlify function to go live.');
   }
 </script>

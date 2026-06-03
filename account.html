@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Account — Tork Digital</title>
+  <title>My Account Tork Digital</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />family=Outfit:wght@300;400;500;600<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />family=JetBrains+Mono:wght@400;500<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -42,7 +42,7 @@
       padding: 0 2.5rem; height: 64px;
     }
     .logo {
-      font-family: 'Exo 2', sans-serif; font-weight: 500; font-size: 1.1rem;
+      font-family: 'Raleway', sans-serif; font-weight: 500; font-size: 1.1rem;
       letter-spacing: -0.5px; text-decoration: none;
       display: flex; align-items: center; gap: 10px;
     }
@@ -70,7 +70,7 @@
     }
     .eyebrow::before { content: ''; display: block; width: 18px; height: 1px; background: currentColor; }
     h2 {
-      font-family: 'Exo 2', sans-serif; font-weight: 500;
+      font-family: 'Raleway', sans-serif; font-weight: 500;
       font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: -0.8px;
       line-height: 1.15; margin-bottom: 0.5rem;
     }
@@ -181,7 +181,7 @@
       display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem;
     }
     .success-icon svg { width: 22px; height: 22px; stroke: var(--blue); }
-    .success-state h3 { font-family: 'Exo 2', sans-serif; font-size: 1.4rem; font-weight: 500; margin-bottom: 0.5rem; }
+    .success-state h3 { font-family: 'Raleway', sans-serif; font-size: 1.4rem; font-weight: 500; margin-bottom: 0.5rem; }
     .success-state p { color: var(--muted); font-size: 0.9rem; font-weight: 300; max-width: 380px; margin: 0 auto 1.5rem; }
     .btn-reset {
       background: none; border: 1px solid var(--border); color: var(--muted);
@@ -445,7 +445,7 @@
         document.getElementById('request-form').style.display = 'none';
         document.getElementById('success-state').classList.add('show');
       } else { throw new Error(); }
-    }).catch(() => alert('Submit failed — email hello@torkdigital.com.au directly.'));
+    }).catch(() => alert('Submit failed email hello@torkdigital.com.au directly.'));
   }
   function resetForm() {
     document.getElementById('request-form').reset();
@@ -453,7 +453,7 @@
     document.getElementById('success-state').classList.remove('show');
   }
   function openBillingPortal() {
-    alert('Stripe billing portal placeholder — wire up your Netlify function to go live.');
+    alert('Stripe billing portal placeholder wire up your Netlify function to go live.');
   }
 </script>
 </body>

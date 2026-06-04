@@ -500,6 +500,27 @@
     .addon-note a { color: var(--blue); text-decoration: none; }
     .addon-note a:hover { text-decoration: underline; }
 
+    /* Enquire-within tiers under pricing */
+    .enquire-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; max-width: 760px; margin: 0 auto 1.5rem; }
+    .enquire-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.5rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1.25rem;
+      transition: border-color 0.25s;
+    }
+    .enquire-card:hover { border-color: var(--border-lit); }
+    .enquire-tier { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--faint); margin-bottom: 0.35rem; }
+    .enquire-card h4 { font-family: 'Raleway', sans-serif; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.4rem; }
+    .enquire-card p { font-size: 0.8rem; color: var(--muted); font-weight: 300; line-height: 1.6; }
+    .enquire-btn {
+      flex-shrink: 0; align-self: center;
+      font-family: 'Outfit', sans-serif; font-size: 0.8rem; font-weight: 500;
+      color: var(--blue); text-decoration: none; white-space: nowrap;
+      border: 1px solid rgba(0,102,255,0.3); border-radius: 8px;
+      padding: 0.55rem 1rem; transition: all 0.2s;
+    }
+    .enquire-btn:hover { background: rgba(0,102,255,0.1); border-color: var(--blue); }
+
     /* ── WORK ── */
     #work { background: var(--bg); }
     .work-head { margin-bottom: 3rem; }
@@ -600,6 +621,67 @@
     }
     @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(3px)} }
 
+    /* Flip cards */
+    .cap-flip { perspective: 1600px; cursor: pointer; min-height: 420px; }
+    .cap-flip-inner {
+      position: relative; width: 100%; height: 100%; min-height: 420px;
+      transition: transform 0.7s cubic-bezier(0.4,0.2,0.2,1);
+      transform-style: preserve-3d;
+    }
+    .cap-flip.flipped .cap-flip-inner { transform: rotateY(180deg); }
+    .cap-face {
+      position: absolute; inset: 0;
+      backface-visibility: hidden; -webkit-backface-visibility: hidden;
+      height: 100%;
+    }
+    .cap-back { transform: rotateY(180deg); justify-content: flex-start; }
+    .cap-flip-hint {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
+      letter-spacing: 1px; color: var(--faint); margin-top: 1.25rem; text-align: center;
+    }
+    .cap-clickable { cursor: pointer; }
+    /* Demo browser mockup on card backs */
+    .cap-demo-browser {
+      width: 100%; background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden; margin: 0.5rem 0 1.25rem;
+    }
+    .cap-demo-bar { background: var(--bg-3); padding: 0.5rem 0.7rem; display: flex; gap: 5px; border-bottom: 1px solid var(--border); }
+    .cap-demo-bar .wb-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .cap-demo-screen { padding: 1rem; min-height: 150px; }
+    .cap-back-label {
+      font-family: 'Raleway', sans-serif; font-weight: 500; font-size: 0.95rem;
+      color: var(--white); text-align: center;
+    }
+
+    /* Game modal */
+    .game-modal {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(5,7,12,0.85); backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center;
+      padding: 2rem 1rem;
+    }
+    .game-modal.open { display: flex; animation: modalfade 0.3s ease; }
+    @keyframes modalfade { from{opacity:0} to{opacity:1} }
+    .game-modal-content {
+      position: relative; text-align: center; max-width: 420px; width: 100%;
+      animation: modalpop 0.4s cubic-bezier(0.3,1.3,0.5,1);
+    }
+    @keyframes modalpop { from{transform:scale(0.85);opacity:0} to{transform:scale(1);opacity:1} }
+    .game-modal-close {
+      position: absolute; top: -10px; right: 0;
+      background: var(--surface); border: 1px solid var(--border-lit);
+      color: var(--white); width: 36px; height: 36px; border-radius: 50%;
+      font-size: 1.3rem; cursor: pointer; transition: all 0.2s; z-index: 5;
+      display: flex; align-items: center; justify-content: center; line-height: 1;
+    }
+    .game-modal-close:hover { border-color: var(--blue); transform: rotate(90deg); }
+    .game-modal-eyebrow {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--purple); margin-bottom: 0.5rem;
+    }
+    .game-modal-title { font-family: 'Raleway', sans-serif; font-weight: 600; font-size: 1.6rem; margin-bottom: 0.5rem; }
+    .game-modal-sub { font-size: 0.85rem; color: var(--muted); font-weight: 300; max-width: 340px; margin: 0 auto 1.75rem; line-height: 1.6; }
+
     /* ── CONTACT ── */
     #contact { background: var(--bg-2); border-top: 1px solid var(--border); }
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7rem; align-items: start; }
@@ -685,33 +767,68 @@
     .footer-copy { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--faint); letter-spacing: 0.5px; }
 
     /* ── TIC-TAC-TOE 3000 ── */
-    .game-wrap { display: flex; justify-content: center; }
+    .game-wrap { display: flex; justify-content: center; perspective: 1400px; }
     .game-device {
       width: 300px;
-      background: linear-gradient(175deg, #1c2240 0%, #0d1020 60%, #0a0c18 100%);
-      border-radius: 18px 18px 40px 40px;
+      background:
+        linear-gradient(135deg, #232a4d 0%, #1a2040 30%, #0d1020 70%, #080a14 100%);
+      border-radius: 20px 20px 44px 44px;
       padding: 16px 16px 24px;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -2px 0 rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.06);
       position: relative;
+      transform: rotateX(8deg) rotateY(-9deg);
+      transform-style: preserve-3d;
+      transition: transform 0.5s ease;
+      box-shadow:
+        /* Tight contact shadows for edges */
+        inset 0 2px 1px rgba(255,255,255,0.12),
+        inset 0 -3px 2px rgba(0,0,0,0.6),
+        inset 3px 0 4px rgba(255,255,255,0.04),
+        inset -4px 0 6px rgba(0,0,0,0.5),
+        /* Right-side body depth (simulates thickness) */
+        6px 6px 0 -1px #0a0c18,
+        9px 9px 0 -2px #070912,
+        12px 12px 0 -3px #05060e,
+        /* Big ambient drop shadow */
+        30px 50px 90px rgba(0,0,0,0.75),
+        0 20px 50px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .game-device:hover {
+      transform: rotateX(4deg) rotateY(-4deg);
+    }
+    /* Glossy highlight sweep across the shell */
+    .game-device::after {
+      content: ''; position: absolute; inset: 0;
+      border-radius: 20px 20px 44px 44px;
+      background: linear-gradient(125deg, rgba(255,255,255,0.10) 0%, transparent 28%, transparent 100%);
+      pointer-events: none;
     }
     .game-screen-bezel {
-      background: #060912; border-radius: 10px; padding: 8px 8px 12px;
-      border: 2px solid #080c18; box-shadow: inset 0 3px 10px rgba(0,0,0,0.9), inset 0 0 0 1px rgba(255,255,255,0.04);
-      margin-bottom: 10px; position: relative;
+      background: linear-gradient(160deg, #0a0d18 0%, #050810 100%);
+      border-radius: 10px 10px 18px 10px; padding: 10px 10px 16px;
+      box-shadow:
+        inset 0 4px 12px rgba(0,0,0,0.95),
+        inset 0 0 0 1px rgba(255,255,255,0.05),
+        inset 0 -1px 0 rgba(255,255,255,0.03),
+        0 1px 0 rgba(255,255,255,0.06);
+      margin-bottom: 12px; position: relative;
+      transform: translateZ(2px);
     }
     .game-screen-bezel::after {
-      content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%);
-      width: 4px; height: 4px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 6px var(--blue);
+      content: ''; position: absolute; bottom: 5px; left: 18px;
+      width: 5px; height: 5px; border-radius: 50%; background: var(--blue);
+      box-shadow: 0 0 8px var(--blue), 0 0 2px #fff;
     }
     .game-screen {
-      background: #0a1628; border-radius: 6px; height: 250px;
+      background: radial-gradient(ellipse at 40% 30%, #0d1c30 0%, #0a1628 60%, #081020 100%);
+      border-radius: 5px; height: 250px;
       overflow: hidden; position: relative; font-family: 'JetBrains Mono', monospace;
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.6);
     }
     .gs-scanlines {
       position: absolute; inset: 0; z-index: 10; pointer-events: none;
       background: repeating-linear-gradient(to bottom, transparent 0px, transparent 3px, rgba(0,0,0,0.12) 3px, rgba(0,0,0,0.12) 4px);
-      border-radius: 6px;
+      border-radius: 5px;
     }
     .gs-layer { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px; }
     .gs-title-logo { margin-bottom: 5px; filter: drop-shadow(0 0 8px #0066FF); }
@@ -762,7 +879,13 @@
     .gb-dpad-row { position: absolute; background: #131a30; border: 1px solid rgba(255,255,255,0.06); border-radius: 4px; display: flex; align-items: center; justify-content: center; }
     .gb-dpad-h { left: 0; right: 0; top: 50%; transform: translateY(-50%); height: 24px; }
     .gb-dpad-v { top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 24px; }
-    .gb-dpad-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 24px; height: 24px; background: #0f1526; z-index: 2; }
+    .gb-dpad-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 24px; height: 24px; background: #0f1526; z-index: 2; box-shadow: inset 0 0 4px rgba(0,0,0,0.6); border-radius: 3px; }
+    .gb-dpad-row {
+      box-shadow:
+        inset 0 2px 2px rgba(255,255,255,0.08),
+        inset 0 -2px 3px rgba(0,0,0,0.6),
+        0 2px 4px rgba(0,0,0,0.5);
+    }
     .gb-dpad-h::before, .gb-dpad-h::after, .gb-dpad-v::before, .gb-dpad-v::after { content: ''; position: absolute; border: 4px solid transparent; }
     .gb-dpad-h::before { left: 5px; border-right-color: #2a3460; }
     .gb-dpad-h::after  { right: 5px; border-left-color: #2a3460; }
@@ -770,16 +893,39 @@
     .gb-dpad-v::after  { bottom: 5px; border-top-color: #2a3460; }
     .gb-actions { display: flex; flex-direction: column; align-items: center; gap: 6px; }
     .gb-btn-row { display: flex; gap: 8px; transform: rotate(-20deg); }
-    .gb-btn { width: 28px; height: 28px; border-radius: 50%; border: none; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; font-weight: 600; color: rgba(255,255,255,0.9); transition: all 0.15s; display: flex; align-items: center; justify-content: center; }
-    .gb-btn:active { transform: scale(0.88); }
-    .gb-btn.btn-a { background: linear-gradient(135deg, #0066FF, #7C3AEA); box-shadow: 0 3px 10px rgba(0,102,255,0.5); }
-    .gb-btn.btn-a:hover { box-shadow: 0 5px 16px rgba(0,102,255,0.7); }
-    .gb-btn.btn-b { background: linear-gradient(135deg, #7C3AEA, #4a1d8a); box-shadow: 0 3px 10px rgba(124,58,234,0.4); }
-    .gb-btn.btn-b:hover { box-shadow: 0 5px 16px rgba(124,58,234,0.6); }
-    .gb-btn-label { font-family: 'JetBrains Mono', monospace; font-size: 0.36rem; color: #2a3460; letter-spacing: 2px; margin-top: 2px; transform: rotate(20deg); }
+    .gb-btn {
+      width: 30px; height: 30px; border-radius: 50%; border: none; cursor: pointer;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.52rem; font-weight: 600;
+      color: rgba(255,255,255,0.95); transition: all 0.12s;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .gb-btn:active { transform: translateY(2px) scale(0.96); }
+    .gb-btn.btn-a {
+      background: radial-gradient(circle at 35% 30%, #3b8bff 0%, #0066FF 50%, #5a2bb5 100%);
+      box-shadow:
+        inset 0 2px 3px rgba(255,255,255,0.4),
+        inset 0 -3px 5px rgba(0,0,0,0.4),
+        0 5px 10px rgba(0,102,255,0.5),
+        0 2px 0 #052e7a;
+    }
+    .gb-btn.btn-a:hover { box-shadow: inset 0 2px 3px rgba(255,255,255,0.4), inset 0 -3px 5px rgba(0,0,0,0.4), 0 7px 16px rgba(0,102,255,0.7), 0 2px 0 #052e7a; }
+    .gb-btn.btn-b {
+      background: radial-gradient(circle at 35% 30%, #a065f0 0%, #7C3AEA 50%, #3a1570 100%);
+      box-shadow:
+        inset 0 2px 3px rgba(255,255,255,0.35),
+        inset 0 -3px 5px rgba(0,0,0,0.4),
+        0 5px 10px rgba(124,58,234,0.4),
+        0 2px 0 #2a0d54;
+    }
+    .gb-btn.btn-b:hover { box-shadow: inset 0 2px 3px rgba(255,255,255,0.35), inset 0 -3px 5px rgba(0,0,0,0.4), 0 7px 16px rgba(124,58,234,0.6), 0 2px 0 #2a0d54; }
+    .gb-btn-label { font-family: 'JetBrains Mono', monospace; font-size: 0.36rem; color: #2a3460; letter-spacing: 2px; margin-top: 3px; transform: rotate(20deg); }
+    .gb-meta-btn {
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.06), 0 2px 3px rgba(0,0,0,0.4);
+    }
     .game-speaker { display: flex; justify-content: flex-end; padding-right: 12px; gap: 4px; }
     .game-speaker-col { display: flex; flex-direction: column; gap: 4px; }
-    .game-speaker span { display: block; width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.07); }
+    .game-speaker span { display: block; width: 3px; height: 3px; border-radius: 50%; background: rgba(0,0,0,0.5); box-shadow: inset 0 1px 1px rgba(0,0,0,0.8), 0 1px 0 rgba(255,255,255,0.04); }
 
     /* ── REVEAL ── */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
@@ -791,6 +937,7 @@
       .process-grid { grid-template-columns: 1fr; }
       .bento-card:nth-child(n) { grid-column: span 12; }
       .pricing-cards { grid-template-columns: 1fr; max-width: 400px; }
+      .enquire-row { grid-template-columns: 1fr; max-width: 400px; }
       .work-grid { grid-template-columns: 1fr; }
       .cap-grid { grid-template-columns: 1fr; }
       .contact-grid { grid-template-columns: 1fr; gap: 3.5rem; }
@@ -1052,6 +1199,25 @@
     </div>
   </div>
 
+  <div class="enquire-row reveal">
+    <div class="enquire-card">
+      <div class="enquire-info">
+        <p class="enquire-tier">Tier Two</p>
+        <h4>Productivity Tools</h4>
+        <p>Custom calculators, booking systems, interactive widgets, browser apps.</p>
+      </div>
+      <a href="mailto:hello@torkdigital.com.au?subject=Productivity%20Tool%20Enquiry" class="enquire-btn">Enquire for pricing</a>
+    </div>
+    <div class="enquire-card">
+      <div class="enquire-info">
+        <p class="enquire-tier">Tier Three</p>
+        <h4>Full SaaS Platforms</h4>
+        <p>User accounts, subscriptions, databases, dashboards. Complete software products.</p>
+      </div>
+      <a href="mailto:hello@torkdigital.com.au?subject=SaaS%20Platform%20Enquiry" class="enquire-btn">Enquire for pricing</a>
+    </div>
+  </div>
+
   <div class="addon-note reveal">
     <strong>Need extra work done?</strong> Additional changes and features available on request. Some may require an hourly rate <a href="mailto:hello@torkdigital.com.au">enquire within</a>.
   </div>
@@ -1133,29 +1299,62 @@
   <div class="reveal" style="text-align:center;margin-bottom:3.5rem">
     <p class="eyebrow gradient" style="justify-content:center"><span class="dash"></span>What We Can Build<span class="dash"></span></p>
     <h2>From simple sites to <span class="gradient-text">full platforms.</span></h2>
-    <p class="section-sub" style="margin:0.75rem auto 0;text-align:center">Whatever stage your business is at, there is a build to match. Here is the range of what Tork Digital can create.</p>
+    <p class="section-sub" style="margin:0.75rem auto 0;text-align:center">Whatever stage your business is at, there is a build to match. Tap any card to see it in action.</p>
   </div>
 
   <div class="cap-grid reveal">
 
-    <!-- Column 1: Simple websites -->
-    <div class="cap-card">
-      <div class="cap-icon blue">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+    <!-- Column 1: Simple websites — FLIP CARD -->
+    <div class="cap-flip" onclick="this.classList.toggle('flipped')">
+      <div class="cap-flip-inner">
+        <!-- Front -->
+        <div class="cap-card cap-face">
+          <div class="cap-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          </div>
+          <p class="cap-tier">Tier One</p>
+          <h3>Simple Websites</h3>
+          <p>Clean, fast, professional sites that give your business a proper presence online. Perfect for getting found and looking the part.</p>
+          <ul class="cap-list">
+            <li>Business & landing pages</li>
+            <li>Portfolios & brochures</li>
+            <li>Contact & enquiry forms</li>
+            <li>Mobile-first, SEO-ready</li>
+          </ul>
+          <p class="cap-flip-hint">Tap to preview ⟲</p>
+        </div>
+        <!-- Back -->
+        <div class="cap-card cap-face cap-back">
+          <div class="cap-demo-browser">
+            <div class="cap-demo-bar">
+              <span class="wb-dot" style="background:#ff5f57"></span>
+              <span class="wb-dot" style="background:#febc2e"></span>
+              <span class="wb-dot" style="background:#28c840"></span>
+            </div>
+            <div class="cap-demo-screen">
+              <div style="height:18px;width:50%;background:linear-gradient(90deg,#0066FF,#7C3AEA);border-radius:3px;margin-bottom:10px"></div>
+              <div style="height:7px;width:90%;background:rgba(242,245,255,0.18);border-radius:2px;margin-bottom:5px"></div>
+              <div style="height:7px;width:75%;background:rgba(242,245,255,0.12);border-radius:2px;margin-bottom:5px"></div>
+              <div style="height:7px;width:82%;background:rgba(242,245,255,0.12);border-radius:2px;margin-bottom:14px"></div>
+              <div style="display:flex;gap:8px;margin-bottom:14px">
+                <div style="height:30px;width:80px;background:linear-gradient(135deg,#0066FF,#7C3AEA);border-radius:6px"></div>
+                <div style="height:30px;width:70px;background:var(--bg-3);border:1px solid var(--border);border-radius:6px"></div>
+              </div>
+              <div style="display:flex;gap:8px">
+                <div style="flex:1;height:40px;background:var(--bg-3);border-radius:6px"></div>
+                <div style="flex:1;height:40px;background:var(--bg-3);border-radius:6px"></div>
+                <div style="flex:1;height:40px;background:var(--bg-3);border-radius:6px"></div>
+              </div>
+            </div>
+          </div>
+          <p class="cap-back-label">A clean business site</p>
+          <p class="cap-flip-hint">Tap to flip back ⟲</p>
+        </div>
       </div>
-      <p class="cap-tier">Tier One</p>
-      <h3>Simple Websites</h3>
-      <p>Clean, fast, professional sites that give your business a proper presence online. Perfect for getting found and looking the part.</p>
-      <ul class="cap-list">
-        <li>Business & landing pages</li>
-        <li>Portfolios & brochures</li>
-        <li>Contact & enquiry forms</li>
-        <li>Mobile-first, SEO-ready</li>
-      </ul>
     </div>
 
-    <!-- Column 2: Productivity tools -->
-    <div class="cap-card cap-featured">
+    <!-- Column 2: Productivity tools — opens game modal -->
+    <div class="cap-card cap-featured cap-clickable" onclick="openGameModal()">
       <div class="cap-icon gradient">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
       </div>
@@ -1168,23 +1367,62 @@
         <li>Interactive widgets</li>
         <li>Browser-based apps</li>
       </ul>
-      <p class="cap-demo-tag">↓ Live example below</p>
+      <p class="cap-demo-tag">▶ Tap to play a live demo</p>
     </div>
 
-    <!-- Column 3: Full SaaS -->
-    <div class="cap-card">
-      <div class="cap-icon purple">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+    <!-- Column 3: Full SaaS — FLIP CARD -->
+    <div class="cap-flip" onclick="this.classList.toggle('flipped')">
+      <div class="cap-flip-inner">
+        <!-- Front -->
+        <div class="cap-card cap-face">
+          <div class="cap-icon purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          </div>
+          <p class="cap-tier">Tier Three</p>
+          <h3>Full SaaS Platforms</h3>
+          <p>Complete software products with user accounts, databases, billing, and everything in between. The kind of build that runs an entire business.</p>
+          <ul class="cap-list">
+            <li>User accounts & logins</li>
+            <li>Subscriptions & payments</li>
+            <li>Databases & dashboards</li>
+            <li>Like Jellar.io</li>
+          </ul>
+          <p class="cap-flip-hint">Tap to preview ⟲</p>
+        </div>
+        <!-- Back -->
+        <div class="cap-card cap-face cap-back">
+          <div class="cap-demo-browser">
+            <div class="cap-demo-bar">
+              <span class="wb-dot" style="background:#ff5f57"></span>
+              <span class="wb-dot" style="background:#febc2e"></span>
+              <span class="wb-dot" style="background:#28c840"></span>
+            </div>
+            <div class="cap-demo-screen" style="display:flex;gap:6px">
+              <div style="width:30%;display:flex;flex-direction:column;gap:5px">
+                <div style="height:9px;background:var(--blue);border-radius:2px;opacity:0.8"></div>
+                <div style="height:6px;background:var(--bg-3);border-radius:2px"></div>
+                <div style="height:6px;background:var(--bg-3);border-radius:2px"></div>
+                <div style="height:6px;background:var(--bg-3);border-radius:2px"></div>
+                <div style="height:6px;background:rgba(124,58,234,0.5);border-radius:2px;margin-top:auto"></div>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;gap:6px">
+                <div style="display:flex;gap:5px">
+                  <div style="flex:1;height:24px;background:linear-gradient(135deg,#0066FF,#7C3AEA);border-radius:4px"></div>
+                  <div style="flex:1;height:24px;background:var(--bg-3);border-radius:4px"></div>
+                  <div style="flex:1;height:24px;background:var(--bg-3);border-radius:4px"></div>
+                </div>
+                <div style="height:38px;background:var(--bg-3);border-radius:4px;border:1px solid var(--border)"></div>
+                <div style="display:flex;gap:5px">
+                  <div style="flex:1;height:20px;background:rgba(0,102,255,0.2);border-radius:4px"></div>
+                  <div style="flex:1;height:20px;background:rgba(124,58,234,0.2);border-radius:4px"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="cap-back-label">A full dashboard product</p>
+          <p class="cap-flip-hint">Tap to flip back ⟲</p>
+        </div>
       </div>
-      <p class="cap-tier">Tier Three</p>
-      <h3>Full SaaS Platforms</h3>
-      <p>Complete software products with user accounts, databases, billing, and everything in between. The kind of build that runs an entire business.</p>
-      <ul class="cap-list">
-        <li>User accounts & logins</li>
-        <li>Subscriptions & payments</li>
-        <li>Databases & dashboards</li>
-        <li>Like <a href="https://jellar.io" target="_blank" rel="noopener noreferrer">Jellar.io</a></li>
-      </ul>
     </div>
 
   </div>
@@ -1192,127 +1430,117 @@
 
 <hr class="divide" />
 
-<!-- GAME -->
-<section id="game" class="section" style="padding-top:5rem;padding-bottom:5rem">
-  <div class="reveal" style="text-align:center;margin-bottom:3rem">
-    <p class="eyebrow purple" style="justify-content:center"><span class="dash"></span>Tier Two In Action<span class="dash"></span></p>
-    <h2>Tic-Tac-Toe <span class="gradient-text">3000.</span></h2>
-    <p class="section-sub" style="margin:0.75rem auto 0;text-align:center">A working example of a productivity tool, built entirely in the browser. No app, no download, no plugin. This is the kind of interactive build that can live right inside your site. Give it a go.</p>
-  </div>
+<!-- GAME MODAL -->
+<div class="game-modal" id="game-modal" onclick="if(event.target===this)closeGameModal()">
+  <div class="game-modal-content">
+    <button class="game-modal-close" onclick="closeGameModal()" aria-label="Close">&times;</button>
+    <p class="game-modal-eyebrow">Tier Two · Live Demo</p>
+    <h3 class="game-modal-title">Tic-Tac-Toe 3000</h3>
+    <p class="game-modal-sub">A productivity tool running entirely in your browser. Max 3 pieces each. Place a 4th and your oldest vanishes.</p>
 
-  <div class="game-wrap reveal">
-    <div class="game-device">
+    <div class="game-wrap">
+      <div class="game-device">
 
-      <div class="game-screen-bezel">
-        <div class="game-screen" id="game-screen">
+        <div class="game-screen-bezel">
+          <div class="game-screen" id="game-screen">
 
-          <div class="gs-layer" id="gs-title">
-            <div class="gs-title-logo">
-              <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
-                <path d="M50 12 L78 38 L68 38 L50 22 L32 38 L22 38 Z" fill="url(#game-grad)"/>
-                <path d="M50 38 L78 64 L62 64 L62 88 L38 88 L38 64 L22 64 Z" fill="url(#game-grad)"/>
-                <defs>
-                  <linearGradient id="game-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#0066FF"/>
-                    <stop offset="100%" stop-color="#7C3AEA"/>
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-            <p class="gs-brand">TORK DIGITAL</p>
-            <p class="gs-model">TIC-TAC-TOE 3000</p>
-            <p class="gs-rule">Max <span>3 pieces</span> each. Place a 4th and your oldest <span>vanishes.</span> No draws.</p>
-            <div class="gs-blink" onclick="gameStart()">PRESS START</div>
-          </div>
-
-          <div class="gs-layer" id="gs-board" style="display:none;flex-direction:column">
-            <div class="gs-top-bar">
-              <div class="gs-score-block">
-                <span class="gs-score-label">YOU</span>
-                <span class="gs-score-val">X</span>
+            <div class="gs-layer" id="gs-title">
+              <div class="gs-title-logo">
+                <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
+                  <path d="M50 12 L78 38 L68 38 L50 22 L32 38 L22 38 Z" fill="url(#game-grad)"/>
+                  <path d="M50 38 L78 64 L62 64 L62 88 L38 88 L38 64 L22 64 Z" fill="url(#game-grad)"/>
+                  <defs>
+                    <linearGradient id="game-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#0066FF"/>
+                      <stop offset="100%" stop-color="#7C3AEA"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
               </div>
-              <div class="gs-score-block gs-score-center">
-                <span class="gs-score-label">VS</span>
-                <span class="gs-score-val" style="font-size:0.55rem;color:#4a5468">CPU</span>
+              <p class="gs-brand">TORK DIGITAL</p>
+              <p class="gs-model">TIC-TAC-TOE 3000</p>
+              <p class="gs-rule">Max <span>3 pieces</span> each. Place a 4th and your oldest <span>vanishes.</span> No draws.</p>
+              <div class="gs-blink" onclick="gameStart()">PRESS START</div>
+            </div>
+
+            <div class="gs-layer" id="gs-board" style="display:none;flex-direction:column">
+              <div class="gs-top-bar">
+                <div class="gs-score-block">
+                  <span class="gs-score-label">YOU</span>
+                  <span class="gs-score-val">X</span>
+                </div>
+                <div class="gs-score-block gs-score-center">
+                  <span class="gs-score-label">VS</span>
+                  <span class="gs-score-val" style="font-size:0.55rem;color:#4a5468">CPU</span>
+                </div>
+                <div class="gs-score-block">
+                  <span class="gs-score-label">CPU</span>
+                  <span class="gs-score-val">O</span>
+                </div>
               </div>
-              <div class="gs-score-block">
-                <span class="gs-score-label">CPU</span>
-                <span class="gs-score-val">O</span>
+              <div class="gs-status" id="gs-status">Your turn</div>
+              <div class="gs-grid" id="gs-grid">
+                <div class="gs-cell" data-i="0"></div>
+                <div class="gs-cell" data-i="1"></div>
+                <div class="gs-cell" data-i="2"></div>
+                <div class="gs-cell" data-i="3"></div>
+                <div class="gs-cell" data-i="4"></div>
+                <div class="gs-cell" data-i="5"></div>
+                <div class="gs-cell" data-i="6"></div>
+                <div class="gs-cell" data-i="7"></div>
+                <div class="gs-cell" data-i="8"></div>
               </div>
             </div>
-            <div class="gs-status" id="gs-status">Your turn</div>
-            <div class="gs-grid" id="gs-grid">
-              <div class="gs-cell" data-i="0"></div>
-              <div class="gs-cell" data-i="1"></div>
-              <div class="gs-cell" data-i="2"></div>
-              <div class="gs-cell" data-i="3"></div>
-              <div class="gs-cell" data-i="4"></div>
-              <div class="gs-cell" data-i="5"></div>
-              <div class="gs-cell" data-i="6"></div>
-              <div class="gs-cell" data-i="7"></div>
-              <div class="gs-cell" data-i="8"></div>
+
+            <div class="gs-layer" id="gs-result" style="display:none">
+              <div class="gs-result-icon" id="gs-result-icon"></div>
+              <p class="gs-result-title" id="gs-result-title"></p>
+              <p class="gs-result-sub" id="gs-result-sub"></p>
+              <div class="gs-blink" onclick="gameStart()" style="cursor:pointer">PLAY AGAIN</div>
             </div>
+
+            <div class="gs-scanlines"></div>
           </div>
+        </div>
 
-          <div class="gs-layer" id="gs-result" style="display:none">
-            <div class="gs-result-icon" id="gs-result-icon"></div>
-            <p class="gs-result-title" id="gs-result-title"></p>
-            <p class="gs-result-sub" id="gs-result-sub"></p>
-            <div class="gs-blink" onclick="gameStart()" style="cursor:pointer">PLAY AGAIN</div>
+        <div class="game-device-label">TIC-TAC-TOE 3000</div>
+
+        <div class="gameboy-controls">
+          <div class="gb-meta">
+            <button class="gb-meta-btn" onclick="gameStart()">START</button>
+            <button class="gb-meta-btn" onclick="gameAction()">SELECT</button>
           </div>
-
-          <div class="gs-scanlines"></div>
-        </div>
-      </div>
-
-      <div class="game-device-label">TIC-TAC-TOE 3000</div>
-
-      <!-- Game Boy style controls -->
-      <div class="gameboy-controls">
-
-        <!-- SELECT + START -->
-        <div class="gb-meta">
-          <button class="gb-meta-btn" onclick="gameStart()">START</button>
-          <button class="gb-meta-btn" onclick="gameAction()">SELECT</button>
-        </div>
-
-        <!-- D-Pad -->
-        <div class="gb-dpad">
-          <div class="gb-dpad-row gb-dpad-h"></div>
-          <div class="gb-dpad-row gb-dpad-v"></div>
-          <div class="gb-dpad-center"></div>
-        </div>
-
-        <!-- A + B buttons -->
-        <div class="gb-actions">
-          <div class="gb-btn-row">
-            <div>
-              <button class="gb-btn btn-b" onclick="gameAction()">B</button>
-              <p class="gb-btn-label">B</p>
-            </div>
-            <div>
-              <button class="gb-btn btn-a" onclick="gameStart()">A</button>
-              <p class="gb-btn-label">A</p>
+          <div class="gb-dpad">
+            <div class="gb-dpad-row gb-dpad-h"></div>
+            <div class="gb-dpad-row gb-dpad-v"></div>
+            <div class="gb-dpad-center"></div>
+          </div>
+          <div class="gb-actions">
+            <div class="gb-btn-row">
+              <div>
+                <button class="gb-btn btn-b" onclick="gameAction()">B</button>
+                <p class="gb-btn-label">B</p>
+              </div>
+              <div>
+                <button class="gb-btn btn-a" onclick="gameStart()">A</button>
+                <p class="gb-btn-label">A</p>
+              </div>
             </div>
           </div>
         </div>
 
-      </div>
+        <div class="game-speaker">
+          <div class="game-speaker-col"><span></span><span></span><span></span></div>
+          <div class="game-speaker-col"><span></span><span></span><span></span></div>
+          <div class="game-speaker-col"><span></span><span></span><span></span></div>
+          <div class="game-speaker-col"><span></span><span></span><span></span></div>
+          <div class="game-speaker-col"><span></span><span></span><span></span></div>
+        </div>
 
-      <!-- Speaker grille — diagonal dot grid like Game Boy -->
-      <div class="game-speaker">
-        <div class="game-speaker-col"><span></span><span></span><span></span></div>
-        <div class="game-speaker-col"><span></span><span></span><span></span></div>
-        <div class="game-speaker-col"><span></span><span></span><span></span></div>
-        <div class="game-speaker-col"><span></span><span></span><span></span></div>
-        <div class="game-speaker-col"><span></span><span></span><span></span></div>
       </div>
-
     </div>
   </div>
-</section>
-
-<hr class="divide" />
+</div>
 
 <!-- CONTACT -->
 <section id="contact" class="section">
@@ -1443,19 +1671,27 @@
     board      = Array(9).fill(null);
     humanQ     = [];
     cpuQ       = [];
-    humanTurn  = true;
     gameActive = true;
 
     document.getElementById('gs-title').style.display  = 'none';
     document.getElementById('gs-result').style.display = 'none';
     document.getElementById('gs-board').style.display  = 'flex';
-    setStatus('Your turn');
 
     document.querySelectorAll('.gs-cell').forEach(c => {
       c.textContent = '';
       c.className   = 'gs-cell';
       c.onclick     = () => humanMove(+c.dataset.i);
     });
+
+    // Randomly decide who goes first
+    if (Math.random() < 0.5) {
+      humanTurn = true;
+      setStatus('You start');
+    } else {
+      humanTurn = false;
+      setStatus('CPU starts');
+      setTimeout(cpuMove, 700);
+    }
   }
 
   function humanMove(i) {
@@ -1479,18 +1715,23 @@
   }
 
   function doPlace(i, mark, cls, queue) {
-    // If already at max, oldest piece vanishes
-    if (queue.length >= MAX_PIECES) {
-      const oldest = queue.shift();
-      removeOldest(oldest);
-    }
-
+    // Place the new piece first
     board[i] = mark;
     queue.push(i);
 
     const cell = getCell(i);
     cell.textContent = mark;
     cell.className   = 'gs-cell taken ' + cls;
+
+    // Check if this placement wins. If so, do NOT remove the oldest piece —
+    // leave the full winning state visible.
+    const isWin = WINS.some(combo => combo.every(idx => board[idx] === mark));
+
+    if (!isWin && queue.length > MAX_PIECES) {
+      // Only remove the oldest if it wasn't a winning move
+      const oldest = queue.shift();
+      removeOldest(oldest);
+    }
 
     updateFading(cls, queue);
   }
@@ -1512,13 +1753,11 @@
     document.querySelectorAll('.' + cls).forEach(c => {
       c.classList.remove('age-1', 'age-2');
     });
-    // Apply two-level fade:
-    // - When player has 2 pieces: oldest gets age-1 (slight fade)
-    // - When player has 3 pieces: oldest gets age-2 (heavy fade, about to vanish),
-    //   middle gets age-1 (slight fade)
+    // While the game is at max pieces, the oldest is about to go (age-2),
+    // the next-oldest gets a slight fade (age-1)
     if (queue.length === 2) {
       getCell(queue[0]).classList.add('age-1');
-    } else if (queue.length === MAX_PIECES) {
+    } else if (queue.length >= MAX_PIECES) {
       getCell(queue[0]).classList.add('age-2');
       getCell(queue[1]).classList.add('age-1');
     }
@@ -1534,7 +1773,7 @@
         isHuman ? '★' : '✦',
         isHuman ? 'YOU WIN' : 'CPU WINS',
         isHuman ? 'Well played.' : 'Try again.'
-      ), 600);
+      ), 900);
       return true;
     }
     return false;
@@ -1560,20 +1799,17 @@
   function getBestMove() {
     const empty = board.map((v,i) => v === null ? i : -1).filter(i => i >= 0);
 
-    // Win immediately if possible (placing + considering what would vanish)
+    // Win immediately if possible. A winning move keeps all pieces (no vanish),
+    // so we test the board with the new piece added and nothing removed.
     for (const i of empty) {
       const testBoard = [...board];
-      const testQ     = [...cpuQ];
-      if (testQ.length >= MAX_PIECES) testBoard[testQ[0]] = null;
       testBoard[i] = 'O';
       if (WINS.some(c => c.every(j => testBoard[j] === 'O'))) return i;
     }
 
-    // Block human from winning on next move
+    // Block human from winning on their next move (same rule applies to them)
     for (const i of empty) {
       const testBoard = [...board];
-      const testQ     = [...humanQ];
-      if (testQ.length >= MAX_PIECES) testBoard[testQ[0]] = null;
       testBoard[i] = 'X';
       if (WINS.some(c => c.every(j => testBoard[j] === 'X'))) return i;
     }
@@ -1593,6 +1829,27 @@
     // A button: start or restart from any screen
     if (!gameActive) gameStart();
   }
+
+  // Modal controls
+  function openGameModal() {
+    const modal = document.getElementById('game-modal');
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    // Reset to title screen each time it opens
+    document.getElementById('gs-board').style.display  = 'none';
+    document.getElementById('gs-result').style.display = 'none';
+    document.getElementById('gs-title').style.display  = 'flex';
+    gameActive = false;
+  }
+  function closeGameModal() {
+    document.getElementById('game-modal').classList.remove('open');
+    document.body.style.overflow = '';
+    gameActive = false;
+  }
+  // Close on Escape key
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeGameModal();
+  });
   // ────────────────────────────────────────────────────────────────────────
 </script>
 </body>

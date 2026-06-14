@@ -670,14 +670,14 @@
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
     }
-    .cap-front { transform: rotateY(0deg); }
-    .cap-back {
-      transform: rotateY(180deg);
-      justify-content: flex-start;
-    }
-    /* Faces never animate or transform on hover — only the inner wrapper rotates */
+    /* Front and back keep their rotation permanently, including on hover */
+    .cap-front,
+    .cap-front:hover { transform: rotateY(0deg) !important; }
+    .cap-back,
+    .cap-back:hover { transform: rotateY(180deg) !important; justify-content: flex-start; }
+    /* Flip-face cards must never lift, shadow, or otherwise transform on hover */
     .cap-flip .cap-card { transition: border-color 0.25s; }
-    .cap-flip .cap-card:hover { transform: none; box-shadow: none; }
+    .cap-flip .cap-card:hover { box-shadow: none; }
     .cap-flip-hint {
       font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
       letter-spacing: 1px; color: var(--faint); margin-top: auto; padding-top: 1rem; text-align: center;
@@ -1381,7 +1381,7 @@
         <!-- Back -->
         <div class="cap-card cap-face cap-back">
           <p class="cap-tier">Tier Three Example</p>
-          <h3>Full SaaS Platforms</h3>
+          <h3>Globe Financial</h3>
           <div class="cap-demo-browser">
             <div class="cap-demo-bar">
               <span class="wb-dot" style="background:#ff5f57"></span>
@@ -1389,14 +1389,14 @@
               <span class="wb-dot" style="background:#28c840"></span>
             </div>
             <div class="cap-thumb">
-              <img src="images/work-jellar.png" alt="SaaS platform example" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
+              <img src="images/work-globe.png" alt="Globe Financial platform" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
             </div>
           </div>
-          <p class="cap-back-label">A full platform like Jellar.io</p>
-          <button class="cap-cta purple-cta">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>
-            Flip back
-          </button>
+          <p class="cap-back-label">A finance platform we built</p>
+          <a href="https://globefinancial.net" target="_blank" rel="noopener noreferrer" class="cap-cta purple-cta" onclick="event.stopPropagation()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Visit globefinancial.net
+          </a>
         </div>
       </div>
     </div>

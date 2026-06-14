@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tork Digital — Level Up Your Digital Presence</title>
+  <title>Tork Digital Level Up Your Digital Presence</title>
+  <link rel="icon" type="image/png" href="/images/logocircle.png" />
+  <link rel="shortcut icon" type="image/png" href="/images/logocircle.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />family=Outfit:wght@300;400;500;600<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />family=JetBrains+Mono:wght@400;500<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -54,15 +56,21 @@
       padding: 0 2.5rem; height: 64px;
     }
     .logo {
-      font-family: 'Exo 2', sans-serif;
+      font-family: 'Raleway', sans-serif;
       font-weight: 500; font-size: 1.15rem; letter-spacing: -0.5px;
       text-decoration: none;
       display: flex; align-items: center; gap: 10px;
+      z-index: 2;
     }
     .logo .logo-arrows { width: 26px; height: 26px; }
     .logo-tork { color: var(--white); }
     .logo-digital { color: var(--blue); }
-    .nav-links { display: flex; align-items: center; gap: 2.5rem; }
+    /* Center the links absolutely in the navbar */
+    .nav-links {
+      display: flex; align-items: center; gap: 2.2rem;
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+    }
     .nav-links a {
       font-size: 0.875rem; font-weight: 400; color: var(--muted);
       text-decoration: none; transition: color 0.2s;
@@ -96,47 +104,60 @@
     }
     .eyebrow.gradient .dash { background: var(--purple); }
 
-    /* ── HERO ── */
-    #hero {
-      padding-top: 9rem; padding-bottom: 6rem;
-      position: relative; overflow: hidden;
+    /* ── HERO with video background ── */
+    .hero-video {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: hidden;
+      padding: 6rem 0 0;
     }
+    .hero-bg-video {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      pointer-events: none;
+    }
+    /* Dark gradient overlay - keeps text readable */
+    .hero-overlay {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(10,15,26,0.92) 0%, rgba(10,15,26,0.65) 50%, rgba(10,15,26,0.45) 100%),
+        linear-gradient(180deg, rgba(10,15,26,0.5) 0%, transparent 30%, rgba(10,15,26,0.85) 100%);
+    }
+    /* Subtle dot grid texture on top */
     .hero-bg {
-      position: absolute; inset: 0; z-index: 0; pointer-events: none;
-      background-image:
-        radial-gradient(circle, rgba(124,58,234,0.18) 1px, transparent 1.5px);
+      position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background-image: radial-gradient(circle, rgba(124,58,234,0.12) 1px, transparent 1.5px);
       background-size: 32px 32px;
-      mask-image: radial-gradient(ellipse 80% 60% at 70% 30%, black 30%, transparent 90%);
+      mask-image: radial-gradient(ellipse 70% 50% at 30% 50%, black 30%, transparent 90%);
     }
-    .glow-1 {
-      position: absolute; width: 600px; height: 600px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,102,255,0.18) 0%, transparent 70%);
-      top: -150px; right: -200px; filter: blur(60px); pointer-events: none; z-index: 0;
-      animation: drift1 14s ease-in-out infinite;
-    }
-    .glow-2 {
-      position: absolute; width: 500px; height: 500px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(124,58,234,0.15) 0%, transparent 70%);
-      bottom: -100px; left: -150px; filter: blur(60px); pointer-events: none; z-index: 0;
-      animation: drift2 16s ease-in-out infinite;
-    }
-    @keyframes drift1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-40px,30px)} }
-    @keyframes drift2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(30px,-20px)} }
 
-    .hero-inner {
-      display: grid; grid-template-columns: 1.1fr 1fr;
-      gap: 4rem; align-items: center; position: relative; z-index: 1;
+    .hero-content-wrap {
+      position: relative; z-index: 3;
+      max-width: 1100px; width: 100%;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+    }
+    .hero-content {
+      max-width: 640px;
     }
 
     .hero-tag {
       display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(0,102,255,0.08);
-      border: 1px solid rgba(0,102,255,0.2);
+      background: rgba(0,102,255,0.12);
+      border: 1px solid rgba(0,102,255,0.3);
       color: var(--blue);
       font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
       letter-spacing: 2px; text-transform: uppercase;
       padding: 0.45rem 1rem; border-radius: 100px; margin-bottom: 2rem;
       animation: fadeUp 0.7s ease both;
+      backdrop-filter: blur(6px);
     }
     .tag-dot {
       width: 6px; height: 6px; border-radius: 50%; background: var(--blue);
@@ -146,10 +167,12 @@
     @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
 
     h1 {
-      font-family: 'Exo 2', sans-serif;
-      font-weight: 500; font-size: clamp(2.6rem, 5vw, 4.2rem);
-      line-height: 1.05; letter-spacing: -2px;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 500; font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1.02; letter-spacing: -2.5px;
       margin-bottom: 1.5rem;
+      color: var(--white);
+      text-shadow: 0 2px 30px rgba(0,0,0,0.5);
       animation: fadeUp 0.7s 0.1s ease both;
     }
     h1 .gradient-text {
@@ -158,84 +181,75 @@
       -webkit-text-fill-color: transparent;
     }
     .hero-sub {
-      font-size: 1.1rem; font-weight: 300; color: var(--muted);
-      max-width: 460px; line-height: 1.75; margin-bottom: 2.5rem;
+      font-size: 1.15rem; font-weight: 300; color: rgba(242,245,255,0.85);
+      max-width: 500px; line-height: 1.75; margin-bottom: 2.5rem;
       animation: fadeUp 0.7s 0.2s ease both;
+      text-shadow: 0 1px 10px rgba(0,0,0,0.4);
     }
     .hero-sub strong { color: var(--white); font-weight: 500; }
 
     .hero-actions {
       display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
       animation: fadeUp 0.7s 0.3s ease both;
+      margin-bottom: 4rem;
     }
     .btn-primary {
       display: inline-flex; align-items: center; gap: 10px;
       background: var(--gradient); color: var(--white);
-      font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 0.95rem;
-      padding: 0.95rem 1.85rem; border-radius: 10px; border: none;
+      font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 1rem;
+      padding: 1rem 2rem; border-radius: 10px; border: none;
       cursor: pointer; text-decoration: none; transition: all 0.2s;
       position: relative; overflow: hidden;
-      box-shadow: 0 0 0 0 var(--blue-glow);
+      box-shadow: 0 8px 32px rgba(0,102,255,0.3);
     }
     .btn-primary::before {
       content:''; position: absolute; inset: 0;
       background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
       opacity: 0; transition: opacity 0.2s;
     }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px var(--blue-glow); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,102,255,0.5); }
     .btn-primary:hover::before { opacity: 1; }
     .btn-primary svg { width: 16px; height: 16px; transition: transform 0.2s; }
     .btn-primary:hover svg { transform: translateX(3px); }
     .btn-secondary {
       display: inline-flex; align-items: center; gap: 8px;
-      border: 1px solid var(--border-lit); color: var(--muted);
-      background: transparent;
-      font-family: 'Outfit', sans-serif; font-weight: 400; font-size: 0.95rem;
-      padding: 0.95rem 1.85rem; border-radius: 10px;
+      border: 1px solid rgba(242,245,255,0.25);
+      color: var(--white);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(6px);
+      font-family: 'Outfit', sans-serif; font-weight: 400; font-size: 1rem;
+      padding: 1rem 2rem; border-radius: 10px;
       text-decoration: none; cursor: pointer; transition: all 0.2s;
     }
-    .btn-secondary:hover { color: var(--white); border-color: var(--blue); }
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: var(--blue);
+    }
 
-    /* ── HERO LOGO MARK ── */
-    .hero-right {
-      display: flex; align-items: center; justify-content: center;
-      position: relative; height: 460px;
-      animation: fadeUp 0.7s 0.3s ease both;
+    /* Scroll cue */
+    .scroll-cue {
+      display: flex; align-items: center; gap: 12px;
+      animation: fadeUp 0.7s 0.5s ease both;
+      opacity: 0.6;
     }
-    .hero-mark {
-      width: 280px; height: 280px; position: relative;
-      filter: drop-shadow(0 0 60px rgba(0,102,255,0.4));
-      animation: float 6s ease-in-out infinite;
+    .scroll-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+      letter-spacing: 3px; color: var(--white);
     }
-    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
-
-    /* Floating preview cards near logo */
-    .float-card {
-      position: absolute; background: var(--surface);
-      border: 1px solid var(--border-lit); border-radius: 12px;
-      padding: 0.9rem 1.1rem; box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-      backdrop-filter: blur(8px);
+    .scroll-line {
+      display: block; width: 1px; height: 40px;
+      background: linear-gradient(180deg, var(--white) 0%, transparent 100%);
+      position: relative; overflow: hidden;
     }
-    .float-card.fc-1 {
-      top: 30px; left: 0; animation: floatA 7s ease-in-out infinite;
+    .scroll-line::after {
+      content: ''; position: absolute; top: -40px; left: 0; width: 1px; height: 20px;
+      background: linear-gradient(180deg, transparent, var(--blue));
+      animation: scrollDown 2s ease-in-out infinite;
     }
-    .float-card.fc-2 {
-      bottom: 50px; right: 10px; animation: floatB 8s ease-in-out infinite;
+    @keyframes scrollDown {
+      0% { top: -20px; }
+      100% { top: 40px; }
     }
-    .float-card.fc-3 {
-      top: 120px; right: -20px; animation: floatA 9s ease-in-out infinite reverse;
-    }
-    @keyframes floatA { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-    @keyframes floatB { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
-
-    .fc-label {
-      font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
-      letter-spacing: 1.5px; text-transform: uppercase; color: var(--faint);
-      margin-bottom: 0.2rem;
-    }
-    .fc-value { font-family: 'Exo 2', sans-serif; font-weight: 600; font-size: 1.1rem; }
-    .fc-value .accent { color: var(--blue); }
-    .fc-value .accent-p { color: var(--purple); }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
@@ -272,7 +286,7 @@
 
     /* ── HEADINGS ── */
     h2 {
-      font-family: 'Exo 2', sans-serif; font-weight: 500;
+      font-family: 'Raleway', sans-serif; font-weight: 500;
       font-size: clamp(2rem, 3.8vw, 3rem); letter-spacing: -1.2px;
       line-height: 1.12; margin-bottom: 1rem; color: var(--white);
     }
@@ -320,7 +334,7 @@
     .step-icon.gradient svg { stroke: url(#step-gradient); }
 
     .process-step h3 {
-      font-family: 'Exo 2', sans-serif; font-size: 1.2rem;
+      font-family: 'Raleway', sans-serif; font-size: 1.2rem;
       font-weight: 500; margin-bottom: 0.6rem; line-height: 1.3; letter-spacing: -0.3px;
     }
     .process-step p { font-size: 0.875rem; color: var(--muted); line-height: 1.75; font-weight: 300; }
@@ -365,7 +379,7 @@
     .bento-icon.gradient svg { stroke: url(#step-gradient); }
 
     .bento-card h3 {
-      font-family: 'Exo 2', sans-serif; font-weight: 500;
+      font-family: 'Raleway', sans-serif; font-weight: 500;
       font-size: 1.2rem; margin-bottom: 0.5rem; letter-spacing: -0.3px; line-height: 1.3;
     }
     .bento-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.75; font-weight: 300; }
@@ -381,7 +395,7 @@
     .bar-score { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--white); width: 24px; text-align: right; }
 
     .ghost-text {
-      font-family: 'Exo 2', sans-serif; font-size: 6rem; font-weight: 700;
+      font-family: 'Raleway', sans-serif; font-size: 6rem; font-weight: 700;
       line-height: 1; position: absolute;
       bottom: 1rem; right: 1.25rem; pointer-events: none; letter-spacing: -3px;
       background: var(--gradient); -webkit-background-clip: text; background-clip: text;
@@ -439,7 +453,7 @@
       color: var(--muted); align-self: flex-start; padding-top: 0.45rem;
     }
     .p-num {
-      font-family: 'Exo 2', sans-serif; font-size: 4.5rem; font-weight: 500;
+      font-family: 'Raleway', sans-serif; font-size: 4.5rem; font-weight: 500;
       letter-spacing: -2px; line-height: 1; color: var(--white);
     }
     .p-card.featured .p-num {
@@ -447,6 +461,19 @@
       background-clip: text; -webkit-text-fill-color: transparent;
     }
     .p-per { font-size: 0.9rem; color: var(--muted); }
+    .p-cents {
+      font-family: 'Raleway', sans-serif; font-size: 1.5rem; font-weight: 500;
+      color: var(--white); align-self: flex-start; padding-top: 0.5rem;
+    }
+    .p-card.featured .p-cents {
+      background: var(--gradient); -webkit-background-clip: text;
+      background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .p-annual {
+      font-size: 0.82rem; color: var(--blue); font-weight: 500;
+      margin-bottom: 1rem; margin-top: -0.2rem;
+    }
+    .p-annual strong { color: var(--white); font-weight: 600; }
     .p-desc { font-size: 0.875rem; color: var(--muted); margin-bottom: 1.75rem; font-weight: 300; line-height: 1.65; }
     .p-desc span { color: var(--blue); font-weight: 500; }
 
@@ -492,10 +519,31 @@
     .addon-note a { color: var(--blue); text-decoration: none; }
     .addon-note a:hover { text-decoration: underline; }
 
+    /* Enquire-within tiers under pricing */
+    .enquire-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; max-width: 760px; margin: 0 auto 1.5rem; }
+    .enquire-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.5rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1.25rem;
+      transition: border-color 0.25s;
+    }
+    .enquire-card:hover { border-color: var(--border-lit); }
+    .enquire-tier { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--faint); margin-bottom: 0.35rem; }
+    .enquire-card h4 { font-family: 'Raleway', sans-serif; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.4rem; }
+    .enquire-card p { font-size: 0.8rem; color: var(--muted); font-weight: 300; line-height: 1.6; }
+    .enquire-btn {
+      flex-shrink: 0; align-self: center;
+      font-family: 'Outfit', sans-serif; font-size: 0.8rem; font-weight: 500;
+      color: var(--blue); text-decoration: none; white-space: nowrap;
+      border: 1px solid rgba(0,102,255,0.3); border-radius: 8px;
+      padding: 0.55rem 1rem; transition: all 0.2s;
+    }
+    .enquire-btn:hover { background: rgba(0,102,255,0.1); border-color: var(--blue); }
+
     /* ── WORK ── */
     #work { background: var(--bg); }
     .work-head { margin-bottom: 3rem; }
-    .work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+    .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
     .work-card {
       display: block; text-decoration: none; color: inherit;
       background: var(--surface); border: 1px solid var(--border);
@@ -517,13 +565,26 @@
       flex: 1; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
       color: var(--muted); margin-left: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
-    .work-mock { padding: 0.85rem; display: flex; flex-direction: column; gap: 6px; min-height: 120px; }
+    .work-thumb {
+      border-radius: 7px; overflow: hidden; background: var(--bg-3);
+      aspect-ratio: 16 / 10; position: relative;
+    }
+    .work-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+    /* Fallback when no screenshot present yet */
+    .work-thumb.no-img::after {
+      content: 'Preview coming soon';
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 1px;
+      color: var(--faint);
+      background: linear-gradient(135deg, rgba(0,102,255,0.08), rgba(124,58,234,0.08));
+    }
     .wm-bar { border-radius: 3px; }
     .work-info {
       display: flex; align-items: center; justify-content: space-between; gap: 1rem;
       padding: 1.25rem 1.5rem;
     }
-    .work-name { font-family: 'Exo 2', sans-serif; font-weight: 500; font-size: 1rem; color: var(--white); margin-bottom: 0.2rem; letter-spacing: -0.2px; }
+    .work-name { font-family: 'Raleway', sans-serif; font-weight: 500; font-size: 1rem; color: var(--white); margin-bottom: 0.2rem; letter-spacing: -0.2px; }
     .work-desc { font-size: 0.8rem; color: var(--muted); font-weight: 300; }
     .work-link {
       font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; font-weight: 500;
@@ -532,6 +593,161 @@
     .work-footnote { text-align: center; font-size: 0.875rem; color: var(--muted); font-weight: 300; margin-top: 1rem; }
     .work-footnote a { color: var(--blue); text-decoration: none; }
     .work-footnote a:hover { text-decoration: underline; }
+
+    /* ── CAPABILITIES ── */
+    .cap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .cap-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 18px; padding: 2rem;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      display: flex; flex-direction: column;
+    }
+    .cap-card:hover { transform: translateY(-4px); border-color: var(--border-lit); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+    .cap-card.cap-featured {
+      border-color: transparent; position: relative;
+      box-shadow: 0 16px 50px rgba(0,102,255,0.12);
+    }
+    .cap-card.cap-featured::before {
+      content: ''; position: absolute; inset: 0; border-radius: 18px; padding: 1px;
+      background: var(--gradient);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+    }
+    .cap-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;
+    }
+    .cap-icon svg { width: 22px; height: 22px; }
+    .cap-icon.blue { background: rgba(0,102,255,0.12); border: 1px solid rgba(0,102,255,0.25); }
+    .cap-icon.blue svg { stroke: var(--blue); }
+    .cap-icon.purple { background: rgba(124,58,234,0.12); border: 1px solid rgba(124,58,234,0.25); }
+    .cap-icon.purple svg { stroke: var(--purple); }
+    .cap-icon.gradient { background: linear-gradient(135deg, rgba(0,102,255,0.15), rgba(124,58,234,0.15)); border: 1px solid rgba(124,58,234,0.3); }
+    .cap-icon.gradient svg { stroke: url(#step-gradient); }
+    .cap-tier {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--faint); margin-bottom: 0.5rem;
+    }
+    .cap-card h3 {
+      font-family: 'Raleway', sans-serif; font-weight: 600;
+      font-size: 1.3rem; margin-bottom: 0.65rem; letter-spacing: -0.3px;
+    }
+    .cap-card > p { font-size: 0.875rem; color: var(--muted); line-height: 1.7; font-weight: 300; margin-bottom: 1.5rem; }
+    .cap-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-top: auto; }
+    .cap-list li {
+      display: flex; align-items: center; gap: 9px;
+      font-size: 0.84rem; color: var(--muted); font-weight: 300;
+    }
+    .cap-list li::before {
+      content: ''; display: block; width: 5px; height: 5px; border-radius: 50%;
+      background: var(--blue); flex-shrink: 0;
+    }
+    .cap-featured .cap-list li::before { background: var(--purple); }
+    .cap-list a { color: var(--blue); text-decoration: none; }
+    .cap-list a:hover { text-decoration: underline; }
+    .cap-demo-tag {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+      letter-spacing: 1px; color: var(--purple); margin-top: 1.25rem;
+      text-align: center; animation: bob 1.8s ease infinite;
+    }
+    @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(3px)} }
+
+    /* Flip cards */
+    .cap-flip {
+      perspective: 1600px;
+      min-height: 460px;
+      cursor: pointer;
+    }
+    .cap-flip-inner {
+      position: relative; width: 100%; height: 100%; min-height: 460px;
+      transition: transform 0.6s cubic-bezier(0.45,0.05,0.25,1);
+      transform-style: preserve-3d;
+    }
+    .cap-flip.flipped .cap-flip-inner { transform: rotateY(180deg); }
+    .cap-face {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+    /* Front and back keep their rotation permanently, including on hover */
+    .cap-front,
+    .cap-front:hover { transform: rotateY(0deg) !important; }
+    .cap-back,
+    .cap-back:hover { transform: rotateY(180deg) !important; justify-content: flex-start; }
+    /* Flip-face cards must never lift, shadow, or otherwise transform on hover */
+    .cap-flip .cap-card { transition: border-color 0.25s; }
+    .cap-flip .cap-card:hover { box-shadow: none; }
+    .cap-flip-hint {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
+      letter-spacing: 1px; color: var(--faint); margin-top: auto; padding-top: 1rem; text-align: center;
+    }
+    .cap-clickable { cursor: pointer; }
+    /* Demo browser mockup on card backs */
+    .cap-demo-browser {
+      width: 100%; background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden; margin: 0.5rem 0 1.25rem;
+    }
+    .cap-demo-bar { background: var(--bg-3); padding: 0.5rem 0.7rem; display: flex; gap: 5px; border-bottom: 1px solid var(--border); }
+    .cap-demo-bar .wb-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .cap-demo-screen { padding: 1rem; min-height: 150px; }
+    .cap-thumb { aspect-ratio: 16 / 10; background: var(--bg-3); position: relative; overflow: hidden; }
+    .cap-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+    .cap-thumb.no-img::after {
+      content: 'Preview coming soon';
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 1px; color: var(--faint);
+      background: linear-gradient(135deg, rgba(0,102,255,0.08), rgba(124,58,234,0.08));
+    }
+    .cap-back-label {
+      font-family: 'Raleway', sans-serif; font-weight: 500; font-size: 0.95rem;
+      color: var(--white); text-align: center;
+    }
+
+    /* Tier CTA buttons */
+    .cap-cta {
+      margin-top: auto; width: 100%;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 0.875rem;
+      padding: 0.75rem 1rem; border-radius: 10px; border: none;
+      cursor: pointer; transition: all 0.2s; color: #fff;
+    }
+    .cap-cta svg { width: 15px; height: 15px; }
+    .cap-cta.blue-cta { background: var(--blue); }
+    .cap-cta.blue-cta:hover { background: #1a7aff; box-shadow: 0 6px 18px rgba(0,102,255,0.4); transform: translateY(-1px); }
+    .cap-cta.gradient-cta { background: var(--gradient); }
+    .cap-cta.gradient-cta:hover { box-shadow: 0 6px 20px rgba(0,102,255,0.45); transform: translateY(-1px); }
+    .cap-cta.purple-cta { background: var(--purple); }
+    .cap-cta.purple-cta:hover { background: #8d4ef7; box-shadow: 0 6px 18px rgba(124,58,234,0.4); transform: translateY(-1px); }
+
+    /* Game modal */
+    .game-modal {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(5,7,12,0.85); backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center;
+      padding: 2rem 1rem;
+    }
+    .game-modal.open { display: flex; animation: modalfade 0.3s ease; }
+    @keyframes modalfade { from{opacity:0} to{opacity:1} }
+    .game-modal-content {
+      position: relative; text-align: center; max-width: 420px; width: 100%;
+      animation: modalpop 0.4s cubic-bezier(0.3,1.3,0.5,1);
+    }
+    @keyframes modalpop { from{transform:scale(0.85);opacity:0} to{transform:scale(1);opacity:1} }
+    .game-modal-close {
+      position: absolute; top: -10px; right: 0;
+      background: var(--surface); border: 1px solid var(--border-lit);
+      color: var(--white); width: 36px; height: 36px; border-radius: 50%;
+      font-size: 1.3rem; cursor: pointer; transition: all 0.2s; z-index: 5;
+      display: flex; align-items: center; justify-content: center; line-height: 1;
+    }
+    .game-modal-close:hover { border-color: var(--blue); transform: rotate(90deg); }
+    .game-modal-eyebrow {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--purple); margin-bottom: 0.5rem;
+    }
+    .game-modal-title { font-family: 'Raleway', sans-serif; font-weight: 600; font-size: 1.6rem; margin-bottom: 0.5rem; }
+    .game-modal-sub { font-size: 0.85rem; color: var(--muted); font-weight: 300; max-width: 340px; margin: 0 auto 1.75rem; line-height: 1.6; }
 
     /* ── CONTACT ── */
     #contact { background: var(--bg-2); border-top: 1px solid var(--border); }
@@ -594,7 +810,7 @@
       display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem;
     }
     .s-icon svg { width: 22px; height: 22px; stroke: var(--blue); }
-    .success-wrap h3 { font-family: 'Exo 2', sans-serif; font-size: 1.5rem; font-weight: 500; margin-bottom: 0.5rem; }
+    .success-wrap h3 { font-family: 'Raleway', sans-serif; font-size: 1.5rem; font-weight: 500; margin-bottom: 0.5rem; }
     .success-wrap p { color: var(--muted); font-size: 0.9rem; font-weight: 300; max-width: 340px; margin: 0 auto 1.5rem; }
     .btn-reset {
       background: none; border: 1px solid var(--border); color: var(--muted);
@@ -617,23 +833,257 @@
     .footer-links a:hover { color: var(--white); }
     .footer-copy { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--faint); letter-spacing: 0.5px; }
 
+    /* ── TIC-TAC-TOE 3000 ── */
+    .game-wrap { display: flex; justify-content: center; perspective: 1400px; }
+    .game-device {
+      width: 300px;
+      background:
+        linear-gradient(135deg, #232a4d 0%, #1a2040 30%, #0d1020 70%, #080a14 100%);
+      border-radius: 20px 20px 44px 44px;
+      padding: 16px 16px 24px;
+      position: relative;
+      transform: rotateX(8deg) rotateY(-9deg);
+      transform-style: preserve-3d;
+      transition: transform 0.5s ease;
+      box-shadow:
+        /* Tight contact shadows for edges */
+        inset 0 2px 1px rgba(255,255,255,0.12),
+        inset 0 -3px 2px rgba(0,0,0,0.6),
+        inset 3px 0 4px rgba(255,255,255,0.04),
+        inset -4px 0 6px rgba(0,0,0,0.5),
+        /* Right-side body depth (simulates thickness) */
+        6px 6px 0 -1px #0a0c18,
+        9px 9px 0 -2px #070912,
+        12px 12px 0 -3px #05060e,
+        /* Big ambient drop shadow */
+        30px 50px 90px rgba(0,0,0,0.75),
+        0 20px 50px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .game-device:hover {
+      /* swivel handled by JS in the modal */
+    }
+    /* Glossy highlight sweep across the shell */
+    .game-device::after {
+      content: ''; position: absolute; inset: 0;
+      border-radius: 20px 20px 44px 44px;
+      background: linear-gradient(125deg, rgba(255,255,255,0.10) 0%, transparent 28%, transparent 100%);
+      pointer-events: none;
+    }
+    .game-screen-bezel {
+      background: linear-gradient(160deg, #0a0d18 0%, #050810 100%);
+      border-radius: 10px 10px 18px 10px; padding: 10px 10px 16px;
+      box-shadow:
+        inset 0 4px 12px rgba(0,0,0,0.95),
+        inset 0 0 0 1px rgba(255,255,255,0.05),
+        inset 0 -1px 0 rgba(255,255,255,0.03),
+        0 1px 0 rgba(255,255,255,0.06);
+      margin-bottom: 12px; position: relative;
+      transform: translateZ(2px);
+    }
+    .game-screen-bezel::after {
+      content: ''; position: absolute; bottom: 5px; left: 18px;
+      width: 5px; height: 5px; border-radius: 50%; background: var(--blue);
+      box-shadow: 0 0 8px var(--blue), 0 0 2px #fff;
+    }
+    .game-screen {
+      background: radial-gradient(ellipse at 40% 30%, #0d1c30 0%, #0a1628 60%, #081020 100%);
+      border-radius: 5px; height: 250px;
+      overflow: hidden; position: relative; font-family: 'JetBrains Mono', monospace;
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.6);
+    }
+    .gs-scanlines {
+      position: absolute; inset: 0; z-index: 10; pointer-events: none;
+      background: repeating-linear-gradient(to bottom, transparent 0px, transparent 3px, rgba(0,0,0,0.12) 3px, rgba(0,0,0,0.12) 4px);
+      border-radius: 5px;
+    }
+    .gs-layer { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px; }
+    .gs-title-logo { margin-bottom: 5px; filter: drop-shadow(0 0 8px #0066FF); }
+    .gs-brand { font-size: 0.55rem; letter-spacing: 4px; color: #0066FF; margin-bottom: 2px; text-shadow: 0 0 8px #0066FF; }
+    .gs-model { font-size: 0.8rem; font-weight: 600; color: #F2F5FF; letter-spacing: 2px; margin-bottom: 6px; font-family: 'Raleway', sans-serif; }
+    .gs-rule { font-size: 0.5rem; letter-spacing: 1px; color: #4a5468; text-align: center; line-height: 1.65; margin-bottom: 12px; max-width: 190px; }
+    .gs-rule span { color: #7C3AEA; }
+    .gs-blink { font-size: 0.6rem; letter-spacing: 3px; color: #7C3AEA; animation: blink-text 1s step-end infinite; text-shadow: 0 0 8px #7C3AEA; cursor: pointer; }
+    @keyframes blink-text { 0%,100%{opacity:1} 50%{opacity:0} }
+    .gs-top-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 5px; border-bottom: 1px solid rgba(0,102,255,0.15); padding-bottom: 5px; }
+    .gs-score-block { text-align: center; flex: 1; }
+    .gs-score-center { border-left: 1px solid rgba(255,255,255,0.06); border-right: 1px solid rgba(255,255,255,0.06); }
+    .gs-score-label { display: block; font-size: 0.46rem; letter-spacing: 2px; color: #4a5468; }
+    .gs-score-val { display: block; font-size: 0.82rem; font-weight: 600; color: #F2F5FF; line-height: 1.2; }
+    .gs-status { font-size: 0.52rem; letter-spacing: 2px; text-transform: uppercase; color: #0066FF; margin-bottom: 6px; text-shadow: 0 0 6px #0066FF; min-height: 13px; }
+    .gs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; width: 150px; }
+    .gs-cell {
+      width: 46px; height: 46px; background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(0,102,255,0.15); border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem; font-weight: 700; cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.4s, text-shadow 0.4s, opacity 0.4s;
+      user-select: none; position: relative;
+    }
+    .gs-cell:hover:not(.taken) { background: rgba(0,102,255,0.1); border-color: rgba(0,102,255,0.5); }
+    .gs-cell.taken { cursor: default; }
+    .gs-cell.x-cell { color: #4d9fff; text-shadow: 0 0 16px #0066FF, 0 0 32px rgba(0,102,255,0.6); background: rgba(0,102,255,0.1); border-color: rgba(0,102,255,0.5); }
+    .gs-cell.o-cell { color: #b47fff; text-shadow: 0 0 16px #7C3AEA, 0 0 32px rgba(124,58,234,0.6); background: rgba(124,58,234,0.1); border-color: rgba(124,58,234,0.4); }
+    .gs-cell.age-1 { color: #c47a30 !important; text-shadow: 0 0 8px rgba(196,122,48,0.6) !important; background: rgba(196,122,48,0.06) !important; border-color: rgba(196,122,48,0.3) !important; opacity: 0.8; }
+    .gs-cell.age-2 { color: #e03030 !important; text-shadow: 0 0 10px rgba(224,48,48,0.8) !important; background: rgba(224,48,48,0.08) !important; border-color: rgba(224,48,48,0.4) !important; opacity: 0.75; }
+    .gs-cell.vanish { opacity: 0; transform: scale(0.5); transition: opacity 0.3s ease, transform 0.3s ease; }
+    .gs-cell.win-cell { opacity: 1 !important; background: rgba(0,102,255,0.15) !important; border-color: #0066FF !important; text-shadow: 0 0 16px #0066FF !important; color: #4d9fff !important; animation: win-pulse 0.5s ease infinite alternate; }
+    @keyframes win-pulse { from{box-shadow:0 0 4px #0066FF} to{box-shadow:0 0 18px #0066FF} }
+    .gs-result-icon { font-size: 2rem; margin-bottom: 6px; }
+    .gs-result-title { font-size: 0.85rem; font-weight: 600; color: #F2F5FF; letter-spacing: 2px; margin-bottom: 4px; font-family: 'Raleway', sans-serif; }
+    .gs-result-sub { font-size: 0.52rem; letter-spacing: 1.5px; color: #4a5468; margin-bottom: 12px; }
+
+    /* Device label */
+    .game-device-label { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 4px; color: #5566a0; text-transform: uppercase; margin-bottom: 10px; }
+
+    /* Game Boy controls */
+    .gameboy-controls { display: flex; align-items: center; justify-content: space-between; padding: 4px 10px; margin-bottom: 14px; }
+    .gb-meta { display: flex; flex-direction: column; align-items: center; gap: 5px; padding-top: 18px; }
+    .gb-meta-btn { background: #1a2245; border: 1px solid rgba(255,255,255,0.14); border-radius: 100px; color: #8b9bd4; font-family: 'JetBrains Mono', monospace; font-size: 0.42rem; letter-spacing: 1.5px; padding: 4px 11px; cursor: pointer; transition: all 0.15s; width: 56px; text-align: center; font-weight: 500; }
+    .gb-meta-btn:hover { color: #fff; border-color: rgba(0,102,255,0.6); background: #22305c; }
+    .gb-meta-btn:active { transform: scale(0.92); }
+    .gb-dpad { position: relative; width: 72px; height: 72px; flex-shrink: 0; }
+    .gb-dpad-row { position: absolute; background: #131a30; border: 1px solid rgba(255,255,255,0.06); border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+    .gb-dpad-h { left: 0; right: 0; top: 50%; transform: translateY(-50%); height: 24px; }
+    .gb-dpad-v { top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 24px; }
+    .gb-dpad-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 24px; height: 24px; background: #0f1526; z-index: 2; box-shadow: inset 0 0 4px rgba(0,0,0,0.6); border-radius: 3px; }
+    .gb-dpad-row {
+      box-shadow:
+        inset 0 2px 2px rgba(255,255,255,0.08),
+        inset 0 -2px 3px rgba(0,0,0,0.6),
+        0 2px 4px rgba(0,0,0,0.5);
+    }
+    .gb-dpad-h::before, .gb-dpad-h::after, .gb-dpad-v::before, .gb-dpad-v::after { content: ''; position: absolute; border: 4px solid transparent; }
+    .gb-dpad-h::before { left: 5px; border-right-color: #2a3460; }
+    .gb-dpad-h::after  { right: 5px; border-left-color: #2a3460; }
+    .gb-dpad-v::before { top: 5px; border-bottom-color: #2a3460; }
+    .gb-dpad-v::after  { bottom: 5px; border-top-color: #2a3460; }
+    .gb-actions { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .gb-btn-row { display: flex; gap: 8px; transform: rotate(-20deg); }
+    .gb-btn {
+      width: 30px; height: 30px; border-radius: 50%; border: none; cursor: pointer;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.52rem; font-weight: 600;
+      color: rgba(255,255,255,0.95); transition: all 0.12s;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .gb-btn:active { transform: translateY(2px) scale(0.96); }
+    .gb-btn.btn-a {
+      background: radial-gradient(circle at 35% 30%, #3b8bff 0%, #0066FF 50%, #5a2bb5 100%);
+      box-shadow:
+        inset 0 2px 3px rgba(255,255,255,0.4),
+        inset 0 -3px 5px rgba(0,0,0,0.4),
+        0 5px 10px rgba(0,102,255,0.5),
+        0 2px 0 #052e7a;
+    }
+    .gb-btn.btn-a:hover { box-shadow: inset 0 2px 3px rgba(255,255,255,0.4), inset 0 -3px 5px rgba(0,0,0,0.4), 0 7px 16px rgba(0,102,255,0.7), 0 2px 0 #052e7a; }
+    .gb-btn.btn-b {
+      background: radial-gradient(circle at 35% 30%, #a065f0 0%, #7C3AEA 50%, #3a1570 100%);
+      box-shadow:
+        inset 0 2px 3px rgba(255,255,255,0.35),
+        inset 0 -3px 5px rgba(0,0,0,0.4),
+        0 5px 10px rgba(124,58,234,0.4),
+        0 2px 0 #2a0d54;
+    }
+    .gb-btn.btn-b:hover { box-shadow: inset 0 2px 3px rgba(255,255,255,0.35), inset 0 -3px 5px rgba(0,0,0,0.4), 0 7px 16px rgba(124,58,234,0.6), 0 2px 0 #2a0d54; }
+    .gb-btn-label { font-family: 'JetBrains Mono', monospace; font-size: 0.42rem; color: #8b9bd4; font-weight: 500; letter-spacing: 2px; margin-top: 3px; transform: rotate(20deg); }
+    .gb-meta-btn {
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.06), 0 2px 3px rgba(0,0,0,0.4);
+    }
+    .game-speaker { display: flex; justify-content: flex-end; padding-right: 12px; gap: 4px; }
+    .game-speaker-col { display: flex; flex-direction: column; gap: 4px; }
+    .game-speaker span { display: block; width: 3px; height: 3px; border-radius: 50%; background: rgba(0,0,0,0.5); box-shadow: inset 0 1px 1px rgba(0,0,0,0.8), 0 1px 0 rgba(255,255,255,0.04); }
+
     /* ── REVEAL ── */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
+    /* Hamburger button — hidden on desktop */
+    .nav-burger {
+      display: none;
+      flex-direction: column; justify-content: center; gap: 5px;
+      width: 40px; height: 40px; background: none; border: none; cursor: pointer;
+      padding: 8px; z-index: 110;
+    }
+    .nav-burger span {
+      display: block; width: 100%; height: 2px; background: var(--white);
+      border-radius: 2px; transition: all 0.3s ease;
+    }
+    .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
     @media (max-width: 960px) {
-      .hero-inner { grid-template-columns: 1fr; }
-      .hero-right { display: none; }
+      .hero-video { padding-top: 5rem; min-height: 88vh; }
+      .hero-content-wrap { padding: 0 1.5rem; }
       .process-grid { grid-template-columns: 1fr; }
       .bento-card:nth-child(n) { grid-column: span 12; }
       .pricing-cards { grid-template-columns: 1fr; max-width: 400px; }
-      .work-grid { grid-template-columns: 1fr; }
-      .contact-grid { grid-template-columns: 1fr; gap: 3.5rem; }
+      .enquire-row { grid-template-columns: 1fr; max-width: 400px; }
+      .work-grid { grid-template-columns: 1fr 1fr; }
+      .cap-grid { grid-template-columns: 1fr; }
+      .cap-flip { min-height: 0; }
+      .cap-flip-inner { min-height: 480px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
     }
+
+    @media (max-width: 768px) {
+      /* Show hamburger, convert nav-links to slide-down panel */
+      .nav-burger { display: flex; }
+      .nav-links {
+        position: fixed; top: 64px; left: 0; right: 0;
+        flex-direction: column; align-items: stretch; gap: 0;
+        background: rgba(10,15,26,0.98); backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        padding: 0.5rem 0;
+        transform: translateY(-120%);
+        transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+        max-height: calc(100vh - 64px); overflow-y: auto;
+      }
+      .nav-links.open { transform: translateY(0); }
+      .nav-links a {
+        padding: 1rem 1.5rem; font-size: 1rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-links a:last-child { border-bottom: none; }
+
+      h1 { font-size: clamp(2.4rem, 9vw, 3.5rem); }
+      .hero-sub { font-size: 1.05rem; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .hero-actions .btn-primary, .hero-actions .btn-secondary { justify-content: center; width: 100%; }
+
+      .process-head, .features-head { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .section { padding: 4rem 1.25rem; }
+
+      /* Game device scales down a touch */
+      .game-modal-content { max-width: 340px; }
+    }
+
     @media (max-width: 640px) {
-      nav { padding: 0 1.5rem; }
-      .nav-links { display: none; }
-      .section { padding: 5rem 1.5rem; }
+      nav { padding: 0 1.25rem; }
+      .section { padding: 3.5rem 1.25rem; }
+      .hero-overlay {
+        background: linear-gradient(180deg, rgba(10,15,26,0.72) 0%, rgba(10,15,26,0.88) 100%);
+      }
+      h1 { letter-spacing: -1.5px; }
+      h2 { font-size: clamp(1.8rem, 7vw, 2.4rem); }
+      .pricing-head .section-sub, .section-sub { font-size: 0.95rem; }
+      .enquire-card { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .enquire-btn { width: 100%; text-align: center; }
+      .work-info { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .work-grid { grid-template-columns: 1fr; }
+      .marquee-item { font-size: 0.66rem; }
+      .footer-inner { flex-direction: column; text-align: center; gap: 1.25rem; }
+      .footer-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
+      /* Game device fits small screens */
+      .game-device { width: 280px; }
+      .game-modal { padding: 1rem 0.75rem; }
+    }
+
+    @media (max-width: 380px) {
+      .game-device { width: 260px; }
+      .gs-cell { width: 42px; height: 42px; }
+      .gs-grid { width: 138px; }
     }
   </style>
 </head>
@@ -658,36 +1108,50 @@
   <a href="#" class="logo">
     <img src="/images/logotorkdigital.png" alt="Tork Digital" style="height:32px;width:auto" />
   </a>
-  <div class="nav-links">
-    <a href="#process">How It Works</a>
-    <a href="#features">What's Included</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#work">Our Work</a>
+  <div class="nav-links" id="nav-links">
+    <a href="#process" onclick="closeMobileNav()">How It Works</a>
+    <a href="#features" onclick="closeMobileNav()">What's Included</a>
+    <a href="#capabilities" onclick="closeMobileNav()">What We Can Build</a>
+    <a href="#work" onclick="closeMobileNav()">Our Work</a>
+    <a href="#pricing" onclick="closeMobileNav()">Pricing</a>
+    <a href="#contact" onclick="closeMobileNav()">Contact</a>
   </div>
-  <a href="account.html" class="nav-cta">My Account</a>
+  <button class="nav-burger" id="nav-burger" onclick="toggleMobileNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
-<!-- HERO -->
-<section id="hero" class="section">
+<!-- HERO with video background -->
+<section id="hero" class="hero-video">
+
+  <!-- BACKGROUND VIDEO LAYER -->
+  <!--
+    TO ADD YOUR VIDEO:
+    1. Upload your video file to /images/ or /video/ folder in your repo
+    2. Update the <source> src below to point to your file
+    3. Add a poster image (a still frame from your video) for fast initial load
+    4. Recommended: MP4, H.264, 1080p, 5-15 seconds looped, under 10MB
+  -->
+  <video class="hero-bg-video" autoplay muted loop playsinline>
+    <source src="/video/hero-loop.mp4" type="video/mp4">
+  </video>
+
+  <!-- Dark overlay for text readability -->
+  <div class="hero-overlay"></div>
+
+  <!-- Subtle grid texture on top of video -->
   <div class="hero-bg"></div>
-  <div class="glow-1"></div>
-  <div class="glow-2"></div>
 
-  <div class="hero-inner">
-    <div>
-      <div class="hero-tag">
-        <span class="tag-dot"></span>
-        Founding rates — limited spots
-      </div>
-
+  <div class="hero-content-wrap">
+    <div class="hero-content">
       <h1>
         Level up your <br>
         <span class="gradient-text">digital presence.</span>
       </h1>
 
       <p class="hero-sub">
-        Professional websites built with <strong>AI speed</strong> and expert care.
-        Live in days. Priced for Australian small business.
+        Professional websites built with precision, speed, and expert care.
+        Built properly. Priced for Australian small business.
       </p>
 
       <div class="hero-actions">
@@ -696,24 +1160,6 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
         <a href="#process" class="btn-secondary">See how it works</a>
-      </div>
-    </div>
-
-    <div class="hero-right">
-      <div class="hero-mark">
-        <img src="/images/logo.png" alt="Tork Digital" style="width:100%;height:100%;object-fit:contain" />
-      </div>
-
-      <div class="float-card fc-1">
-        <p class="fc-label">Build time</p>
-        <p class="fc-value">4 days</p>
-      </div>
-      <div class="float-card fc-2">
-        <p class="fc-label">Hosting</p>
-        <p class="fc-value">TBA</p>
-      </div>
-      <div class="float-card fc-3">
-        <p class="fc-label">Uptime SLA</p>
       </div>
     </div>
   </div>
@@ -726,47 +1172,47 @@
     <div class="marquee-item">Fast Delivery <span class="m-dot"></span></div>
     <div class="marquee-item">Mobile First <span class="m-dot"></span></div>
     <div class="marquee-item">SEO Optimised <span class="m-dot"></span></div>
-    <div class="marquee-item">Expert Security <span class="m-dot"></span></div>
+    <div class="marquee-item">Your site, handled <span class="m-dot"></span></div>
     <div class="marquee-item">No Lock-In Contracts <span class="m-dot"></span></div>
     <div class="marquee-item">Founding Rates <span class="m-dot"></span></div>
     <div class="marquee-item">Australian Owned <span class="m-dot"></span></div>
     <div class="marquee-item">Fast Delivery <span class="m-dot"></span></div>
     <div class="marquee-item">Mobile First <span class="m-dot"></span></div>
     <div class="marquee-item">SEO Optimised <span class="m-dot"></span></div>
-    <div class="marquee-item">Expert Security <span class="m-dot"></span></div>
+    <div class="marquee-item">Your site, handled <span class="m-dot"></span></div>
     <div class="marquee-item">No Lock-In Contracts <span class="m-dot"></span></div>
     <div class="marquee-item">Founding Rates <span class="m-dot"></span></div>
   </div>
 </div>
 
-<!-- HOW IT WORKS -->
+<hr class="divide" />
 <section id="process" class="section">
   <div class="process-head reveal">
     <div>
       <p class="eyebrow blue"><span class="dash"></span>How It Works</p>
-      <h2>From conversation to <span class="gradient-text">live</span> in 4 days.</h2>
+      <h2>Built in stages. <span class="gradient-text">Launched with confidence.</span></h2>
     </div>
-    <p class="section-sub">Three steps. Zero confusion. A site you'll be proud to share.</p>
+    <p class="section-sub">Clear stages. A site you will actually be proud to share.</p>
   </div>
   <div class="process-grid reveal">
     <div class="process-step">
-      <div class="step-number">01 — Brief</div>
+      <div class="step-number">01 Brief</div>
       <div class="step-icon blue">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
       </div>
       <h3>Tell us about your business</h3>
-      <p>Fill in a short brief — your goals, your style, what you like. Takes five minutes and sets us up to nail it first time.</p>
+      <p>Fill in a short brief your goals, your style, what you like. Takes five minutes and sets us up to nail it first time.</p>
     </div>
     <div class="process-step">
-      <div class="step-number">02 — Build</div>
+      <div class="step-number">02 Build</div>
       <div class="step-icon gradient">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
       </div>
       <h3>We build, you approve</h3>
-      <p>We design and build using AI-powered tooling. You review, request tweaks if needed, and we finalise — fast.</p>
+      <p>We design and build your site. You review, request tweaks if needed, and we finalise fast.</p>
     </div>
     <div class="process-step">
-      <div class="step-number">03 — Live</div>
+      <div class="step-number">03 Live</div>
       <div class="step-icon purple">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
       </div>
@@ -794,9 +1240,9 @@
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
       </div>
       <p class="card-eyebrow" style="color:var(--blue)">Speed</p>
-      <h3>Days, not months.</h3>
-      <p>We use AI tooling to move fast without cutting corners. You're live before a traditional agency would even respond to your enquiry.</p>
-      <div class="ghost-text">AI</div>
+      <h3>Quick, with no corners cut.</h3>
+      <p>A developed, fully functional build is put in front of you within days. A real developer build to review and advise how you would like to proceed from there.</p>
+      <div class="ghost-text">GO</div>
     </div>
     <div class="bento-card">
       <div class="bento-icon gradient">
@@ -804,32 +1250,15 @@
       </div>
       <p class="card-eyebrow" style="background:var(--gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">Search</p>
       <h3>Built to be found.</h3>
-      <p>SEO baked in from the ground up. Fast load times, clean code, structure that search engines reward.</p>
-      <div class="bar-stack">
-        <div class="bar-row">
-          <span class="bar-label">Performance</span>
-          <div class="bar-track"><div class="bar-fill blue" style="width:97%"></div></div>
-          <span class="bar-score">97</span>
-        </div>
-        <div class="bar-row">
-          <span class="bar-label">SEO</span>
-          <div class="bar-track"><div class="bar-fill gradient" style="width:100%"></div></div>
-          <span class="bar-score">100</span>
-        </div>
-        <div class="bar-row">
-          <span class="bar-label">Accessibility</span>
-          <div class="bar-track"><div class="bar-fill purple" style="width:94%"></div></div>
-          <span class="bar-score">94</span>
-        </div>
-      </div>
+      <p>SEO considered from the ground up. Fast load times, clean code, and structure that search engines reward, so the right people find you.</p>
     </div>
     <div class="bento-card">
       <div class="bento-icon purple">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       </div>
       <p class="card-eyebrow" style="color:var(--purple)">Security</p>
-      <h3>SSL &amp; monitoring.</h3>
-      <p>Malware scanning and proactive security built in. Worry about your business, not your website.</p>
+      <h3>Designed by a security professional.</h3>
+      <p>Built with confidence by an information security professional. SEO matters, but so does protecting your site and your customers. Both are considered from day one.</p>
     </div>
     <div class="bento-card">
       <div class="bento-icon blue">
@@ -843,64 +1272,135 @@
       <div class="bento-icon purple">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
       </div>
-      <p class="card-eyebrow" style="color:var(--purple)">Support</p>
-      <h3>Real people, real help.</h3>
-      <p>Priority email support from the people who built your site. Not a ticket queue overseas.</p>
+      <p class="card-eyebrow" style="color:var(--purple)">Direct</p>
+      <h3>Work with the builder.</h3>
+      <p>You deal directly with the person who built your site. No account managers, no ticket queue overseas, no middlemen.</p>
     </div>
   </div>
 </section>
 
 <hr class="divide" />
 
-<!-- PRICING -->
-<section id="pricing" class="section">
-  <div class="pricing-head reveal">
-    <p class="eyebrow gradient" style="justify-content:center"><span class="dash"></span>Pricing<span class="dash"></span></p>
-    <h2>Simple. Transparent. <br><span class="gradient-text">No surprises.</span></h2>
-    <p class="section-sub">One fee to build it. One flat monthly to keep it running.</p>
+<!-- CAPABILITIES -->
+<section id="capabilities" class="section">
+  <div class="reveal" style="text-align:center;margin-bottom:3.5rem">
+    <p class="eyebrow gradient" style="justify-content:center"><span class="dash"></span>What We Can Build<span class="dash"></span></p>
+    <h2>From simple sites to <span class="gradient-text">full platforms.</span></h2>
+    <p class="section-sub" style="margin:0.75rem auto 0;text-align:center">Whatever stage your business is at, there is a build to match. Tap any card to see it in action.</p>
   </div>
 
-  <div class="pricing-cards reveal">
-    <div class="p-card standard">
-      <span class="p-badge purple">One-Time</span>
-      <p class="p-label">Website Build</p>
-      <div class="p-amount"><span class="p-curr"></span><span class="p-num" style="font-size:2.2rem;letter-spacing:-1px">TBA</span></div>
-      <p class="p-desc">Your site designed, built, and launched. Ready to go.</p>
-      <button class="p-btn purple-btn" onclick="handleCheckout('build')">Get Your Site Built</button>
-      <div class="p-includes">
-        <p class="p-includes-label">Includes</p>
-        <ul>
-          <li><span class="tick purple"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Custom design</li>
-          <li><span class="tick purple"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Mobile-first build</li>
-          <li><span class="tick purple"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>SEO foundations</li>
-          <li><span class="tick purple"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Ready to launch</li>
-        </ul>
+  <div class="cap-grid reveal">
+
+    <!-- Column 1: Simple websites — FLIP CARD -->
+    <div class="cap-flip" onclick="this.classList.toggle('flipped')">
+      <div class="cap-flip-inner">
+        <!-- Front -->
+        <div class="cap-card cap-face cap-front">
+          <div class="cap-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          </div>
+          <p class="cap-tier">Tier One</p>
+          <h3>Simple Websites</h3>
+          <p>Clean, fast, professional sites that give your business a proper presence online. Perfect for getting found and looking the part.</p>
+          <ul class="cap-list">
+            <li>Business & landing pages</li>
+            <li>Portfolios & brochures</li>
+            <li>Contact & enquiry forms</li>
+            <li>Mobile-first, SEO-ready</li>
+          </ul>
+          <button class="cap-cta blue-cta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>
+            See an example
+          </button>
+        </div>
+        <!-- Back -->
+        <div class="cap-card cap-face cap-back">
+          <p class="cap-tier">Tier One Example</p>
+          <h3>Globe Financial</h3>
+          <div class="cap-demo-browser">
+            <div class="cap-demo-bar">
+              <span class="wb-dot" style="background:#ff5f57"></span>
+              <span class="wb-dot" style="background:#febc2e"></span>
+              <span class="wb-dot" style="background:#28c840"></span>
+            </div>
+            <div class="cap-thumb">
+              <img src="/images/work-globe.png" alt="Globe Financial website" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
+            </div>
+          </div>
+          <p class="cap-back-label">A clean, fast business site</p>
+          <a href="https://globefinancial.net" target="_blank" rel="noopener noreferrer" class="cap-cta blue-cta" onclick="event.stopPropagation()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Visit globefinancial.net
+          </a>
+        </div>
       </div>
     </div>
 
-    <div class="p-card featured">
-      <span class="p-badge gradient">Founding Rate</span>
-      <p class="p-label">Monthly Hosting</p>
-      <div class="p-amount"><span class="p-curr"></span><span class="p-num" style="font-size:2.2rem;letter-spacing:-1px">TBA</span></div>
-      <p class="p-desc">Hosting, SSL, security, and support. <span>Cancel any time.</span></p>
-      <button class="p-btn gradient-btn" onclick="handleCheckout('hosting')">Start Hosting</button>
-      <div class="p-includes">
-        <p class="p-includes-label">Every month</p>
-        <ul>
-          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>SSL certificate</li>
-          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Security monitoring</li>
-          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Priority email support</li>
-          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Founding rate — locked forever</li>
-        </ul>
-        <p class="domain-disclaimer">
-          <strong>Note:</strong> Domain name renewal is not included in hosting. Your domain is yours to manage — we'll remind you when it's due, but renewal costs are your responsibility.
-        </p>
+    <!-- Column 2: Productivity tools — opens game modal -->
+    <div class="cap-card cap-featured cap-clickable" onclick="openGameModal()">
+      <div class="cap-icon gradient">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+      </div>
+      <p class="cap-tier">Tier Two</p>
+      <h3>Productivity Tools</h3>
+      <p>Interactive tools and apps built right into your site. Calculators, booking systems, dashboards, games. The kind of thing that makes visitors stop and take notice.</p>
+      <ul class="cap-list">
+        <li>Custom calculators & forms</li>
+        <li>Booking & scheduling tools</li>
+        <li>Interactive widgets</li>
+        <li>Browser-based apps</li>
+      </ul>
+      <button class="cap-cta gradient-cta">
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Play a live demo
+      </button>
+    </div>
+
+    <!-- Column 3: Full SaaS — FLIP CARD -->
+    <div class="cap-flip" onclick="this.classList.toggle('flipped')">
+      <div class="cap-flip-inner">
+        <!-- Front -->
+        <div class="cap-card cap-face cap-front">
+          <div class="cap-icon purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          </div>
+          <p class="cap-tier">Tier Three</p>
+          <h3>Full SaaS Platforms</h3>
+          <p>Complete software products with user accounts, databases, billing, and everything in between. The kind of build that runs an entire business.</p>
+          <ul class="cap-list">
+            <li>User accounts & logins</li>
+            <li>Subscriptions & payments</li>
+            <li>Databases & dashboards</li>
+            <li>Like Jellar.io</li>
+          </ul>
+          <button class="cap-cta purple-cta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>
+            See an example
+          </button>
+        </div>
+        <!-- Back -->
+        <div class="cap-card cap-face cap-back">
+          <p class="cap-tier">Tier Three Example</p>
+          <h3>Jellar</h3>
+          <div class="cap-demo-browser">
+            <div class="cap-demo-bar">
+              <span class="wb-dot" style="background:#ff5f57"></span>
+              <span class="wb-dot" style="background:#febc2e"></span>
+              <span class="wb-dot" style="background:#28c840"></span>
+            </div>
+            <div class="cap-thumb">
+              <img src="/images/work-jellar.png" alt="Jellar platform" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
+            </div>
+          </div>
+          <p class="cap-back-label">A full SaaS platform we built</p>
+          <a href="https://jellar.io" target="_blank" rel="noopener noreferrer" class="cap-cta purple-cta" onclick="event.stopPropagation()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Visit jellar.io
+          </a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="addon-note reveal">
-    <strong>Need extra work done?</strong> Additional changes and features available on request. Some may require an hourly rate — <a href="mailto:hello@torkdigital.com.au">enquire within</a>.
   </div>
 </section>
 
@@ -923,20 +1423,14 @@
           <span class="wb-dot" style="background:#28c840"></span>
           <span class="wb-url">popcornpasswords.com</span>
         </div>
-        <div class="work-mock">
-          <div class="wm-bar" style="width:60%;height:14px;background:linear-gradient(90deg,#0066FF,#7C3AEA);border-radius:3px"></div>
-          <div class="wm-bar" style="width:85%;height:7px;background:rgba(242,245,255,0.15);border-radius:2px;margin-top:6px"></div>
-          <div class="wm-bar" style="width:70%;height:7px;background:rgba(242,245,255,0.1);border-radius:2px"></div>
-          <div style="display:flex;gap:8px;margin-top:10px">
-            <div style="flex:1;height:54px;background:linear-gradient(135deg,#0066FF,#7C3AEA);border-radius:6px"></div>
-            <div style="flex:1;height:54px;background:var(--bg-3);border:1px solid var(--border);border-radius:6px"></div>
-          </div>
+        <div class="work-thumb">
+          <img src="/images/work-popcorn.png" alt="Popcorn Passwords website" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
         </div>
       </div>
       <div class="work-info">
         <div>
           <p class="work-name">Popcorn Passwords</p>
-          <p class="work-desc">Consumer SaaS — password management with personality</p>
+          <p class="work-desc">Productivity tool, password generator tool with a movie night twist</p>
         </div>
         <span class="work-link">Visit site ↗</span>
       </div>
@@ -950,20 +1444,35 @@
           <span class="wb-dot" style="background:#28c840"></span>
           <span class="wb-url">jellar.io</span>
         </div>
-        <div class="work-mock">
-          <div class="wm-bar" style="width:45%;height:14px;background:var(--white);border-radius:3px"></div>
-          <div class="wm-bar" style="width:75%;height:7px;background:rgba(242,245,255,0.15);border-radius:2px;margin-top:6px"></div>
-          <div class="wm-bar" style="width:60%;height:7px;background:rgba(242,245,255,0.1);border-radius:2px"></div>
-          <div style="display:flex;gap:8px;margin-top:10px">
-            <div style="flex:1;height:54px;background:var(--blue);border-radius:6px"></div>
-            <div style="flex:2;height:54px;background:var(--bg-3);border:1px solid var(--border);border-radius:6px"></div>
-          </div>
+        <div class="work-thumb">
+          <img src="/images/work-jellar.png" alt="Jellar website" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
         </div>
       </div>
       <div class="work-info">
         <div>
           <p class="work-name">Jellar</p>
-          <p class="work-desc">B2B platform — clean, conversion-focused web presence</p>
+          <p class="work-desc">B2B platform, clean conversion-focused presence</p>
+        </div>
+        <span class="work-link">Visit site ↗</span>
+      </div>
+    </a>
+
+    <a href="https://globefinancial.net" target="_blank" rel="noopener noreferrer" class="work-card">
+      <div class="work-preview">
+        <div class="work-browser-bar">
+          <span class="wb-dot" style="background:#ff5f57"></span>
+          <span class="wb-dot" style="background:#febc2e"></span>
+          <span class="wb-dot" style="background:#28c840"></span>
+          <span class="wb-url">globefinancial.net</span>
+        </div>
+        <div class="work-thumb">
+          <img src="/images/work-globe.png" alt="Globe Financial website" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
+        </div>
+      </div>
+      <div class="work-info">
+        <div>
+          <p class="work-name">Globe Financial</p>
+          <p class="work-desc">Local Adelaide mortgage and finance broker</p>
         </div>
         <span class="work-link">Visit site ↗</span>
       </div>
@@ -975,21 +1484,200 @@
 
 <hr class="divide" />
 
+<!-- PRICING -->
+<section id="pricing" class="section">
+  <div class="pricing-head reveal">
+    <p class="eyebrow gradient" style="justify-content:center"><span class="dash"></span>Pricing<span class="dash"></span></p>
+    <h2>Simple. Transparent. <br><span class="gradient-text">No surprises.</span></h2>
+    <p class="section-sub">One fee to build it. One flat monthly to keep it running.</p>
+  </div>
+
+  <div class="pricing-cards reveal">
+    <div class="p-card standard">
+      <span class="p-badge purple">One-Time</span>
+      <p class="p-label">Website Build</p>
+      <div class="p-amount"><span class="p-curr">A$</span><span class="p-num">4999</span></div>
+      <p class="p-desc">Your site designed, built, and launched. <span>Enquire about our founding rate.</span></p>
+      <button class="p-btn purple-btn" onclick="location.href='#contact'">Enquire about founding rate</button>
+      <div class="p-includes">
+        <p class="p-includes-label">Includes</p>
+        <ul>
+          <li><span class="tick purple"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Custom design</li>
+          <li><span class="tick purple"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Mobile-first build</li>
+          <li><span class="tick purple"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>SEO foundations</li>
+          <li><span class="tick purple"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Ready to launch</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="p-card featured">
+      <span class="p-badge gradient">Best Value</span>
+      <p class="p-label">Hosting &amp; Care</p>
+      <div class="p-amount"><span class="p-curr">A$</span><span class="p-num">49</span><span class="p-cents">.99</span><span class="p-per">/mo</span></div>
+      <p class="p-annual">or pay annually <strong>A$570</strong> and save</p>
+      <p class="p-desc">Hosting, form routing, and everything that keeps you online. <span>Cancel any time.</span></p>
+      <button class="p-btn gradient-btn" onclick="location.href='#contact'">Get Started</button>
+      <div class="p-includes">
+        <p class="p-includes-label">Included</p>
+        <ul>
+          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Fast, secure hosting</li>
+          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Form routing &amp; delivery</li>
+          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>SSL certificate management</li>
+          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Always online, always fast</li>
+        </ul>
+        <p class="domain-disclaimer">
+          <strong>Note:</strong> Domain name renewal is not included in hosting. Your domain is yours to manage. We will remind you when it is due, but renewal costs are your responsibility.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="enquire-row reveal">
+    <div class="enquire-card">
+      <div class="enquire-info">
+        <p class="enquire-tier">Tier Two</p>
+        <h4>Productivity Tools</h4>
+        <p>Custom calculators, booking systems, interactive widgets, browser apps.</p>
+      </div>
+      <a href="#contact" class="enquire-btn">Enquire for pricing</a>
+    </div>
+    <div class="enquire-card">
+      <div class="enquire-info">
+        <p class="enquire-tier">Tier Three</p>
+        <h4>Full SaaS Platforms</h4>
+        <p>User accounts, subscriptions, databases, dashboards. Complete software products.</p>
+      </div>
+      <a href="#contact" class="enquire-btn">Enquire for pricing</a>
+    </div>
+  </div>
+
+  <div class="addon-note reveal">
+    <strong>Need extra work done?</strong> Additional changes and features available on request. Some may require an hourly rate <a href="#contact">enquire within</a>.
+  </div>
+</section>
+
+<hr class="divide" />
+
+<!-- GAME MODAL -->
+<div class="game-modal" id="game-modal" onclick="if(event.target===this)closeGameModal()">
+  <div class="game-modal-content">
+    <button class="game-modal-close" onclick="closeGameModal()" aria-label="Close">&times;</button>
+    <p class="game-modal-eyebrow">Tier Two · Live Demo</p>
+    <h3 class="game-modal-title">Tic-Tac-Toe 3000</h3>
+    <p class="game-modal-sub">A coded tool running entirely in your browser. This game is an example of tools that we can build. Max 3 pieces each. Place a 4th and your oldest vanishes.</p>
+
+    <div class="game-wrap" id="game-swivel-wrap">
+      <div class="game-device" id="game-device">
+
+        <div class="game-screen-bezel">
+          <div class="game-screen" id="game-screen">
+
+            <div class="gs-layer" id="gs-title">
+              <div class="gs-title-logo">
+                <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
+                  <path d="M50 12 L78 38 L68 38 L50 22 L32 38 L22 38 Z" fill="url(#game-grad)"/>
+                  <path d="M50 38 L78 64 L62 64 L62 88 L38 88 L38 64 L22 64 Z" fill="url(#game-grad)"/>
+                  <defs>
+                    <linearGradient id="game-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#0066FF"/>
+                      <stop offset="100%" stop-color="#7C3AEA"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              <p class="gs-brand">TORK DIGITAL</p>
+              <p class="gs-model">TIC-TAC-TOE 3000</p>
+              <p class="gs-rule">Max <span>3 pieces</span> each. Place a 4th and your oldest <span>vanishes.</span> No draws.</p>
+              <div class="gs-blink" onclick="gameStart()">PRESS START</div>
+            </div>
+
+            <div class="gs-layer" id="gs-board" style="display:none;flex-direction:column">
+              <div class="gs-top-bar">
+                <div class="gs-score-block">
+                  <span class="gs-score-label">YOU</span>
+                  <span class="gs-score-val">X</span>
+                </div>
+                <div class="gs-score-block gs-score-center">
+                  <span class="gs-score-label">VS</span>
+                  <span class="gs-score-val" style="font-size:0.55rem;color:#4a5468">CPU</span>
+                </div>
+                <div class="gs-score-block">
+                  <span class="gs-score-label">CPU</span>
+                  <span class="gs-score-val">O</span>
+                </div>
+              </div>
+              <div class="gs-status" id="gs-status">Your turn</div>
+              <div class="gs-grid" id="gs-grid">
+                <div class="gs-cell" data-i="0"></div>
+                <div class="gs-cell" data-i="1"></div>
+                <div class="gs-cell" data-i="2"></div>
+                <div class="gs-cell" data-i="3"></div>
+                <div class="gs-cell" data-i="4"></div>
+                <div class="gs-cell" data-i="5"></div>
+                <div class="gs-cell" data-i="6"></div>
+                <div class="gs-cell" data-i="7"></div>
+                <div class="gs-cell" data-i="8"></div>
+              </div>
+            </div>
+
+            <div class="gs-layer" id="gs-result" style="display:none">
+              <div class="gs-result-icon" id="gs-result-icon"></div>
+              <p class="gs-result-title" id="gs-result-title"></p>
+              <p class="gs-result-sub" id="gs-result-sub"></p>
+              <div class="gs-blink" onclick="gameStart()" style="cursor:pointer">PLAY AGAIN</div>
+            </div>
+
+            <div class="gs-scanlines"></div>
+          </div>
+        </div>
+
+        <div class="game-device-label">TIC-TAC-TOE 3000</div>
+
+        <div class="gameboy-controls">
+          <div class="gb-meta">
+            <button class="gb-meta-btn" onclick="gameStart()">START</button>
+            <button class="gb-meta-btn" onclick="gameAction()">SELECT</button>
+          </div>
+          <div class="gb-dpad">
+            <div class="gb-dpad-row gb-dpad-h"></div>
+            <div class="gb-dpad-row gb-dpad-v"></div>
+            <div class="gb-dpad-center"></div>
+          </div>
+          <div class="gb-actions">
+            <div class="gb-btn-row">
+              <div>
+                <button class="gb-btn btn-b" onclick="gameAction()">B</button>
+                <p class="gb-btn-label">B</p>
+              </div>
+              <div>
+                <button class="gb-btn btn-a" onclick="gameStart()">A</button>
+                <p class="gb-btn-label">A</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="game-speaker">
+          <div class="game-speaker-col"><span></span><span></span><span></span></div>
+          <div class="game-speaker-col"><span></span><span></span><span></span></div>
+          <div class="game-speaker-col"><span></span><span></span><span></span></div>
+          <div class="game-speaker-col"><span></span><span></span><span></span></div>
+          <div class="game-speaker-col"><span></span><span></span><span></span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- CONTACT -->
 <section id="contact" class="section">
   <div class="contact-grid">
     <div class="reveal">
       <p class="eyebrow blue"><span class="dash"></span>Get Started</p>
       <h2>Ready to <span class="gradient-text">level up?</span></h2>
-      <p class="section-sub" style="margin-bottom:2.5rem">Send us a message. No hard sell — just a conversation about what your business needs.</p>
-      <div class="contact-detail">
-        <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.75"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-        <div class="contact-meta"><p>Email</p><a href="mailto:hello@torkdigital.com.au">hello@torkdigital.com.au</a></div>
-      </div>
-      <div class="contact-detail">
-        <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.75"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.7A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16z"/></svg></div>
-        <div class="contact-meta"><p>Phone</p><a href="tel:+61400000000">0400 000 000</a></div>
-      </div>
+      <p class="section-sub" style="margin-bottom:2rem">Send a message using the form. No hard sell, just a conversation about what your business needs.</p>
+      <p class="section-sub">Fill in a few details and we will be in touch to talk through your project.</p>
     </div>
 
     <div class="reveal">
@@ -1015,12 +1703,14 @@
         </div>
         <div class="form-group">
           <label class="f-label" for="f-type">What do you need?</label>
-          <select id="f-type" name="enquiry-type">
+          <select id="f-type" name="enquiry-type" required>
             <option value="" disabled selected>Select a category</option>
-            <option value="new-site">New Website</option>
-            <option value="redesign">Redesign Existing Site</option>
-            <option value="hosting">Just Hosting / Maintenance</option>
-            <option value="other">Something Else</option>
+            <option value="New Website">New Website</option>
+            <option value="Redesign Existing Site">Redesign Existing Site</option>
+            <option value="Productivity Tool">Productivity Tool</option>
+            <option value="Full SaaS Platform">Full SaaS Platform</option>
+            <option value="Just Hosting / Maintenance">Just Hosting / Maintenance</option>
+            <option value="Something Else">Something Else</option>
           </select>
         </div>
         <div class="form-group">
@@ -1046,35 +1736,47 @@
       <img src="/images/logotorkdigital.png" alt="Tork Digital" style="height:28px;width:auto;opacity:0.85" />
     </a>
     <div class="footer-links">
-      <a href="mailto:hello@torkdigital.com.au">hello@torkdigital.com.au</a>
-      <a href="tel:+61400000000">0400 000 000</a>
-      <a href="account.html">My Account</a>
+      <a href="#contact">Contact</a>
       <a href="terms.html">Terms &amp; Conditions</a>
     </div>
-    <p class="footer-copy">© 2025 Tork Digital — Australian Owned</p>
+    <p class="footer-copy">© 2025 Tork Digital Australian Owned</p>
   </div>
 </footer>
 
 <script>
+  // Mobile nav toggle
+  function toggleMobileNav() {
+    document.getElementById('nav-links').classList.toggle('open');
+    document.getElementById('nav-burger').classList.toggle('open');
+  }
+  function closeMobileNav() {
+    document.getElementById('nav-links').classList.remove('open');
+    document.getElementById('nav-burger').classList.remove('open');
+  }
+
   // Scroll reveal
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // Form
+  // Form (Netlify Forms via AJAX)
   function handleSubmit(e) {
     e.preventDefault();
+    const form = e.target;
+    const data = new FormData(form);
     fetch('/', {
       method: 'POST',
-      body: new URLSearchParams(new FormData(e.target)).toString(),
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-    }).then(r => {
-      if (r.ok) {
-        document.getElementById('contact-form').style.display = 'none';
-        document.getElementById('success-state').classList.add('show');
-      } else { throw new Error(); }
-    }).catch(() => alert('Submit failed — email us directly at hello@torkdigital.com.au'));
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(data).toString()
+    }).then(() => {
+      // Netlify returns 200 on success; show success state
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('success-state').classList.add('show');
+    }).catch((err) => {
+      console.error('Form submit error:', err);
+      alert('Something went wrong sending your message. Please try again.');
+    });
   }
   function resetForm() {
     document.getElementById('contact-form').reset();
@@ -1084,8 +1786,248 @@
 
   // Stripe placeholders
   function handleCheckout(type) {
-    alert('Stripe checkout placeholder — wire up your Price IDs to go live.');
+    alert('Stripe checkout placeholder wire up your Price IDs to go live.');
   }
+
+  // ── DIGI-TOE 3000: VANISHING PIECES EDITION ─────────────────────────────
+  // Rules: each player max 3 pieces. Placing a 4th removes your oldest.
+  // Oldest piece dims as a warning. No draws possible.
+
+  const WINS = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  const MAX_PIECES = 3;
+
+  let board       = Array(9).fill(null);  // 'X', 'O', or null
+  let humanQ      = [];   // ordered positions human has placed, oldest first
+  let cpuQ        = [];   // ordered positions cpu has placed, oldest first
+  let humanTurn   = true;
+  let gameActive  = false;
+
+  function gameStart() {
+    board      = Array(9).fill(null);
+    humanQ     = [];
+    cpuQ       = [];
+    gameActive = true;
+
+    document.getElementById('gs-title').style.display  = 'none';
+    document.getElementById('gs-result').style.display = 'none';
+    document.getElementById('gs-board').style.display  = 'flex';
+
+    document.querySelectorAll('.gs-cell').forEach(c => {
+      c.textContent = '';
+      c.className   = 'gs-cell';
+      c.onclick     = () => humanMove(+c.dataset.i);
+    });
+
+    // Randomly decide who goes first
+    if (Math.random() < 0.5) {
+      humanTurn = true;
+      setStatus('You start');
+    } else {
+      humanTurn = false;
+      setStatus('CPU starts');
+      setTimeout(cpuMove, 700);
+    }
+  }
+
+  function humanMove(i) {
+    if (!gameActive || !humanTurn || board[i]) return;
+
+    doPlace(i, 'X', 'x-cell', humanQ);
+    if (checkWin('X')) return;
+
+    humanTurn = false;
+    setStatus('Thinking...');
+    setTimeout(cpuMove, 480 + Math.random() * 360);
+  }
+
+  function cpuMove() {
+    if (!gameActive) return;
+    const move = getBestMove();
+    doPlace(move, 'O', 'o-cell', cpuQ);
+    if (checkWin('O')) return;
+    humanTurn = true;
+    setStatus('Your turn');
+  }
+
+  function doPlace(i, mark, cls, queue) {
+    // Place the new piece first
+    board[i] = mark;
+    queue.push(i);
+
+    const cell = getCell(i);
+    cell.textContent = mark;
+    cell.className   = 'gs-cell taken ' + cls;
+
+    // Check if this placement wins. If so, do NOT remove the oldest piece —
+    // leave the full winning state visible.
+    const isWin = WINS.some(combo => combo.every(idx => board[idx] === mark));
+
+    if (!isWin && queue.length > MAX_PIECES) {
+      // Only remove the oldest if it wasn't a winning move
+      const oldest = queue.shift();
+      removeOldest(oldest);
+    }
+
+    updateFading(cls, queue);
+  }
+
+  function removeOldest(pos) {
+    // Brief vanish animation then clear
+    const cell = getCell(pos);
+    cell.classList.add('vanish');
+    setTimeout(() => {
+      board[pos] = null;
+      cell.textContent = '';
+      cell.className   = 'gs-cell';
+      cell.onclick     = () => humanMove(pos);
+    }, 350);
+  }
+
+  function updateFading(cls, queue) {
+    // Clear all age classes for this player first
+    document.querySelectorAll('.' + cls).forEach(c => {
+      c.classList.remove('age-1', 'age-2');
+    });
+    // While the game is at max pieces, the oldest is about to go (age-2),
+    // the next-oldest gets a slight fade (age-1)
+    if (queue.length === 2) {
+      getCell(queue[0]).classList.add('age-1');
+    } else if (queue.length >= MAX_PIECES) {
+      getCell(queue[0]).classList.add('age-2');
+      getCell(queue[1]).classList.add('age-1');
+    }
+  }
+
+  function checkWin(mark) {
+    const win = WINS.find(combo => combo.every(i => board[i] === mark));
+    if (win) {
+      win.forEach(i => getCell(i).classList.add('win-cell'));
+      gameActive = false;
+      const isHuman = mark === 'X';
+      setTimeout(() => showResult(
+        isHuman ? '★' : '✦',
+        isHuman ? 'YOU WIN' : 'CPU WINS',
+        isHuman ? 'Well played.' : 'Try again.'
+      ), 900);
+      return true;
+    }
+    return false;
+  }
+
+  function showResult(icon, title, sub) {
+    document.getElementById('gs-board').style.display   = 'none';
+    document.getElementById('gs-result-icon').textContent  = icon;
+    document.getElementById('gs-result-title').textContent = title;
+    document.getElementById('gs-result-sub').textContent   = sub;
+    document.getElementById('gs-result').style.display  = 'flex';
+  }
+
+  function setStatus(txt) {
+    document.getElementById('gs-status').textContent = txt;
+  }
+
+  function getCell(i) {
+    return document.querySelector('.gs-cell[data-i="' + i + '"]');
+  }
+
+  // CPU logic: win > block > strategic > random
+  function getBestMove() {
+    const empty = board.map((v,i) => v === null ? i : -1).filter(i => i >= 0);
+
+    // Win immediately if possible. A winning move keeps all pieces (no vanish),
+    // so we test the board with the new piece added and nothing removed.
+    for (const i of empty) {
+      const testBoard = [...board];
+      testBoard[i] = 'O';
+      if (WINS.some(c => c.every(j => testBoard[j] === 'O'))) return i;
+    }
+
+    // Block human from winning on their next move (same rule applies to them)
+    for (const i of empty) {
+      const testBoard = [...board];
+      testBoard[i] = 'X';
+      if (WINS.some(c => c.every(j => testBoard[j] === 'X'))) return i;
+    }
+
+    // Take center
+    if (board[4] === null) return 4;
+
+    // Take a corner
+    const corners = [0,2,6,8].filter(i => board[i] === null);
+    if (corners.length) return corners[Math.floor(Math.random() * corners.length)];
+
+    // Any empty
+    return empty[Math.floor(Math.random() * empty.length)];
+  }
+
+  function gameAction() {
+    // A button: start or restart from any screen
+    if (!gameActive) gameStart();
+  }
+
+  // Modal controls
+  function openGameModal() {
+    const modal = document.getElementById('game-modal');
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    // Reset to title screen each time it opens
+    document.getElementById('gs-board').style.display  = 'none';
+    document.getElementById('gs-result').style.display = 'none';
+    document.getElementById('gs-title').style.display  = 'flex';
+    gameActive = false;
+  }
+  function closeGameModal() {
+    document.getElementById('game-modal').classList.remove('open');
+    document.body.style.overflow = '';
+    gameActive = false;
+  }
+  // Close on Escape key
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeGameModal();
+  });
+
+  // ── Mouse swivel for the 3D device ──
+  // The device sits on transform-style: preserve-3d. We nudge its rotation
+  // based on cursor position relative to the device. The screen and buttons
+  // stay fully interactive because we only rotate the shell, never disable
+  // pointer events.
+  (function () {
+    const wrap = document.getElementById('game-swivel-wrap');
+    const device = document.getElementById('game-device');
+    if (!wrap || !device) return;
+
+    const BASE_X = 8;    // resting rotateX
+    const BASE_Y = -9;   // resting rotateY
+    const RANGE  = 12;   // max degrees of swivel either way
+
+    let raf = null;
+
+    function onMove(e) {
+      const rect = device.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      // -1 to 1 across the device
+      const dx = (e.clientX - cx) / (rect.width / 2);
+      const dy = (e.clientY - cy) / (rect.height / 2);
+      const ry = BASE_Y + Math.max(-1, Math.min(1, dx)) * RANGE;
+      const rx = BASE_X - Math.max(-1, Math.min(1, dy)) * RANGE;
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        device.style.transition = 'transform 0.1s ease-out';
+        device.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+      });
+    }
+
+    function onLeave() {
+      device.style.transition = 'transform 0.5s ease';
+      device.style.transform = `rotateX(${BASE_X}deg) rotateY(${BASE_Y}deg)`;
+    }
+
+    // Track mouse anywhere in the modal so it feels responsive
+    document.getElementById('game-modal').addEventListener('mousemove', onMove);
+    document.getElementById('game-modal').addEventListener('mouseleave', onLeave);
+  })();
+  // ────────────────────────────────────────────────────────────────────────
 </script>
 </body>
 </html>

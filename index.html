@@ -543,7 +543,7 @@
     /* ── WORK ── */
     #work { background: var(--bg); }
     .work-head { margin-bottom: 3rem; }
-    .work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+    .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
     .work-card {
       display: block; text-decoration: none; color: inherit;
       background: var(--surface); border: 1px solid var(--border);
@@ -1020,7 +1020,7 @@
       .bento-card:nth-child(n) { grid-column: span 12; }
       .pricing-cards { grid-template-columns: 1fr; max-width: 400px; }
       .enquire-row { grid-template-columns: 1fr; max-width: 400px; }
-      .work-grid { grid-template-columns: 1fr; }
+      .work-grid { grid-template-columns: 1fr 1fr; }
       .cap-grid { grid-template-columns: 1fr; }
       .cap-flip { min-height: 0; }
       .cap-flip-inner { min-height: 480px; }
@@ -1071,6 +1071,7 @@
       .enquire-card { flex-direction: column; align-items: flex-start; gap: 1rem; }
       .enquire-btn { width: 100%; text-align: center; }
       .work-info { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .work-grid { grid-template-columns: 1fr; }
       .marquee-item { font-size: 0.66rem; }
       .footer-inner { flex-direction: column; text-align: center; gap: 1.25rem; }
       .footer-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
@@ -1323,7 +1324,7 @@
               <span class="wb-dot" style="background:#28c840"></span>
             </div>
             <div class="cap-thumb">
-              <img src="/images/work-popcorn.png" alt="Simple website example" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
+              <img src="images/work-popcorn.png" alt="Simple website example" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
             </div>
           </div>
           <p class="cap-back-label">A clean, fast business site</p>
@@ -1388,7 +1389,7 @@
               <span class="wb-dot" style="background:#28c840"></span>
             </div>
             <div class="cap-thumb">
-              <img src="/images/work-jellar.png" alt="SaaS platform example" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
+              <img src="images/work-jellar.png" alt="SaaS platform example" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
             </div>
           </div>
           <p class="cap-back-label">A full platform like Jellar.io</p>
@@ -1423,7 +1424,7 @@
           <span class="wb-url">popcornpasswords.com</span>
         </div>
         <div class="work-thumb">
-          <img src="/images/work-popcorn.png" alt="Popcorn Passwords website" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
+          <img src="images/work-popcorn.png" alt="Popcorn Passwords website" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
         </div>
       </div>
       <div class="work-info">
@@ -1444,7 +1445,7 @@
           <span class="wb-url">jellar.io</span>
         </div>
         <div class="work-thumb">
-          <img src="/images/work-jellar.png" alt="Jellar website" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
+          <img src="images/work-jellar.png" alt="Jellar website" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
         </div>
       </div>
       <div class="work-info">
@@ -1453,6 +1454,27 @@
           <p class="work-desc">B2B platform, clean conversion-focused presence</p>
         </div>
         <span class="work-link">Visit site ↗</span>
+      </div>
+    </a>
+
+    <a href="#contact" class="work-card">
+      <div class="work-preview">
+        <div class="work-browser-bar">
+          <span class="wb-dot" style="background:#ff5f57"></span>
+          <span class="wb-dot" style="background:#febc2e"></span>
+          <span class="wb-dot" style="background:#28c840"></span>
+          <span class="wb-url">finance broker</span>
+        </div>
+        <div class="work-thumb">
+          <img src="images/work-globe.png" alt="Adelaide finance broker website" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
+        </div>
+      </div>
+      <div class="work-info">
+        <div>
+          <p class="work-name">Finance Broker</p>
+          <p class="work-desc">Local Adelaide mortgage and finance broker</p>
+        </div>
+        <span class="work-link">Enquire ↗</span>
       </div>
     </a>
   </div>
@@ -1738,19 +1760,23 @@
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // Form
+  // Form (Netlify Forms via AJAX)
   function handleSubmit(e) {
     e.preventDefault();
+    const form = e.target;
+    const data = new FormData(form);
     fetch('/', {
       method: 'POST',
-      body: new URLSearchParams(new FormData(e.target)).toString(),
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-    }).then(r => {
-      if (r.ok) {
-        document.getElementById('contact-form').style.display = 'none';
-        document.getElementById('success-state').classList.add('show');
-      } else { throw new Error(); }
-    }).catch(() => alert('Something went wrong sending your message. Please try again.'));
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(data).toString()
+    }).then(() => {
+      // Netlify returns 200 on success; show success state
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('success-state').classList.add('show');
+    }).catch((err) => {
+      console.error('Form submit error:', err);
+      alert('Something went wrong sending your message. Please try again.');
+    });
   }
   function resetForm() {
     document.getElementById('contact-form').reset();

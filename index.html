@@ -60,11 +60,17 @@
       font-weight: 500; font-size: 1.15rem; letter-spacing: -0.5px;
       text-decoration: none;
       display: flex; align-items: center; gap: 10px;
+      z-index: 2;
     }
     .logo .logo-arrows { width: 26px; height: 26px; }
     .logo-tork { color: var(--white); }
     .logo-digital { color: var(--blue); }
-    .nav-links { display: flex; align-items: center; gap: 2.5rem; }
+    /* Center the links absolutely in the navbar */
+    .nav-links {
+      display: flex; align-items: center; gap: 2.2rem;
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+    }
     .nav-links a {
       font-size: 0.875rem; font-weight: 400; color: var(--muted);
       text-decoration: none; transition: color 0.2s;
@@ -663,21 +669,15 @@
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
-      /* Force own compositing layer to stop flicker */
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-      /* Faces must NOT animate their own transform — only the inner wrapper rotates */
-      transition: none;
     }
-    .cap-front { transform: rotateY(0deg) translateZ(0); }
+    .cap-front { transform: rotateY(0deg); }
     .cap-back {
-      transform: rotateY(180deg) translateZ(0);
+      transform: rotateY(180deg);
       justify-content: flex-start;
     }
-    /* Kill the generic card hover lift on flip faces — that was the flicker */
-    .cap-flip .cap-card { transition: none; }
+    /* Faces never animate or transform on hover — only the inner wrapper rotates */
+    .cap-flip .cap-card { transition: border-color 0.25s; }
     .cap-flip .cap-card:hover { transform: none; box-shadow: none; }
-    .cap-flip:hover .cap-flip-inner { /* subtle hint only, no transform conflict */ }
     .cap-flip-hint {
       font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
       letter-spacing: 1px; color: var(--faint); margin-top: auto; padding-top: 1rem; text-align: center;
@@ -1110,9 +1110,9 @@
   <div class="nav-links" id="nav-links">
     <a href="#process" onclick="closeMobileNav()">How It Works</a>
     <a href="#features" onclick="closeMobileNav()">What's Included</a>
-    <a href="#pricing" onclick="closeMobileNav()">Pricing</a>
     <a href="#capabilities" onclick="closeMobileNav()">What We Can Build</a>
     <a href="#work" onclick="closeMobileNav()">Our Work</a>
+    <a href="#pricing" onclick="closeMobileNav()">Pricing</a>
     <a href="#contact" onclick="closeMobileNav()">Contact</a>
   </div>
   <button class="nav-burger" id="nav-burger" onclick="toggleMobileNav()" aria-label="Menu">
@@ -1280,137 +1280,6 @@
 
 <hr class="divide" />
 
-<!-- PRICING -->
-<section id="pricing" class="section">
-  <div class="pricing-head reveal">
-    <p class="eyebrow gradient" style="justify-content:center"><span class="dash"></span>Pricing<span class="dash"></span></p>
-    <h2>Simple. Transparent. <br><span class="gradient-text">No surprises.</span></h2>
-    <p class="section-sub">One fee to build it. One flat monthly to keep it running.</p>
-  </div>
-
-  <div class="pricing-cards reveal">
-    <div class="p-card standard">
-      <span class="p-badge purple">One-Time</span>
-      <p class="p-label">Website Build</p>
-      <div class="p-amount"><span class="p-curr">A$</span><span class="p-num">4999</span></div>
-      <p class="p-desc">Your site designed, built, and launched. <span>Enquire about our founding rate.</span></p>
-      <button class="p-btn purple-btn" onclick="location.href='#contact'">Enquire about founding rate</button>
-      <div class="p-includes">
-        <p class="p-includes-label">Includes</p>
-        <ul>
-          <li><span class="tick purple"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Custom design</li>
-          <li><span class="tick purple"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Mobile-first build</li>
-          <li><span class="tick purple"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>SEO foundations</li>
-          <li><span class="tick purple"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Ready to launch</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="p-card featured">
-      <span class="p-badge gradient">Best Value</span>
-      <p class="p-label">Hosting &amp; Care</p>
-      <div class="p-amount"><span class="p-curr">A$</span><span class="p-num">49</span><span class="p-cents">.99</span><span class="p-per">/mo</span></div>
-      <p class="p-annual">or pay annually <strong>A$570</strong> and save</p>
-      <p class="p-desc">Hosting, form routing, and everything that keeps you online. <span>Cancel any time.</span></p>
-      <button class="p-btn gradient-btn" onclick="location.href='#contact'">Get Started</button>
-      <div class="p-includes">
-        <p class="p-includes-label">Included</p>
-        <ul>
-          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Fast, secure hosting</li>
-          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Form routing &amp; delivery</li>
-          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>SSL certificate management</li>
-          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Always online, always fast</li>
-        </ul>
-        <p class="domain-disclaimer">
-          <strong>Note:</strong> Domain name renewal is not included in hosting. Your domain is yours to manage. We will remind you when it is due, but renewal costs are your responsibility.
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div class="enquire-row reveal">
-    <div class="enquire-card">
-      <div class="enquire-info">
-        <p class="enquire-tier">Tier Two</p>
-        <h4>Productivity Tools</h4>
-        <p>Custom calculators, booking systems, interactive widgets, browser apps.</p>
-      </div>
-      <a href="#contact" class="enquire-btn">Enquire for pricing</a>
-    </div>
-    <div class="enquire-card">
-      <div class="enquire-info">
-        <p class="enquire-tier">Tier Three</p>
-        <h4>Full SaaS Platforms</h4>
-        <p>User accounts, subscriptions, databases, dashboards. Complete software products.</p>
-      </div>
-      <a href="#contact" class="enquire-btn">Enquire for pricing</a>
-    </div>
-  </div>
-
-  <div class="addon-note reveal">
-    <strong>Need extra work done?</strong> Additional changes and features available on request. Some may require an hourly rate <a href="#contact">enquire within</a>.
-  </div>
-</section>
-
-<hr class="divide" />
-
-<!-- WORK -->
-<section id="work" class="section">
-  <div class="work-head reveal">
-    <p class="eyebrow blue"><span class="dash"></span>Our Work</p>
-    <h2>Real sites.<br><span class="gradient-text">Live right now.</span></h2>
-    <p class="section-sub" style="margin-top:0.5rem">A small sample of what we've built. Each one fast, focused, and designed to convert.</p>
-  </div>
-
-  <div class="work-grid reveal">
-    <a href="https://popcornpasswords.com" target="_blank" rel="noopener noreferrer" class="work-card">
-      <div class="work-preview">
-        <div class="work-browser-bar">
-          <span class="wb-dot" style="background:#ff5f57"></span>
-          <span class="wb-dot" style="background:#febc2e"></span>
-          <span class="wb-dot" style="background:#28c840"></span>
-          <span class="wb-url">popcornpasswords.com</span>
-        </div>
-        <div class="work-thumb">
-          <img src="/images/work-popcorn.png" alt="Popcorn Passwords website" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
-        </div>
-      </div>
-      <div class="work-info">
-        <div>
-          <p class="work-name">Popcorn Passwords</p>
-          <p class="work-desc">Consumer SaaS, password management with personality</p>
-        </div>
-        <span class="work-link">Visit site ↗</span>
-      </div>
-    </a>
-
-    <a href="https://jellar.io" target="_blank" rel="noopener noreferrer" class="work-card">
-      <div class="work-preview">
-        <div class="work-browser-bar">
-          <span class="wb-dot" style="background:#ff5f57"></span>
-          <span class="wb-dot" style="background:#febc2e"></span>
-          <span class="wb-dot" style="background:#28c840"></span>
-          <span class="wb-url">jellar.io</span>
-        </div>
-        <div class="work-thumb">
-          <img src="/images/work-jellar.png" alt="Jellar website" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
-        </div>
-      </div>
-      <div class="work-info">
-        <div>
-          <p class="work-name">Jellar</p>
-          <p class="work-desc">B2B platform, clean conversion-focused presence</p>
-        </div>
-        <span class="work-link">Visit site ↗</span>
-      </div>
-    </a>
-  </div>
-
-  <p class="work-footnote reveal">More work coming soon. <a href="#contact">Get in touch</a> to talk about yours.</p>
-</section>
-
-<hr class="divide" />
-
 <!-- CAPABILITIES -->
 <section id="capabilities" class="section">
   <div class="reveal" style="text-align:center;margin-bottom:3.5rem">
@@ -1531,6 +1400,137 @@
       </div>
     </div>
 
+  </div>
+</section>
+
+<hr class="divide" />
+
+<!-- WORK -->
+<section id="work" class="section">
+  <div class="work-head reveal">
+    <p class="eyebrow blue"><span class="dash"></span>Our Work</p>
+    <h2>Real sites.<br><span class="gradient-text">Live right now.</span></h2>
+    <p class="section-sub" style="margin-top:0.5rem">A small sample of what we've built. Each one fast, focused, and designed to convert.</p>
+  </div>
+
+  <div class="work-grid reveal">
+    <a href="https://popcornpasswords.com" target="_blank" rel="noopener noreferrer" class="work-card">
+      <div class="work-preview">
+        <div class="work-browser-bar">
+          <span class="wb-dot" style="background:#ff5f57"></span>
+          <span class="wb-dot" style="background:#febc2e"></span>
+          <span class="wb-dot" style="background:#28c840"></span>
+          <span class="wb-url">popcornpasswords.com</span>
+        </div>
+        <div class="work-thumb">
+          <img src="/images/work-popcorn.png" alt="Popcorn Passwords website" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
+        </div>
+      </div>
+      <div class="work-info">
+        <div>
+          <p class="work-name">Popcorn Passwords</p>
+          <p class="work-desc">Consumer SaaS, password management with personality</p>
+        </div>
+        <span class="work-link">Visit site ↗</span>
+      </div>
+    </a>
+
+    <a href="https://jellar.io" target="_blank" rel="noopener noreferrer" class="work-card">
+      <div class="work-preview">
+        <div class="work-browser-bar">
+          <span class="wb-dot" style="background:#ff5f57"></span>
+          <span class="wb-dot" style="background:#febc2e"></span>
+          <span class="wb-dot" style="background:#28c840"></span>
+          <span class="wb-url">jellar.io</span>
+        </div>
+        <div class="work-thumb">
+          <img src="/images/work-jellar.png" alt="Jellar website" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
+        </div>
+      </div>
+      <div class="work-info">
+        <div>
+          <p class="work-name">Jellar</p>
+          <p class="work-desc">B2B platform, clean conversion-focused presence</p>
+        </div>
+        <span class="work-link">Visit site ↗</span>
+      </div>
+    </a>
+  </div>
+
+  <p class="work-footnote reveal">More work coming soon. <a href="#contact">Get in touch</a> to talk about yours.</p>
+</section>
+
+<hr class="divide" />
+
+<!-- PRICING -->
+<section id="pricing" class="section">
+  <div class="pricing-head reveal">
+    <p class="eyebrow gradient" style="justify-content:center"><span class="dash"></span>Pricing<span class="dash"></span></p>
+    <h2>Simple. Transparent. <br><span class="gradient-text">No surprises.</span></h2>
+    <p class="section-sub">One fee to build it. One flat monthly to keep it running.</p>
+  </div>
+
+  <div class="pricing-cards reveal">
+    <div class="p-card standard">
+      <span class="p-badge purple">One-Time</span>
+      <p class="p-label">Website Build</p>
+      <div class="p-amount"><span class="p-curr">A$</span><span class="p-num">4999</span></div>
+      <p class="p-desc">Your site designed, built, and launched. <span>Enquire about our founding rate.</span></p>
+      <button class="p-btn purple-btn" onclick="location.href='#contact'">Enquire about founding rate</button>
+      <div class="p-includes">
+        <p class="p-includes-label">Includes</p>
+        <ul>
+          <li><span class="tick purple"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Custom design</li>
+          <li><span class="tick purple"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Mobile-first build</li>
+          <li><span class="tick purple"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>SEO foundations</li>
+          <li><span class="tick purple"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Ready to launch</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="p-card featured">
+      <span class="p-badge gradient">Best Value</span>
+      <p class="p-label">Hosting &amp; Care</p>
+      <div class="p-amount"><span class="p-curr">A$</span><span class="p-num">49</span><span class="p-cents">.99</span><span class="p-per">/mo</span></div>
+      <p class="p-annual">or pay annually <strong>A$570</strong> and save</p>
+      <p class="p-desc">Hosting, form routing, and everything that keeps you online. <span>Cancel any time.</span></p>
+      <button class="p-btn gradient-btn" onclick="location.href='#contact'">Get Started</button>
+      <div class="p-includes">
+        <p class="p-includes-label">Included</p>
+        <ul>
+          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Fast, secure hosting</li>
+          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Form routing &amp; delivery</li>
+          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>SSL certificate management</li>
+          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Always online, always fast</li>
+        </ul>
+        <p class="domain-disclaimer">
+          <strong>Note:</strong> Domain name renewal is not included in hosting. Your domain is yours to manage. We will remind you when it is due, but renewal costs are your responsibility.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="enquire-row reveal">
+    <div class="enquire-card">
+      <div class="enquire-info">
+        <p class="enquire-tier">Tier Two</p>
+        <h4>Productivity Tools</h4>
+        <p>Custom calculators, booking systems, interactive widgets, browser apps.</p>
+      </div>
+      <a href="#contact" class="enquire-btn">Enquire for pricing</a>
+    </div>
+    <div class="enquire-card">
+      <div class="enquire-info">
+        <p class="enquire-tier">Tier Three</p>
+        <h4>Full SaaS Platforms</h4>
+        <p>User accounts, subscriptions, databases, dashboards. Complete software products.</p>
+      </div>
+      <a href="#contact" class="enquire-btn">Enquire for pricing</a>
+    </div>
+  </div>
+
+  <div class="addon-note reveal">
+    <strong>Need extra work done?</strong> Additional changes and features available on request. Some may require an hourly rate <a href="#contact">enquire within</a>.
   </div>
 </section>
 
@@ -1685,6 +1685,8 @@
             <option value="" disabled selected>Select a category</option>
             <option value="new-site">New Website</option>
             <option value="redesign">Redesign Existing Site</option>
+            <option value="productivity-tool">Productivity Tool</option>
+            <option value="full-saas">Full SaaS Platform</option>
             <option value="hosting">Just Hosting / Maintenance</option>
             <option value="other">Something Else</option>
           </select>

@@ -559,7 +559,20 @@
       flex: 1; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
       color: var(--muted); margin-left: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
-    .work-mock { padding: 0.85rem; display: flex; flex-direction: column; gap: 6px; min-height: 120px; }
+    .work-thumb {
+      border-radius: 7px; overflow: hidden; background: var(--bg-3);
+      aspect-ratio: 16 / 10; position: relative;
+    }
+    .work-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+    /* Fallback when no screenshot present yet */
+    .work-thumb.no-img::after {
+      content: 'Preview coming soon';
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 1px;
+      color: var(--faint);
+      background: linear-gradient(135deg, rgba(0,102,255,0.08), rgba(124,58,234,0.08));
+    }
     .wm-bar { border-radius: 3px; }
     .work-info {
       display: flex; align-items: center; justify-content: space-between; gap: 1rem;
@@ -637,29 +650,34 @@
     /* Flip cards */
     .cap-flip {
       perspective: 1600px;
-      min-height: 440px;
+      min-height: 460px;
       cursor: pointer;
     }
     .cap-flip-inner {
-      position: relative; width: 100%; height: 100%; min-height: 440px;
-      transition: transform 0.6s ease;
+      position: relative; width: 100%; height: 100%; min-height: 460px;
+      transition: transform 0.6s cubic-bezier(0.45,0.05,0.25,1);
       transform-style: preserve-3d;
-      will-change: transform;
     }
     .cap-flip.flipped .cap-flip-inner { transform: rotateY(180deg); }
     .cap-face {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
-      transform: rotateY(0deg);
-      /* No hover transforms on faces — they fight the 3D flip */
+      backface-visibility: hidden;
+      /* Force own compositing layer to stop flicker */
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      /* Faces must NOT animate their own transform — only the inner wrapper rotates */
+      transition: none;
     }
-    /* Override the generic .cap-card hover lift/shadow on flip faces */
-    .cap-flip .cap-card:hover { transform: none; box-shadow: none; }
+    .cap-front { transform: rotateY(0deg) translateZ(0); }
     .cap-back {
-      transform: rotateY(180deg);
+      transform: rotateY(180deg) translateZ(0);
       justify-content: flex-start;
     }
+    /* Kill the generic card hover lift on flip faces — that was the flicker */
+    .cap-flip .cap-card { transition: none; }
+    .cap-flip .cap-card:hover { transform: none; box-shadow: none; }
+    .cap-flip:hover .cap-flip-inner { /* subtle hint only, no transform conflict */ }
     .cap-flip-hint {
       font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
       letter-spacing: 1px; color: var(--faint); margin-top: auto; padding-top: 1rem; text-align: center;
@@ -673,6 +691,14 @@
     .cap-demo-bar { background: var(--bg-3); padding: 0.5rem 0.7rem; display: flex; gap: 5px; border-bottom: 1px solid var(--border); }
     .cap-demo-bar .wb-dot { width: 8px; height: 8px; border-radius: 50%; }
     .cap-demo-screen { padding: 1rem; min-height: 150px; }
+    .cap-thumb { aspect-ratio: 16 / 10; background: var(--bg-3); position: relative; overflow: hidden; }
+    .cap-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+    .cap-thumb.no-img::after {
+      content: 'Preview coming soon';
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 1px; color: var(--faint);
+      background: linear-gradient(135deg, rgba(0,102,255,0.08), rgba(124,58,234,0.08));
+    }
     .cap-back-label {
       font-family: 'Raleway', sans-serif; font-weight: 500; font-size: 0.95rem;
       color: var(--white); text-align: center;
@@ -972,8 +998,23 @@
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
+    /* Hamburger button — hidden on desktop */
+    .nav-burger {
+      display: none;
+      flex-direction: column; justify-content: center; gap: 5px;
+      width: 40px; height: 40px; background: none; border: none; cursor: pointer;
+      padding: 8px; z-index: 110;
+    }
+    .nav-burger span {
+      display: block; width: 100%; height: 2px; background: var(--white);
+      border-radius: 2px; transition: all 0.3s ease;
+    }
+    .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
     @media (max-width: 960px) {
-      .hero-video { padding-top: 5rem; min-height: 90vh; }
+      .hero-video { padding-top: 5rem; min-height: 88vh; }
       .hero-content-wrap { padding: 0 1.5rem; }
       .process-grid { grid-template-columns: 1fr; }
       .bento-card:nth-child(n) { grid-column: span 12; }
@@ -981,15 +1022,67 @@
       .enquire-row { grid-template-columns: 1fr; max-width: 400px; }
       .work-grid { grid-template-columns: 1fr; }
       .cap-grid { grid-template-columns: 1fr; }
-      .contact-grid { grid-template-columns: 1fr; gap: 3.5rem; }
+      .cap-flip { min-height: 0; }
+      .cap-flip-inner { min-height: 480px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
     }
-    @media (max-width: 640px) {
-      nav { padding: 0 1.5rem; }
-      .nav-links { display: none; }
-      .section { padding: 5rem 1.5rem; }
-      .hero-overlay {
-        background: linear-gradient(180deg, rgba(10,15,26,0.7) 0%, rgba(10,15,26,0.85) 100%);
+
+    @media (max-width: 768px) {
+      /* Show hamburger, convert nav-links to slide-down panel */
+      .nav-burger { display: flex; }
+      .nav-links {
+        position: fixed; top: 64px; left: 0; right: 0;
+        flex-direction: column; align-items: stretch; gap: 0;
+        background: rgba(10,15,26,0.98); backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        padding: 0.5rem 0;
+        transform: translateY(-120%);
+        transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+        max-height: calc(100vh - 64px); overflow-y: auto;
       }
+      .nav-links.open { transform: translateY(0); }
+      .nav-links a {
+        padding: 1rem 1.5rem; font-size: 1rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-links a:last-child { border-bottom: none; }
+
+      h1 { font-size: clamp(2.4rem, 9vw, 3.5rem); }
+      .hero-sub { font-size: 1.05rem; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .hero-actions .btn-primary, .hero-actions .btn-secondary { justify-content: center; width: 100%; }
+
+      .process-head, .features-head { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .section { padding: 4rem 1.25rem; }
+
+      /* Game device scales down a touch */
+      .game-modal-content { max-width: 340px; }
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 1.25rem; }
+      .section { padding: 3.5rem 1.25rem; }
+      .hero-overlay {
+        background: linear-gradient(180deg, rgba(10,15,26,0.72) 0%, rgba(10,15,26,0.88) 100%);
+      }
+      h1 { letter-spacing: -1.5px; }
+      h2 { font-size: clamp(1.8rem, 7vw, 2.4rem); }
+      .pricing-head .section-sub, .section-sub { font-size: 0.95rem; }
+      .enquire-card { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .enquire-btn { width: 100%; text-align: center; }
+      .work-info { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .marquee-item { font-size: 0.66rem; }
+      .footer-inner { flex-direction: column; text-align: center; gap: 1.25rem; }
+      .footer-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
+      /* Game device fits small screens */
+      .game-device { width: 280px; }
+      .game-modal { padding: 1rem 0.75rem; }
+    }
+
+    @media (max-width: 380px) {
+      .game-device { width: 260px; }
+      .gs-cell { width: 42px; height: 42px; }
+      .gs-grid { width: 138px; }
     }
   </style>
 </head>
@@ -1014,13 +1107,17 @@
   <a href="#" class="logo">
     <img src="/images/logotorkdigital.png" alt="Tork Digital" style="height:32px;width:auto" />
   </a>
-  <div class="nav-links">
-    <a href="#process">How It Works</a>
-    <a href="#features">What's Included</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#work">Our Work</a>
+  <div class="nav-links" id="nav-links">
+    <a href="#process" onclick="closeMobileNav()">How It Works</a>
+    <a href="#features" onclick="closeMobileNav()">What's Included</a>
+    <a href="#pricing" onclick="closeMobileNav()">Pricing</a>
+    <a href="#capabilities" onclick="closeMobileNav()">What We Can Build</a>
+    <a href="#work" onclick="closeMobileNav()">Our Work</a>
+    <a href="#contact" onclick="closeMobileNav()">Contact</a>
   </div>
-  <a href="#contact" class="nav-cta">Contact</a>
+  <button class="nav-burger" id="nav-burger" onclick="toggleMobileNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO with video background -->
@@ -1046,11 +1143,6 @@
 
   <div class="hero-content-wrap">
     <div class="hero-content">
-      <div class="hero-tag">
-        <span class="tag-dot"></span>
-        Founding rates limited spots
-      </div>
-
       <h1>
         Level up your <br>
         <span class="gradient-text">digital presence.</span>
@@ -1179,9 +1271,9 @@
       <div class="bento-icon purple">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
       </div>
-      <p class="card-eyebrow" style="color:var(--purple)">Support</p>
-      <h3>Real people, real help.</h3>
-      <p>Priority email support from the person who built your site. Not a ticket queue overseas.</p>
+      <p class="card-eyebrow" style="color:var(--purple)">Direct</p>
+      <h3>Work with the builder.</h3>
+      <p>You deal directly with the person who built your site. No account managers, no ticket queue overseas, no middlemen.</p>
     </div>
   </div>
 </section>
@@ -1219,7 +1311,7 @@
       <p class="p-label">Hosting &amp; Care</p>
       <div class="p-amount"><span class="p-curr">A$</span><span class="p-num">49</span><span class="p-cents">.99</span><span class="p-per">/mo</span></div>
       <p class="p-annual">or pay annually <strong>A$570</strong> and save</p>
-      <p class="p-desc">Hosting, support, and everything that keeps you online. <span>Cancel any time.</span></p>
+      <p class="p-desc">Hosting, form routing, and everything that keeps you online. <span>Cancel any time.</span></p>
       <button class="p-btn gradient-btn" onclick="location.href='#contact'">Get Started</button>
       <div class="p-includes">
         <p class="p-includes-label">Included</p>
@@ -1227,7 +1319,7 @@
           <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Fast, secure hosting</li>
           <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Form routing &amp; delivery</li>
           <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>SSL certificate management</li>
-          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Priority support</li>
+          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Always online, always fast</li>
         </ul>
         <p class="domain-disclaimer">
           <strong>Note:</strong> Domain name renewal is not included in hosting. Your domain is yours to manage. We will remind you when it is due, but renewal costs are your responsibility.
@@ -1279,20 +1371,14 @@
           <span class="wb-dot" style="background:#28c840"></span>
           <span class="wb-url">popcornpasswords.com</span>
         </div>
-        <div class="work-mock">
-          <div class="wm-bar" style="width:60%;height:14px;background:linear-gradient(90deg,#0066FF,#7C3AEA);border-radius:3px"></div>
-          <div class="wm-bar" style="width:85%;height:7px;background:rgba(242,245,255,0.15);border-radius:2px;margin-top:6px"></div>
-          <div class="wm-bar" style="width:70%;height:7px;background:rgba(242,245,255,0.1);border-radius:2px"></div>
-          <div style="display:flex;gap:8px;margin-top:10px">
-            <div style="flex:1;height:54px;background:linear-gradient(135deg,#0066FF,#7C3AEA);border-radius:6px"></div>
-            <div style="flex:1;height:54px;background:var(--bg-3);border:1px solid var(--border);border-radius:6px"></div>
-          </div>
+        <div class="work-thumb">
+          <img src="/images/work-popcorn.png" alt="Popcorn Passwords website" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
         </div>
       </div>
       <div class="work-info">
         <div>
           <p class="work-name">Popcorn Passwords</p>
-          <p class="work-desc">Consumer SaaS password management with personality</p>
+          <p class="work-desc">Consumer SaaS, password management with personality</p>
         </div>
         <span class="work-link">Visit site ↗</span>
       </div>
@@ -1306,20 +1392,14 @@
           <span class="wb-dot" style="background:#28c840"></span>
           <span class="wb-url">jellar.io</span>
         </div>
-        <div class="work-mock">
-          <div class="wm-bar" style="width:45%;height:14px;background:var(--white);border-radius:3px"></div>
-          <div class="wm-bar" style="width:75%;height:7px;background:rgba(242,245,255,0.15);border-radius:2px;margin-top:6px"></div>
-          <div class="wm-bar" style="width:60%;height:7px;background:rgba(242,245,255,0.1);border-radius:2px"></div>
-          <div style="display:flex;gap:8px;margin-top:10px">
-            <div style="flex:1;height:54px;background:var(--blue);border-radius:6px"></div>
-            <div style="flex:2;height:54px;background:var(--bg-3);border:1px solid var(--border);border-radius:6px"></div>
-          </div>
+        <div class="work-thumb">
+          <img src="/images/work-jellar.png" alt="Jellar website" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
         </div>
       </div>
       <div class="work-info">
         <div>
           <p class="work-name">Jellar</p>
-          <p class="work-desc">B2B platform clean, conversion-focused web presence</p>
+          <p class="work-desc">B2B platform, clean conversion-focused presence</p>
         </div>
         <span class="work-link">Visit site ↗</span>
       </div>
@@ -1345,7 +1425,7 @@
     <div class="cap-flip" onclick="this.classList.toggle('flipped')">
       <div class="cap-flip-inner">
         <!-- Front -->
-        <div class="cap-card cap-face">
+        <div class="cap-card cap-face cap-front">
           <div class="cap-icon blue">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
           </div>
@@ -1365,29 +1445,19 @@
         </div>
         <!-- Back -->
         <div class="cap-card cap-face cap-back">
+          <p class="cap-tier">Tier One Example</p>
+          <h3>Simple Websites</h3>
           <div class="cap-demo-browser">
             <div class="cap-demo-bar">
               <span class="wb-dot" style="background:#ff5f57"></span>
               <span class="wb-dot" style="background:#febc2e"></span>
               <span class="wb-dot" style="background:#28c840"></span>
             </div>
-            <div class="cap-demo-screen">
-              <div style="height:18px;width:50%;background:linear-gradient(90deg,#0066FF,#7C3AEA);border-radius:3px;margin-bottom:10px"></div>
-              <div style="height:7px;width:90%;background:rgba(242,245,255,0.18);border-radius:2px;margin-bottom:5px"></div>
-              <div style="height:7px;width:75%;background:rgba(242,245,255,0.12);border-radius:2px;margin-bottom:5px"></div>
-              <div style="height:7px;width:82%;background:rgba(242,245,255,0.12);border-radius:2px;margin-bottom:14px"></div>
-              <div style="display:flex;gap:8px;margin-bottom:14px">
-                <div style="height:30px;width:80px;background:linear-gradient(135deg,#0066FF,#7C3AEA);border-radius:6px"></div>
-                <div style="height:30px;width:70px;background:var(--bg-3);border:1px solid var(--border);border-radius:6px"></div>
-              </div>
-              <div style="display:flex;gap:8px">
-                <div style="flex:1;height:40px;background:var(--bg-3);border-radius:6px"></div>
-                <div style="flex:1;height:40px;background:var(--bg-3);border-radius:6px"></div>
-                <div style="flex:1;height:40px;background:var(--bg-3);border-radius:6px"></div>
-              </div>
+            <div class="cap-thumb">
+              <img src="/images/work-popcorn.png" alt="Simple website example" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
             </div>
           </div>
-          <p class="cap-back-label">A clean business site</p>
+          <p class="cap-back-label">A clean, fast business site</p>
           <button class="cap-cta blue-cta">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>
             Flip back
@@ -1420,7 +1490,7 @@
     <div class="cap-flip" onclick="this.classList.toggle('flipped')">
       <div class="cap-flip-inner">
         <!-- Front -->
-        <div class="cap-card cap-face">
+        <div class="cap-card cap-face cap-front">
           <div class="cap-icon purple">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
           </div>
@@ -1440,35 +1510,19 @@
         </div>
         <!-- Back -->
         <div class="cap-card cap-face cap-back">
+          <p class="cap-tier">Tier Three Example</p>
+          <h3>Full SaaS Platforms</h3>
           <div class="cap-demo-browser">
             <div class="cap-demo-bar">
               <span class="wb-dot" style="background:#ff5f57"></span>
               <span class="wb-dot" style="background:#febc2e"></span>
               <span class="wb-dot" style="background:#28c840"></span>
             </div>
-            <div class="cap-demo-screen" style="display:flex;gap:6px">
-              <div style="width:30%;display:flex;flex-direction:column;gap:5px">
-                <div style="height:9px;background:var(--blue);border-radius:2px;opacity:0.8"></div>
-                <div style="height:6px;background:var(--bg-3);border-radius:2px"></div>
-                <div style="height:6px;background:var(--bg-3);border-radius:2px"></div>
-                <div style="height:6px;background:var(--bg-3);border-radius:2px"></div>
-                <div style="height:6px;background:rgba(124,58,234,0.5);border-radius:2px;margin-top:auto"></div>
-              </div>
-              <div style="flex:1;display:flex;flex-direction:column;gap:6px">
-                <div style="display:flex;gap:5px">
-                  <div style="flex:1;height:24px;background:linear-gradient(135deg,#0066FF,#7C3AEA);border-radius:4px"></div>
-                  <div style="flex:1;height:24px;background:var(--bg-3);border-radius:4px"></div>
-                  <div style="flex:1;height:24px;background:var(--bg-3);border-radius:4px"></div>
-                </div>
-                <div style="height:38px;background:var(--bg-3);border-radius:4px;border:1px solid var(--border)"></div>
-                <div style="display:flex;gap:5px">
-                  <div style="flex:1;height:20px;background:rgba(0,102,255,0.2);border-radius:4px"></div>
-                  <div style="flex:1;height:20px;background:rgba(124,58,234,0.2);border-radius:4px"></div>
-                </div>
-              </div>
+            <div class="cap-thumb">
+              <img src="/images/work-jellar.png" alt="SaaS platform example" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
             </div>
           </div>
-          <p class="cap-back-label">A full dashboard product</p>
+          <p class="cap-back-label">A full platform like Jellar.io</p>
           <button class="cap-cta purple-cta">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>
             Flip back
@@ -1666,6 +1720,16 @@
 </footer>
 
 <script>
+  // Mobile nav toggle
+  function toggleMobileNav() {
+    document.getElementById('nav-links').classList.toggle('open');
+    document.getElementById('nav-burger').classList.toggle('open');
+  }
+  function closeMobileNav() {
+    document.getElementById('nav-links').classList.remove('open');
+    document.getElementById('nav-burger').classList.remove('open');
+  }
+
   // Scroll reveal
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });

@@ -455,6 +455,19 @@
       background-clip: text; -webkit-text-fill-color: transparent;
     }
     .p-per { font-size: 0.9rem; color: var(--muted); }
+    .p-cents {
+      font-family: 'Raleway', sans-serif; font-size: 1.5rem; font-weight: 500;
+      color: var(--white); align-self: flex-start; padding-top: 0.5rem;
+    }
+    .p-card.featured .p-cents {
+      background: var(--gradient); -webkit-background-clip: text;
+      background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .p-annual {
+      font-size: 0.82rem; color: var(--blue); font-weight: 500;
+      margin-bottom: 1rem; margin-top: -0.2rem;
+    }
+    .p-annual strong { color: var(--white); font-weight: 600; }
     .p-desc { font-size: 0.875rem; color: var(--muted); margin-bottom: 1.75rem; font-weight: 300; line-height: 1.65; }
     .p-desc span { color: var(--blue); font-weight: 500; }
 
@@ -622,22 +635,34 @@
     @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(3px)} }
 
     /* Flip cards */
-    .cap-flip { perspective: 1600px; cursor: pointer; min-height: 420px; }
+    .cap-flip {
+      perspective: 1600px;
+      min-height: 440px;
+      cursor: pointer;
+    }
     .cap-flip-inner {
-      position: relative; width: 100%; height: 100%; min-height: 420px;
-      transition: transform 0.7s cubic-bezier(0.4,0.2,0.2,1);
+      position: relative; width: 100%; height: 100%; min-height: 440px;
+      transition: transform 0.6s ease;
       transform-style: preserve-3d;
+      will-change: transform;
     }
     .cap-flip.flipped .cap-flip-inner { transform: rotateY(180deg); }
     .cap-face {
-      position: absolute; inset: 0;
-      backface-visibility: hidden; -webkit-backface-visibility: hidden;
-      height: 100%;
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transform: rotateY(0deg);
+      /* No hover transforms on faces — they fight the 3D flip */
     }
-    .cap-back { transform: rotateY(180deg); justify-content: flex-start; }
+    /* Override the generic .cap-card hover lift/shadow on flip faces */
+    .cap-flip .cap-card:hover { transform: none; box-shadow: none; }
+    .cap-back {
+      transform: rotateY(180deg);
+      justify-content: flex-start;
+    }
     .cap-flip-hint {
       font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
-      letter-spacing: 1px; color: var(--faint); margin-top: 1.25rem; text-align: center;
+      letter-spacing: 1px; color: var(--faint); margin-top: auto; padding-top: 1rem; text-align: center;
     }
     .cap-clickable { cursor: pointer; }
     /* Demo browser mockup on card backs */
@@ -652,6 +677,22 @@
       font-family: 'Raleway', sans-serif; font-weight: 500; font-size: 0.95rem;
       color: var(--white); text-align: center;
     }
+
+    /* Tier CTA buttons */
+    .cap-cta {
+      margin-top: auto; width: 100%;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 0.875rem;
+      padding: 0.75rem 1rem; border-radius: 10px; border: none;
+      cursor: pointer; transition: all 0.2s; color: #fff;
+    }
+    .cap-cta svg { width: 15px; height: 15px; }
+    .cap-cta.blue-cta { background: var(--blue); }
+    .cap-cta.blue-cta:hover { background: #1a7aff; box-shadow: 0 6px 18px rgba(0,102,255,0.4); transform: translateY(-1px); }
+    .cap-cta.gradient-cta { background: var(--gradient); }
+    .cap-cta.gradient-cta:hover { box-shadow: 0 6px 20px rgba(0,102,255,0.45); transform: translateY(-1px); }
+    .cap-cta.purple-cta { background: var(--purple); }
+    .cap-cta.purple-cta:hover { background: #8d4ef7; box-shadow: 0 6px 18px rgba(124,58,234,0.4); transform: translateY(-1px); }
 
     /* Game modal */
     .game-modal {
@@ -794,7 +835,7 @@
       border: 1px solid rgba(255,255,255,0.08);
     }
     .game-device:hover {
-      transform: rotateX(4deg) rotateY(-4deg);
+      /* swivel handled by JS in the modal */
     }
     /* Glossy highlight sweep across the shell */
     .game-device::after {
@@ -867,13 +908,13 @@
     .gs-result-sub { font-size: 0.52rem; letter-spacing: 1.5px; color: #4a5468; margin-bottom: 12px; }
 
     /* Device label */
-    .game-device-label { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; letter-spacing: 4px; color: #1e2640; text-transform: uppercase; margin-bottom: 10px; }
+    .game-device-label { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 4px; color: #5566a0; text-transform: uppercase; margin-bottom: 10px; }
 
     /* Game Boy controls */
     .gameboy-controls { display: flex; align-items: center; justify-content: space-between; padding: 4px 10px; margin-bottom: 14px; }
     .gb-meta { display: flex; flex-direction: column; align-items: center; gap: 5px; padding-top: 18px; }
-    .gb-meta-btn { background: #0d1428; border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; color: #3a4468; font-family: 'JetBrains Mono', monospace; font-size: 0.38rem; letter-spacing: 1.5px; padding: 3px 10px; cursor: pointer; transition: all 0.15s; width: 52px; text-align: center; }
-    .gb-meta-btn:hover { color: var(--blue); border-color: rgba(0,102,255,0.3); }
+    .gb-meta-btn { background: #1a2245; border: 1px solid rgba(255,255,255,0.14); border-radius: 100px; color: #8b9bd4; font-family: 'JetBrains Mono', monospace; font-size: 0.42rem; letter-spacing: 1.5px; padding: 4px 11px; cursor: pointer; transition: all 0.15s; width: 56px; text-align: center; font-weight: 500; }
+    .gb-meta-btn:hover { color: #fff; border-color: rgba(0,102,255,0.6); background: #22305c; }
     .gb-meta-btn:active { transform: scale(0.92); }
     .gb-dpad { position: relative; width: 72px; height: 72px; flex-shrink: 0; }
     .gb-dpad-row { position: absolute; background: #131a30; border: 1px solid rgba(255,255,255,0.06); border-radius: 4px; display: flex; align-items: center; justify-content: center; }
@@ -919,7 +960,7 @@
         0 2px 0 #2a0d54;
     }
     .gb-btn.btn-b:hover { box-shadow: inset 0 2px 3px rgba(255,255,255,0.35), inset 0 -3px 5px rgba(0,0,0,0.4), 0 7px 16px rgba(124,58,234,0.6), 0 2px 0 #2a0d54; }
-    .gb-btn-label { font-family: 'JetBrains Mono', monospace; font-size: 0.36rem; color: #2a3460; letter-spacing: 2px; margin-top: 3px; transform: rotate(20deg); }
+    .gb-btn-label { font-family: 'JetBrains Mono', monospace; font-size: 0.42rem; color: #8b9bd4; font-weight: 500; letter-spacing: 2px; margin-top: 3px; transform: rotate(20deg); }
     .gb-meta-btn {
       box-shadow: inset 0 1px 1px rgba(255,255,255,0.06), 0 2px 3px rgba(0,0,0,0.4);
     }
@@ -979,7 +1020,7 @@
     <a href="#pricing">Pricing</a>
     <a href="#work">Our Work</a>
   </div>
-  <a href="account.html" class="nav-cta">My Account</a>
+  <a href="#contact" class="nav-cta">Contact</a>
 </nav>
 
 <!-- HERO with video background -->
@@ -1026,12 +1067,6 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
         <a href="#process" class="btn-secondary">See how it works</a>
-      </div>
-
-      <!-- Scroll indicator -->
-      <div class="scroll-cue">
-        <span class="scroll-label">SCROLL</span>
-        <span class="scroll-line"></span>
       </div>
     </div>
   </div>
@@ -1165,9 +1200,9 @@
     <div class="p-card standard">
       <span class="p-badge purple">One-Time</span>
       <p class="p-label">Website Build</p>
-      <div class="p-amount"><span class="p-curr"></span><span class="p-num" style="font-size:2.2rem;letter-spacing:-1px">TBA</span></div>
-      <p class="p-desc">Your site designed, built, and launched. Ready to go.</p>
-      <button class="p-btn purple-btn" onclick="handleCheckout('build')">Get Your Site Built</button>
+      <div class="p-amount"><span class="p-curr">A$</span><span class="p-num">4999</span></div>
+      <p class="p-desc">Your site designed, built, and launched. <span>Enquire about our founding rate.</span></p>
+      <button class="p-btn purple-btn" onclick="location.href='#contact'">Enquire about founding rate</button>
       <div class="p-includes">
         <p class="p-includes-label">Includes</p>
         <ul>
@@ -1180,20 +1215,22 @@
     </div>
 
     <div class="p-card featured">
-      <span class="p-badge gradient">Founding Rate</span>
-      <p class="p-label">Monthly Hosting</p>
-      <div class="p-amount"><span class="p-curr"></span><span class="p-num" style="font-size:2.2rem;letter-spacing:-1px">TBA</span></div>
+      <span class="p-badge gradient">Best Value</span>
+      <p class="p-label">Hosting &amp; Care</p>
+      <div class="p-amount"><span class="p-curr">A$</span><span class="p-num">49</span><span class="p-cents">.99</span><span class="p-per">/mo</span></div>
+      <p class="p-annual">or pay annually <strong>A$570</strong> and save</p>
       <p class="p-desc">Hosting, support, and everything that keeps you online. <span>Cancel any time.</span></p>
-      <button class="p-btn gradient-btn" onclick="handleCheckout('hosting')">Start Hosting</button>
+      <button class="p-btn gradient-btn" onclick="location.href='#contact'">Get Started</button>
       <div class="p-includes">
-        <p class="p-includes-label">Every month</p>
+        <p class="p-includes-label">Included</p>
         <ul>
-          
-          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Priority email support</li>
-          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Founding rate locked forever</li>
+          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Fast, secure hosting</li>
+          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Form routing &amp; delivery</li>
+          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>SSL certificate management</li>
+          <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Priority support</li>
         </ul>
         <p class="domain-disclaimer">
-          <strong>Note:</strong> Domain name renewal is not included in hosting. Your domain is yours to manage we'll remind you when it's due, but renewal costs are your responsibility.
+          <strong>Note:</strong> Domain name renewal is not included in hosting. Your domain is yours to manage. We will remind you when it is due, but renewal costs are your responsibility.
         </p>
       </div>
     </div>
@@ -1206,7 +1243,7 @@
         <h4>Productivity Tools</h4>
         <p>Custom calculators, booking systems, interactive widgets, browser apps.</p>
       </div>
-      <a href="mailto:hello@torkdigital.com.au?subject=Productivity%20Tool%20Enquiry" class="enquire-btn">Enquire for pricing</a>
+      <a href="#contact" class="enquire-btn">Enquire for pricing</a>
     </div>
     <div class="enquire-card">
       <div class="enquire-info">
@@ -1214,12 +1251,12 @@
         <h4>Full SaaS Platforms</h4>
         <p>User accounts, subscriptions, databases, dashboards. Complete software products.</p>
       </div>
-      <a href="mailto:hello@torkdigital.com.au?subject=SaaS%20Platform%20Enquiry" class="enquire-btn">Enquire for pricing</a>
+      <a href="#contact" class="enquire-btn">Enquire for pricing</a>
     </div>
   </div>
 
   <div class="addon-note reveal">
-    <strong>Need extra work done?</strong> Additional changes and features available on request. Some may require an hourly rate <a href="mailto:hello@torkdigital.com.au">enquire within</a>.
+    <strong>Need extra work done?</strong> Additional changes and features available on request. Some may require an hourly rate <a href="#contact">enquire within</a>.
   </div>
 </section>
 
@@ -1321,7 +1358,10 @@
             <li>Contact & enquiry forms</li>
             <li>Mobile-first, SEO-ready</li>
           </ul>
-          <p class="cap-flip-hint">Tap to preview ⟲</p>
+          <button class="cap-cta blue-cta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>
+            See an example
+          </button>
         </div>
         <!-- Back -->
         <div class="cap-card cap-face cap-back">
@@ -1348,7 +1388,10 @@
             </div>
           </div>
           <p class="cap-back-label">A clean business site</p>
-          <p class="cap-flip-hint">Tap to flip back ⟲</p>
+          <button class="cap-cta blue-cta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>
+            Flip back
+          </button>
         </div>
       </div>
     </div>
@@ -1367,7 +1410,10 @@
         <li>Interactive widgets</li>
         <li>Browser-based apps</li>
       </ul>
-      <p class="cap-demo-tag">▶ Tap to play a live demo</p>
+      <button class="cap-cta gradient-cta">
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Play a live demo
+      </button>
     </div>
 
     <!-- Column 3: Full SaaS — FLIP CARD -->
@@ -1387,7 +1433,10 @@
             <li>Databases & dashboards</li>
             <li>Like Jellar.io</li>
           </ul>
-          <p class="cap-flip-hint">Tap to preview ⟲</p>
+          <button class="cap-cta purple-cta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>
+            See an example
+          </button>
         </div>
         <!-- Back -->
         <div class="cap-card cap-face cap-back">
@@ -1420,7 +1469,10 @@
             </div>
           </div>
           <p class="cap-back-label">A full dashboard product</p>
-          <p class="cap-flip-hint">Tap to flip back ⟲</p>
+          <button class="cap-cta purple-cta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>
+            Flip back
+          </button>
         </div>
       </div>
     </div>
@@ -1436,10 +1488,10 @@
     <button class="game-modal-close" onclick="closeGameModal()" aria-label="Close">&times;</button>
     <p class="game-modal-eyebrow">Tier Two · Live Demo</p>
     <h3 class="game-modal-title">Tic-Tac-Toe 3000</h3>
-    <p class="game-modal-sub">A productivity tool running entirely in your browser. Max 3 pieces each. Place a 4th and your oldest vanishes.</p>
+    <p class="game-modal-sub">A coded tool running entirely in your browser. This game is an example of tools that we can build. Max 3 pieces each. Place a 4th and your oldest vanishes.</p>
 
-    <div class="game-wrap">
-      <div class="game-device">
+    <div class="game-wrap" id="game-swivel-wrap">
+      <div class="game-device" id="game-device">
 
         <div class="game-screen-bezel">
           <div class="game-screen" id="game-screen">
@@ -1548,15 +1600,8 @@
     <div class="reveal">
       <p class="eyebrow blue"><span class="dash"></span>Get Started</p>
       <h2>Ready to <span class="gradient-text">level up?</span></h2>
-      <p class="section-sub" style="margin-bottom:2.5rem">Send us a message. No hard sell just a conversation about what your business needs.</p>
-      <div class="contact-detail">
-        <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.75"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-        <div class="contact-meta"><p>Email</p><a href="mailto:hello@torkdigital.com.au">hello@torkdigital.com.au</a></div>
-      </div>
-      <div class="contact-detail">
-        <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.75"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.7A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16z"/></svg></div>
-        <div class="contact-meta"><p>Phone</p><a href="tel:+61400000000">0400 000 000</a></div>
-      </div>
+      <p class="section-sub" style="margin-bottom:2rem">Send a message using the form. No hard sell, just a conversation about what your business needs.</p>
+      <p class="section-sub">Fill in a few details and we will be in touch to talk through your project.</p>
     </div>
 
     <div class="reveal">
@@ -1613,9 +1658,7 @@
       <img src="/images/logotorkdigital.png" alt="Tork Digital" style="height:28px;width:auto;opacity:0.85" />
     </a>
     <div class="footer-links">
-      <a href="mailto:hello@torkdigital.com.au">hello@torkdigital.com.au</a>
-      <a href="tel:+61400000000">0400 000 000</a>
-      <a href="account.html">My Account</a>
+      <a href="#contact">Contact</a>
       <a href="terms.html">Terms &amp; Conditions</a>
     </div>
     <p class="footer-copy">© 2025 Tork Digital Australian Owned</p>
@@ -1641,7 +1684,7 @@
         document.getElementById('contact-form').style.display = 'none';
         document.getElementById('success-state').classList.add('show');
       } else { throw new Error(); }
-    }).catch(() => alert('Submit failed email us directly at hello@torkdigital.com.au'));
+    }).catch(() => alert('Something went wrong sending your message. Please try again.'));
   }
   function resetForm() {
     document.getElementById('contact-form').reset();
@@ -1850,6 +1893,48 @@
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeGameModal();
   });
+
+  // ── Mouse swivel for the 3D device ──
+  // The device sits on transform-style: preserve-3d. We nudge its rotation
+  // based on cursor position relative to the device. The screen and buttons
+  // stay fully interactive because we only rotate the shell, never disable
+  // pointer events.
+  (function () {
+    const wrap = document.getElementById('game-swivel-wrap');
+    const device = document.getElementById('game-device');
+    if (!wrap || !device) return;
+
+    const BASE_X = 8;    // resting rotateX
+    const BASE_Y = -9;   // resting rotateY
+    const RANGE  = 12;   // max degrees of swivel either way
+
+    let raf = null;
+
+    function onMove(e) {
+      const rect = device.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      // -1 to 1 across the device
+      const dx = (e.clientX - cx) / (rect.width / 2);
+      const dy = (e.clientY - cy) / (rect.height / 2);
+      const ry = BASE_Y + Math.max(-1, Math.min(1, dx)) * RANGE;
+      const rx = BASE_X - Math.max(-1, Math.min(1, dy)) * RANGE;
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        device.style.transition = 'transform 0.1s ease-out';
+        device.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+      });
+    }
+
+    function onLeave() {
+      device.style.transition = 'transform 0.5s ease';
+      device.style.transform = `rotateX(${BASE_X}deg) rotateY(${BASE_Y}deg)`;
+    }
+
+    // Track mouse anywhere in the modal so it feels responsive
+    document.getElementById('game-modal').addEventListener('mousemove', onMove);
+    document.getElementById('game-modal').addEventListener('mouseleave', onLeave);
+  })();
   // ────────────────────────────────────────────────────────────────────────
 </script>
 </body>

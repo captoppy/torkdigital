@@ -520,21 +520,22 @@
     .addon-note a:hover { text-decoration: underline; }
 
     /* Enquire-within tiers under pricing */
-    .enquire-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; max-width: 760px; margin: 0 auto 1.5rem; }
+    .enquire-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; max-width: 980px; margin: 0 auto 1.5rem; }
     .enquire-card {
       background: var(--surface); border: 1px solid var(--border);
       border-radius: 14px; padding: 1.5rem;
-      display: flex; align-items: center; justify-content: space-between; gap: 1.25rem;
+      display: flex; flex-direction: column; gap: 1rem;
       transition: border-color 0.25s;
     }
     .enquire-card:hover { border-color: var(--border-lit); }
+    .enquire-info { flex: 1; }
     .enquire-tier { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--faint); margin-bottom: 0.35rem; }
     .enquire-card h4 { font-family: 'Raleway', sans-serif; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.4rem; }
     .enquire-card p { font-size: 0.8rem; color: var(--muted); font-weight: 300; line-height: 1.6; }
     .enquire-btn {
-      flex-shrink: 0; align-self: center;
+      flex-shrink: 0; align-self: stretch; text-align: center;
       font-family: 'Outfit', sans-serif; font-size: 0.8rem; font-weight: 500;
-      color: var(--blue); text-decoration: none; white-space: nowrap;
+      color: var(--blue); text-decoration: none;
       border: 1px solid rgba(0,102,255,0.3); border-radius: 8px;
       padding: 0.55rem 1rem; transition: all 0.2s;
     }
@@ -1019,7 +1020,7 @@
       .process-grid { grid-template-columns: 1fr; }
       .bento-card:nth-child(n) { grid-column: span 12; }
       .pricing-cards { grid-template-columns: 1fr; max-width: 400px; }
-      .enquire-row { grid-template-columns: 1fr; max-width: 400px; }
+      .enquire-row { grid-template-columns: 1fr 1fr; max-width: 600px; }
       .work-grid { grid-template-columns: 1fr 1fr; }
       .cap-grid { grid-template-columns: 1fr; }
       .cap-flip { min-height: 0; }
@@ -1068,8 +1069,8 @@
       h1 { letter-spacing: -1.5px; }
       h2 { font-size: clamp(1.8rem, 7vw, 2.4rem); }
       .pricing-head .section-sub, .section-sub { font-size: 0.95rem; }
-      .enquire-card { flex-direction: column; align-items: flex-start; gap: 1rem; }
       .enquire-btn { width: 100%; text-align: center; }
+      .enquire-row { grid-template-columns: 1fr; max-width: 400px; }
       .work-info { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
       .work-grid { grid-template-columns: 1fr; }
       .marquee-item { font-size: 0.66rem; }
@@ -1496,7 +1497,7 @@
     <div class="p-card standard">
       <span class="p-badge purple">One-Time</span>
       <p class="p-label">Website Build</p>
-      <div class="p-amount"><span class="p-curr">A$</span><span class="p-num">4999</span></div>
+      <div class="p-amount"><span class="p-curr">A$</span><span class="p-num">2499</span></div>
       <p class="p-desc">Your site designed, built, and launched. <span>Enquire about our founding rate.</span></p>
       <button class="p-btn purple-btn" onclick="location.href='#contact'">Enquire about founding rate</button>
       <div class="p-includes">
@@ -1526,7 +1527,7 @@
           <li><span class="tick blue"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>Always online, always fast</li>
         </ul>
         <p class="domain-disclaimer">
-          <strong>Note:</strong> Domain name renewal is not included in hosting. Your domain is yours to manage. We will remind you when it is due, but renewal costs are your responsibility.
+          <strong>Note:</strong> Domain name renewal is not included in hosting. Your domain is yours to manage and renew, and renewal costs are your responsibility.
         </p>
       </div>
     </div>
@@ -1548,6 +1549,14 @@
         <p>User accounts, subscriptions, databases, dashboards. Complete software products.</p>
       </div>
       <a href="#contact" class="enquire-btn">Enquire for pricing</a>
+    </div>
+    <div class="enquire-card">
+      <div class="enquire-info">
+        <p class="enquire-tier">Add-On</p>
+        <h4>Domain Name Purchasing</h4>
+        <p>Need a domain registered for your new site? We can take care of it for you.</p>
+      </div>
+      <a href="#contact" class="enquire-btn">Enquire within</a>
     </div>
   </div>
 

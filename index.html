@@ -412,6 +412,7 @@
     .p-card {
       border-radius: 20px; padding: 2.25rem; position: relative; overflow: hidden;
       transition: transform 0.25s, box-shadow 0.25s;
+      display: flex; flex-direction: column;
     }
     .p-card:hover { transform: translateY(-3px); }
     .p-card.standard {
@@ -474,7 +475,7 @@
       margin-bottom: 1rem; margin-top: -0.2rem;
     }
     .p-annual strong { color: var(--white); font-weight: 600; }
-    .p-desc { font-size: 0.875rem; color: var(--muted); margin-bottom: 1.75rem; font-weight: 300; line-height: 1.65; }
+    .p-desc { font-size: 0.875rem; color: var(--muted); margin-bottom: 1.75rem; font-weight: 300; line-height: 1.65; min-height: 2.6em; }
     .p-desc span { color: var(--blue); font-weight: 500; }
 
     .p-btn {
@@ -1489,16 +1490,17 @@
 <section id="pricing" class="section">
   <div class="pricing-head reveal">
     <p class="eyebrow gradient" style="justify-content:center"><span class="dash"></span>Pricing<span class="dash"></span></p>
-    <h2>Simple. Transparent. <br><span class="gradient-text">No surprises.</span></h2>
-    <p class="section-sub">One fee to build it. One flat monthly to keep it running.</p>
+    <h2>Straightforward. <br><span class="gradient-text">No surprises.</span></h2>
+    <p class="section-sub">Every build is quoted for what it actually needs. Hosting is flat and transparent.</p>
   </div>
 
   <div class="pricing-cards reveal">
     <div class="p-card standard">
       <span class="p-badge purple">One-Time</span>
       <p class="p-label">Website Build</p>
-      <div class="p-amount"><span class="p-curr">A$</span><span class="p-num">2499</span></div>
-      <p class="p-desc">Your site designed, built, and launched. <span>50% deposit to commence, 50% on completion. Enquire about our founding rate.</span></p>
+      <div class="p-amount"><span class="p-num" style="font-size:2rem;letter-spacing:-0.5px">Enquire for pricing</span></div>
+      <p class="p-annual" style="visibility:hidden">spacer</p>
+      <p class="p-desc">Your site designed, built, and launched. <span>50% deposit to commence, 50% on completion.</span></p>
       <button class="p-btn purple-btn" onclick="location.href='#contact'">Enquire about founding rate</button>
       <div class="p-includes">
         <p class="p-includes-label">Includes</p>
@@ -1513,7 +1515,7 @@
 
     <div class="p-card featured">
       <span class="p-badge gradient">Best Value</span>
-      <p class="p-label">Hosting &amp; Care</p>
+      <p class="p-label">Hosting &amp; Reports</p>
       <div class="p-amount"><span class="p-curr">A$</span><span class="p-num">49</span><span class="p-cents">.99</span><span class="p-per">/mo</span></div>
       <p class="p-annual">or pay annually <strong>A$570</strong> and save</p>
       <p class="p-desc">Hosting, form routing, and everything that keeps you online. <span>Cancel any time.</span></p>

@@ -1,14 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-AU">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tork Digital Level Up Your Digital Presence</title>
+
+  <title>Tork Digital | Websites for Australian Small Business</title>
+  <meta name="description" content="Professional websites for Australian small business, designed and built by an information security professional in Adelaide. From simple sites to productivity tools and full platforms." />
+  <link rel="canonical" href="https://torkdigital.com.au/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Tork Digital" />
+  <meta property="og:title" content="Tork Digital | Websites for Australian Small Business" />
+  <meta property="og:description" content="Professional websites for Australian small business, designed and built by an information security professional in Adelaide." />
+  <meta property="og:url" content="https://torkdigital.com.au/" />
+  <meta property="og:image" content="https://torkdigital.com.au/images/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_AU" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tork Digital | Websites for Australian Small Business" />
+  <meta name="twitter:description" content="Professional websites for Australian small business, designed and built by an information security professional in Adelaide." />
+  <meta name="twitter:image" content="https://torkdigital.com.au/images/og-image.png" />
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Tork Digital",
+    "description": "Website design, development, and hosting for Australian small business.",
+    "url": "https://torkdigital.com.au/",
+    "areaServed": "Australia",
+    "address": { "@type": "PostalAddress", "addressRegion": "SA", "addressCountry": "AU" }
+  }
+  </script>
+
   <link rel="icon" type="image/png" href="/images/logocircle.png" />
   <link rel="shortcut icon" type="image/png" href="/images/logocircle.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Self-hosted fonts: latin subsets only, preload the critical ones -->
+  <link rel="preload" href="/fonts/raleway-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/outfit-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin />
+
   <style>
+    /* ── Self-hosted fonts ── */
+    @font-face { font-family: 'Raleway'; font-style: normal; font-weight: 300; font-display: swap; src: url('/fonts/raleway-latin-300-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Raleway'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/raleway-latin-400-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Raleway'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/raleway-latin-500-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Raleway'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/raleway-latin-600-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Raleway'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/raleway-latin-700-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Outfit'; font-style: normal; font-weight: 300; font-display: swap; src: url('/fonts/outfit-latin-300-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Outfit'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/outfit-latin-400-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Outfit'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/outfit-latin-500-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Outfit'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/outfit-latin-600-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2'); }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -1000,6 +1050,38 @@
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
+    /* ── ACCESSIBILITY ── */
+    .skip-link {
+      position: absolute; top: -60px; left: 1rem; z-index: 200;
+      background: var(--blue); color: #fff; text-decoration: none;
+      padding: 0.7rem 1.2rem; border-radius: 0 0 10px 10px;
+      font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 0.9rem;
+      transition: top 0.2s;
+    }
+    .skip-link:focus { top: 0; }
+
+    /* Visible keyboard focus for all interactive elements */
+    a:focus-visible, button:focus-visible, select:focus-visible,
+    input:focus-visible, textarea:focus-visible,
+    [tabindex="0"]:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    /* Respect reduced-motion preferences: kill animation and let content show */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .marquee-track { animation: none !important; }
+      .hero-bg-video { display: none; }
+    }
+
     /* Hamburger button — hidden on desktop */
     .nav-burger {
       display: none;
@@ -1090,6 +1172,7 @@
   </style>
 </head>
 <body>
+<a href="#hero" class="skip-link">Skip to content</a>
 
 <!-- SVG GRADIENT DEFS -->
 <svg width="0" height="0" style="position:absolute">
@@ -1118,7 +1201,7 @@
     <a href="#pricing" onclick="closeMobileNav()">Pricing</a>
     <a href="#contact" onclick="closeMobileNav()">Contact</a>
   </div>
-  <button class="nav-burger" id="nav-burger" onclick="toggleMobileNav()" aria-label="Menu">
+  <button class="nav-burger" id="nav-burger" onclick="toggleMobileNav()" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
     <span></span><span></span><span></span>
   </button>
 </nav>
@@ -1294,7 +1377,7 @@
   <div class="cap-grid reveal">
 
     <!-- Column 1: Simple websites — FLIP CARD -->
-    <div class="cap-flip" onclick="this.classList.toggle('flipped')">
+    <div class="cap-flip" role="button" tabindex="0" aria-pressed="false" onclick="toggleFlip(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleFlip(this)}">
       <div class="cap-flip-inner">
         <!-- Front -->
         <div class="cap-card cap-face cap-front">
@@ -1326,7 +1409,7 @@
               <span class="wb-dot" style="background:#28c840"></span>
             </div>
             <div class="cap-thumb">
-              <img src="/images/work-globe.png" alt="Globe Financial website" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
+              <img src="/images/work-globe.png" alt="Globe Financial website" width="1280" height="800" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
             </div>
           </div>
           <p class="cap-back-label">A clean, fast business site</p>
@@ -1339,7 +1422,7 @@
     </div>
 
     <!-- Column 2: Productivity tools — opens game modal -->
-    <div class="cap-card cap-featured cap-clickable" onclick="openGameModal()">
+    <div class="cap-card cap-featured cap-clickable" role="button" tabindex="0" aria-label="Open the Tic-Tac-Toe 3000 live demo" onclick="openGameModal()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGameModal()}">
       <div class="cap-icon gradient">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
       </div>
@@ -1359,7 +1442,7 @@
     </div>
 
     <!-- Column 3: Full SaaS — FLIP CARD -->
-    <div class="cap-flip" onclick="this.classList.toggle('flipped')">
+    <div class="cap-flip" role="button" tabindex="0" aria-pressed="false" onclick="toggleFlip(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleFlip(this)}">
       <div class="cap-flip-inner">
         <!-- Front -->
         <div class="cap-card cap-face cap-front">
@@ -1391,7 +1474,7 @@
               <span class="wb-dot" style="background:#28c840"></span>
             </div>
             <div class="cap-thumb">
-              <img src="/images/work-jellar.png" alt="Jellar platform" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
+              <img src="/images/work-jellar.png" alt="Jellar platform" width="1280" height="800" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
             </div>
           </div>
           <p class="cap-back-label">A full SaaS platform we built</p>
@@ -1426,7 +1509,7 @@
           <span class="wb-url">popcornpasswords.com</span>
         </div>
         <div class="work-thumb">
-          <img src="/images/work-popcorn.png" alt="Popcorn Passwords website" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
+          <img src="/images/work-popcorn.png" alt="Popcorn Passwords website" width="1280" height="800" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
         </div>
       </div>
       <div class="work-info">
@@ -1447,7 +1530,7 @@
           <span class="wb-url">jellar.io</span>
         </div>
         <div class="work-thumb">
-          <img src="/images/work-jellar.png" alt="Jellar website" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
+          <img src="/images/work-jellar.png" alt="Jellar website" width="1280" height="800" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
         </div>
       </div>
       <div class="work-info">
@@ -1468,7 +1551,7 @@
           <span class="wb-url">globefinancial.net</span>
         </div>
         <div class="work-thumb">
-          <img src="/images/work-globe.png" alt="Globe Financial website" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
+          <img src="/images/work-globe.png" alt="Globe Financial website" width="1280" height="800" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
         </div>
       </div>
       <div class="work-info">
@@ -1570,7 +1653,7 @@
 <hr class="divide" />
 
 <!-- GAME MODAL -->
-<div class="game-modal" id="game-modal" onclick="if(event.target===this)closeGameModal()">
+<div class="game-modal" id="game-modal" role="dialog" aria-modal="true" aria-label="Tic-Tac-Toe 3000 live demo" onclick="if(event.target===this)closeGameModal()">
   <div class="game-modal-content">
     <button class="game-modal-close" onclick="closeGameModal()" aria-label="Close">&times;</button>
     <p class="game-modal-eyebrow">Tier Two · Live Demo</p>
@@ -1757,12 +1840,23 @@
 <script>
   // Mobile nav toggle
   function toggleMobileNav() {
-    document.getElementById('nav-links').classList.toggle('open');
-    document.getElementById('nav-burger').classList.toggle('open');
+    const links = document.getElementById('nav-links');
+    const burger = document.getElementById('nav-burger');
+    links.classList.toggle('open');
+    burger.classList.toggle('open');
+    burger.setAttribute('aria-expanded', links.classList.contains('open') ? 'true' : 'false');
   }
   function closeMobileNav() {
     document.getElementById('nav-links').classList.remove('open');
-    document.getElementById('nav-burger').classList.remove('open');
+    const burger = document.getElementById('nav-burger');
+    burger.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+  }
+
+  // Flip card toggle keeps aria-pressed in sync for screen readers
+  function toggleFlip(el) {
+    el.classList.toggle('flipped');
+    el.setAttribute('aria-pressed', el.classList.contains('flipped') ? 'true' : 'false');
   }
 
   // Scroll reveal
@@ -2003,6 +2097,7 @@
   // stay fully interactive because we only rotate the shell, never disable
   // pointer events.
   (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const wrap = document.getElementById('game-swivel-wrap');
     const device = document.getElementById('game-device');
     if (!wrap || !device) return;

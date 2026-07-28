@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy | Tork Digital</title>
+  <meta name="description" content="Privacy policy for Tork Digital. What we collect through our enquiry form, how it is handled, and how to have it removed." />
+  <link rel="canonical" href="https://torkdigital.com.au/privacy.html" />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" type="image/png" href="/images/logocircle.png" />
+  <style>
+    @font-face { font-family: 'Raleway'; font-style: normal; font-weight: 300; font-display: swap; src: url('/fonts/raleway-latin-300-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Raleway'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/raleway-latin-400-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Raleway'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/raleway-latin-500-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Raleway'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/raleway-latin-600-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Raleway'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/raleway-latin-700-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Outfit'; font-style: normal; font-weight: 300; font-display: swap; src: url('/fonts/outfit-latin-300-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Outfit'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/outfit-latin-400-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Outfit'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/outfit-latin-500-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Outfit'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/outfit-latin-600-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2'); }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0A0F1A;
+      --bg-2:       #0f1626;
+      --surface:    #131a2c;
+      --white:      #F2F5FF;
+      --blue:       #0066FF;
+      --purple:     #7C3AEA;
+      --gradient:   linear-gradient(135deg, #0066FF 0%, #7C3AEA 100%);
+      --text:       #F2F5FF;
+      --muted:      #8b94a8;
+      --faint:      #4a5468;
+      --border:     rgba(242,245,255,0.08);
+      --border-lit: rgba(242,245,255,0.16);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: 'Outfit', sans-serif; font-size: 16px;
+      line-height: 1.6; -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,15,26,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem; height: 64px;
+    }
+    .logo {
+      font-family: 'Raleway', sans-serif; font-weight: 500; font-size: 1.1rem;
+      letter-spacing: -0.5px; text-decoration: none;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .logo-tork { color: var(--white); }
+    .logo-digital { color: var(--blue); }
+    .back-link {
+      font-size: 0.875rem; color: var(--muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--white); }
+
+    .page { max-width: 780px; margin: 0 auto; padding: 8rem 2.5rem 5rem; }
+
+    .page-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+      letter-spacing: 2.5px; text-transform: uppercase; color: var(--blue);
+      margin-bottom: 1rem; display: flex; align-items: center; gap: 8px;
+    }
+    .eyebrow::before { content: ''; display: block; width: 18px; height: 1px; background: currentColor; }
+    h1 {
+      font-family: 'Raleway', sans-serif; font-weight: 500;
+      font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -1px; line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    h1 .gradient-text {
+      background: var(--gradient); -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .last-updated {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+      color: var(--faint); letter-spacing: 0.5px;
+    }
+
+    .toc {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem 2rem; margin-bottom: 3rem;
+    }
+    .toc p {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 1.5px; color: var(--faint); margin-bottom: 1rem;
+    }
+    .toc ol { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; counter-reset: toc; }
+    .toc li { counter-increment: toc; }
+    .toc a {
+      font-size: 0.875rem; color: var(--muted); text-decoration: none;
+      display: flex; align-items: center; gap: 8px; transition: color 0.2s;
+    }
+    .toc a::before {
+      content: counter(toc, decimal-leading-zero);
+      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+      color: var(--faint); width: 22px;
+    }
+    .toc a:hover { color: var(--blue); }
+
+    .terms-body { display: flex; flex-direction: column; gap: 2.5rem; }
+    .terms-section h2 {
+      font-family: 'Raleway', sans-serif; font-weight: 500;
+      font-size: 1.3rem; letter-spacing: -0.3px; margin-bottom: 1rem;
+      padding-bottom: 0.6rem; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px; color: var(--white); line-height: 1.3;
+    }
+    .section-num {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+      color: var(--faint); font-weight: 400; flex-shrink: 0;
+    }
+    .terms-section p {
+      font-size: 0.925rem; color: var(--muted); line-height: 1.8;
+      font-weight: 300; margin-bottom: 0.85rem;
+    }
+    .terms-section p:last-child { margin-bottom: 0; }
+    .terms-section p strong { color: var(--white); font-weight: 500; }
+    .terms-section ul {
+      list-style: none; display: flex; flex-direction: column; gap: 0.6rem;
+      margin: 0.75rem 0 0.85rem;
+    }
+    .terms-section li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.925rem; color: var(--muted); font-weight: 300; line-height: 1.7;
+    }
+    .terms-section li::before {
+      content: ''; display: block; width: 5px; height: 5px;
+      background: var(--blue); border-radius: 50%; flex-shrink: 0; margin-top: 0.55rem;
+      box-shadow: 0 0 6px var(--blue);
+    }
+    .terms-section li strong { color: var(--white); font-weight: 500; }
+    .terms-section a { color: var(--blue); text-decoration: none; }
+    .terms-section a:hover { text-decoration: underline; }
+
+    .callout {
+      background: var(--surface);
+      border-left: 3px solid var(--blue); border-radius: 0 10px 10px 0;
+      padding: 1rem 1.25rem; margin: 1rem 0;
+      font-size: 0.875rem; color: var(--muted); font-weight: 300; line-height: 1.7;
+    }
+    .callout strong { color: var(--blue); font-weight: 500; }
+
+    .callout.purple {
+      border-left-color: var(--purple);
+      background: rgba(124,58,234,0.05);
+    }
+    .callout.purple strong { color: var(--purple); }
+
+    footer {
+      background: var(--bg-2); border-top: 1px solid var(--border);
+      padding: 2rem 2.5rem; margin-top: 5rem;
+    }
+    .footer-inner {
+      max-width: 780px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a {
+      font-size: 0.8rem; color: var(--faint); text-decoration: none; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--blue); }
+    .footer-copy {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+      color: var(--faint); letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 1.5rem; }
+      .page { padding: 7rem 1.5rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0066FF"/>
+      <stop offset="100%" stop-color="#7C3AEA"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<nav>
+  <a href="index.html" class="logo">
+    <img src="/images/logotorkdigital.png" alt="Tork Digital" style="height:30px;width:auto" />
+  </a>
+  <a href="index.html" class="back-link">← Back to site</a>
+</nav>
+
+<div class="page">
+
+  <div class="page-header">
+    <p class="eyebrow">Legal</p>
+    <h1>Privacy <span class="gradient-text">Policy</span></h1>
+    <p class="last-updated">Last updated: June 2026</p>
+  </div>
+
+  <div class="terms-body" style="margin-top:1rem">
+
+    <div class="terms-section" id="p1">
+      <h2><span class="section-num">01</span>Who We Are</h2>
+      <p>This privacy policy covers the website of <strong>Toby Renfors trading as Tork Digital</strong> (ABN: 96 344 238 441), based in South Australia. It explains what information this site collects, why, and what happens to it.</p>
+    </div>
+
+    <div class="terms-section" id="p2">
+      <h2><span class="section-num">02</span>What We Collect</h2>
+      <p>The only personal information this website collects is what you choose to submit through the enquiry form: your name, your email address, the enquiry category you select, and your message.</p>
+      <p>That is the complete list. This site sets no cookies, runs no analytics, and uses no advertising or tracking technology of any kind. There is nothing to accept or opt out of, because nothing is collected in the background.</p>
+    </div>
+
+    <div class="terms-section" id="p3">
+      <h2><span class="section-num">03</span>How Enquiries Are Handled</h2>
+      <p>Form submissions are processed by Netlify, the platform that hosts this website, and delivered to us by email. Submissions are stored in our Netlify dashboard and in our email inbox. Netlify applies automated spam filtering to submissions as part of this service.</p>
+      <p>We use your enquiry details for one purpose: to respond to you about your enquiry. Your details are never sold, shared for marketing, or added to any mailing list.</p>
+    </div>
+
+    <div class="terms-section" id="p4">
+      <h2><span class="section-num">04</span>Retention &amp; Deletion</h2>
+      <p>Enquiry submissions are kept only as long as they are useful for responding to you and for records of any resulting engagement, and are periodically cleared from our systems.</p>
+      <p>If you would like the details of an enquiry deleted at any time, send a request through the enquiry form and we will remove them.</p>
+    </div>
+
+    <div class="terms-section" id="p5">
+      <h2><span class="section-num">05</span>External Links</h2>
+      <p>This site links to websites we have built for clients. Those sites are operated by their respective owners and have their own privacy practices, which we do not control.</p>
+    </div>
+
+    <div class="terms-section" id="p6">
+      <h2><span class="section-num">06</span>The Legal Bit</h2>
+      <p>We handle personal information in accordance with the Australian Privacy Act 1988 and the Australian Privacy Principles. This policy is governed by the laws of South Australia, Australia.</p>
+      <p style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border);font-size:0.8rem;color:var(--faint)">Last updated June 2026. If our data practices change, this page will change with them.</p>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a href="index.html" class="logo">
+      <img src="/images/logotorkdigital.png" alt="Tork Digital" style="height:26px;width:auto;opacity:0.85" />
+    </a>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="terms.html">Terms &amp; Conditions</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+    <p class="footer-copy">© 2025 Tork Digital Australian Owned</p>
+  </div>
+</footer>
+
+</body>
+</html>

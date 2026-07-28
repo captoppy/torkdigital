@@ -1,0 +1,7 @@
+# Tork Digital security contact
+# https://torkdigital.com.au
+
+Contact: https://torkdigital.com.au/#contact
+Expires: 2027-07-01T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://torkdigital.com.au/.well-known/security.txt

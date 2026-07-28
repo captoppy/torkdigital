@@ -59,6 +59,15 @@
     @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2'); }
     @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2'); }
 
+    /* Heading font — self-hosted from the official Fontshare package, ITF Free Font
+       License (personal + commercial use permitted, see /fonts/FFL-ClashDisplay.txt) */
+    @font-face { font-family: 'Clash Display'; font-style: normal; font-weight: 200; font-display: swap; src: url('/fonts/ClashDisplay-Extralight.woff2') format('woff2'); }
+    @font-face { font-family: 'Clash Display'; font-style: normal; font-weight: 300; font-display: swap; src: url('/fonts/ClashDisplay-Light.woff2') format('woff2'); }
+    @font-face { font-family: 'Clash Display'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ClashDisplay-Regular.woff2') format('woff2'); }
+    @font-face { font-family: 'Clash Display'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/ClashDisplay-Medium.woff2') format('woff2'); }
+    @font-face { font-family: 'Clash Display'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ClashDisplay-Semibold.woff2') format('woff2'); }
+    @font-face { font-family: 'Clash Display'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/ClashDisplay-Bold.woff2') format('woff2'); }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -217,8 +226,8 @@
     @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
 
     h1 {
-      font-family: 'Raleway', sans-serif;
-      font-weight: 500; font-size: clamp(2.8rem, 6vw, 5rem);
+      font-family: 'Clash Display', 'Raleway', sans-serif;
+      font-weight: 600; font-size: clamp(2.8rem, 6vw, 5rem);
       line-height: 1.02; letter-spacing: -2.5px;
       margin-bottom: 1.5rem;
       color: var(--white);
@@ -336,7 +345,7 @@
 
     /* ── HEADINGS ── */
     h2 {
-      font-family: 'Raleway', sans-serif; font-weight: 500;
+      font-family: 'Clash Display', 'Raleway', sans-serif; font-weight: 600;
       font-size: clamp(2rem, 3.8vw, 3rem); letter-spacing: -1.2px;
       line-height: 1.12; margin-bottom: 1rem; color: var(--white);
     }
@@ -692,7 +701,7 @@
     .wr-frame:hover .wr-shot { animation-play-state: paused; }
 
     .wr-info h3 {
-      font-family: 'Raleway', sans-serif; font-weight: 600;
+      font-family: 'Clash Display', 'Raleway', sans-serif; font-weight: 600;
       font-size: 1.7rem; letter-spacing: -0.5px; margin-bottom: 0.75rem;
     }
     .wr-info > p { font-size: 0.92rem; color: var(--muted); font-weight: 300; line-height: 1.75; margin-bottom: 1.4rem; }
@@ -732,7 +741,7 @@
       opacity: 0.6;
     }
     .wr-meta h3 {
-      font-family: 'Raleway', sans-serif; font-weight: 600;
+      font-family: 'Clash Display', 'Raleway', sans-serif; font-weight: 600;
       font-size: 1.6rem; letter-spacing: -0.5px; margin-bottom: 1rem;
     }
     .wr-meta p { font-size: 0.92rem; color: var(--muted); font-weight: 300; line-height: 1.8; margin-bottom: 1.5rem; }
@@ -773,7 +782,7 @@
       letter-spacing: 2px; text-transform: uppercase; color: var(--faint); margin-bottom: 0.5rem;
     }
     .cap-card h3 {
-      font-family: 'Raleway', sans-serif; font-weight: 600;
+      font-family: 'Clash Display', 'Raleway', sans-serif; font-weight: 600;
       font-size: 1.3rem; margin-bottom: 0.65rem; letter-spacing: -0.3px;
     }
     .cap-card > p { font-size: 0.875rem; color: var(--muted); line-height: 1.7; font-weight: 300; margin-bottom: 1.5rem; }
@@ -889,7 +898,7 @@
       font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
       letter-spacing: 2px; text-transform: uppercase; color: var(--purple); margin-bottom: 0.5rem;
     }
-    .game-modal-title { font-family: 'Raleway', sans-serif; font-weight: 600; font-size: 1.6rem; margin-bottom: 0.5rem; }
+    .game-modal-title { font-family: 'Clash Display', 'Raleway', sans-serif; font-weight: 600; font-size: 1.6rem; margin-bottom: 0.5rem; }
     .game-modal-sub { font-size: 0.85rem; color: var(--muted); font-weight: 300; max-width: 340px; margin: 0 auto 1.75rem; line-height: 1.6; }
 
     /* ── CONTACT ── */

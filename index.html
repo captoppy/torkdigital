@@ -56,8 +56,17 @@
     @font-face { font-family: 'Outfit'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/outfit-latin-400-normal.woff2') format('woff2'); }
     @font-face { font-family: 'Outfit'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/outfit-latin-500-normal.woff2') format('woff2'); }
     @font-face { font-family: 'Outfit'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/outfit-latin-600-normal.woff2') format('woff2'); }
-    @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2'); }
-    @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Space Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/space-mono-latin-400-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Space Mono'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/space-mono-latin-700-normal.woff2') format('woff2'); }
+
+    /* Heading font — self-hosted from the official Fontshare package, ITF Free Font
+       License (personal + commercial use permitted, see /fonts/FFL-ClashDisplay.txt) */
+    @font-face { font-family: 'Clash Display'; font-style: normal; font-weight: 200; font-display: swap; src: url('/fonts/ClashDisplay-Extralight.woff2') format('woff2'); }
+    @font-face { font-family: 'Clash Display'; font-style: normal; font-weight: 300; font-display: swap; src: url('/fonts/ClashDisplay-Light.woff2') format('woff2'); }
+    @font-face { font-family: 'Clash Display'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ClashDisplay-Regular.woff2') format('woff2'); }
+    @font-face { font-family: 'Clash Display'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/ClashDisplay-Medium.woff2') format('woff2'); }
+    @font-face { font-family: 'Clash Display'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ClashDisplay-Semibold.woff2') format('woff2'); }
+    @font-face { font-family: 'Clash Display'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/ClashDisplay-Bold.woff2') format('woff2'); }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -142,7 +151,7 @@
     /* ── EYEBROW ── */
     .eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
-      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+      font-family: 'Space Mono', monospace; font-size: 0.7rem;
       letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 1.25rem;
     }
     .eyebrow .dash { display: block; width: 18px; height: 1px; background: currentColor; }
@@ -203,7 +212,7 @@
       background: rgba(0,102,255,0.12);
       border: 1px solid rgba(0,102,255,0.3);
       color: var(--blue);
-      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+      font-family: 'Space Mono', monospace; font-size: 0.7rem;
       letter-spacing: 2px; text-transform: uppercase;
       padding: 0.45rem 1rem; border-radius: 100px; margin-bottom: 2rem;
       animation: fadeUp 0.7s ease both;
@@ -217,8 +226,8 @@
     @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
 
     h1 {
-      font-family: 'Raleway', sans-serif;
-      font-weight: 500; font-size: clamp(2.8rem, 6vw, 5rem);
+      font-family: 'Clash Display', 'Raleway', sans-serif;
+      font-weight: 600; font-size: clamp(2.8rem, 6vw, 5rem);
       line-height: 1.02; letter-spacing: -2.5px;
       margin-bottom: 1.5rem;
       color: var(--white);
@@ -283,7 +292,7 @@
       opacity: 0.6;
     }
     .scroll-label {
-      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+      font-family: 'Space Mono', monospace; font-size: 0.65rem;
       letter-spacing: 3px; color: var(--white);
     }
     .scroll-line {
@@ -306,37 +315,91 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── MARQUEE ── */
-    .marquee-wrap {
-      overflow: hidden; padding: 1.1rem 0; position: relative;
+    /* ── LIVE STATUS STRIP ── */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+    .status-strip {
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; gap: 1.75rem;
+      padding: 0.85rem 1.75rem;
       background: var(--bg-2);
       border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      opacity: var(--ss-opacity, 1);
+      transition: opacity 0.05s linear;
     }
-    .marquee-wrap::before, .marquee-wrap::after {
-      content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2;
-      pointer-events: none;
+    /* Faint moving scanlines drifting down the strip for a "signal" feel */
+    .status-scanlines {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background: repeating-linear-gradient(to bottom, rgba(150,162,190,0.05) 0px, rgba(150,162,190,0.05) 1px, transparent 1px, transparent 3px);
+      animation: status-scan 6s linear infinite;
     }
-    .marquee-wrap::before { left: 0; background: linear-gradient(to right, var(--bg-2), transparent); }
-    .marquee-wrap::after  { right: 0; background: linear-gradient(to left, var(--bg-2), transparent); }
-    .marquee-track {
+    @keyframes status-scan { from { background-position: 0 0; } to { background-position: 0 60px; } }
+
+    .status-live {
+      position: relative; z-index: 1; flex-shrink: 0;
+      display: flex; align-items: center; gap: 8px;
+      padding-right: 1.5rem; border-right: 1px solid var(--border);
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: #ff3b3b;
+      box-shadow: 0 0 8px #ff3b3b; animation: status-pulse 1.6s ease infinite;
+    }
+    @keyframes status-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.45;transform:scale(0.8)} }
+    .status-live-text {
+      font-family: 'Space Mono', monospace; font-weight: 700; font-size: 0.68rem;
+      letter-spacing: 2px; color: var(--white);
+      animation: status-glitch 5s steps(1) infinite;
+    }
+    /* Brief RGB-split glitch flicker on the LIVE label, a few times per loop */
+    @keyframes status-glitch {
+      0%, 96%, 100% { text-shadow: none; transform: translate(0,0); }
+      96.5% { text-shadow: -2px 0 #ff3b3b, 2px 0 #0066FF; transform: translate(-1px,0); }
+      97% { text-shadow: 2px 0 #ff3b3b, -2px 0 #0066FF; transform: translate(1px,0); }
+      97.5% { text-shadow: none; transform: translate(0,0); }
+    }
+    .status-clock {
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
+      color: var(--blue); letter-spacing: 0.5px; white-space: nowrap;
+    }
+
+    .status-track-wrap {
+      position: relative; z-index: 1; overflow: hidden; flex: 1; min-width: 0;
+    }
+    .status-track {
       display: flex; width: max-content;
-      animation: marquee 32s linear infinite;
+      animation: status-marquee 30s linear infinite;
     }
-    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-    .marquee-item {
-      white-space: nowrap; padding: 0 2rem;
-      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
-      letter-spacing: 2px; text-transform: uppercase; color: var(--muted);
-      display: flex; align-items: center; gap: 2rem;
+    @keyframes status-marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .status-item {
+      white-space: nowrap; padding: 0 1.5rem;
+      font-family: 'Space Mono', monospace; font-size: 0.72rem;
+      letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted);
+      display: flex; align-items: center; gap: 1.5rem;
     }
-    .m-dot {
-      width: 4px; height: 4px; border-radius: 50%;
+    .s-dot {
+      width: 4px; height: 4px; border-radius: 50%; margin-left: 1.5rem;
       background: var(--purple); box-shadow: 0 0 6px var(--purple);
+    }
+
+    @media (max-width: 640px) {
+      .status-strip { padding: 0.75rem 1rem; gap: 1rem; }
+      .status-live { padding-right: 0.85rem; }
+      .status-live-text { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .status-strip { opacity: 1 !important; }
+      .status-scanlines { animation: none; }
+      .status-dot { animation: none; }
+      .status-live-text { animation: none; }
+      .status-track { animation: none; }
     }
 
     /* ── HEADINGS ── */
     h2 {
-      font-family: 'Raleway', sans-serif; font-weight: 500;
+      font-family: 'Clash Display', 'Raleway', sans-serif; font-weight: 600;
       font-size: clamp(2rem, 3.8vw, 3rem); letter-spacing: -1.2px;
       line-height: 1.12; margin-bottom: 1rem; color: var(--white);
     }
@@ -365,7 +428,7 @@
     .process-step:hover::before { opacity: 1; }
 
     .step-number {
-      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 500;
+      font-family: 'Space Mono', monospace; font-size: 0.72rem; font-weight: 700;
       letter-spacing: 1.5px; color: var(--faint); margin-bottom: 1.75rem;
     }
     .step-icon {
@@ -410,7 +473,7 @@
     .bento-card:nth-child(5) { grid-column: span 4; }
 
     .card-eyebrow {
-      font-family: 'JetBrains Mono', monospace; font-size: 0.64rem;
+      font-family: 'Space Mono', monospace; font-size: 0.64rem;
       letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.85rem;
     }
     .bento-icon {
@@ -442,7 +505,7 @@
     .bar-fill.blue { background: var(--blue); box-shadow: 0 0 8px var(--blue-glow); }
     .bar-fill.purple { background: var(--purple); box-shadow: 0 0 8px var(--purple-glow); }
     .bar-fill.gradient { background: var(--gradient); }
-    .bar-score { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--white); width: 24px; text-align: right; }
+    .bar-score { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--white); width: 24px; text-align: right; }
 
     .ghost-text {
       font-family: 'Raleway', sans-serif; font-size: 6rem; font-weight: 700;
@@ -485,7 +548,7 @@
     .p-card.featured:hover { box-shadow: 0 20px 60px rgba(0,102,255,0.25); }
 
     .p-badge {
-      display: inline-block; font-family: 'JetBrains Mono', monospace;
+      display: inline-block; font-family: 'Space Mono', monospace;
       font-size: 0.62rem; letter-spacing: 1.5px; text-transform: uppercase;
       padding: 0.3rem 0.75rem; border-radius: 100px; margin-bottom: 1.5rem;
     }
@@ -496,11 +559,11 @@
       border: 1px solid rgba(124,58,234,0.3);
     }
 
-    .p-label { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.5rem; color: var(--muted); }
+    .p-label { font-family: 'Space Mono', monospace; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.5rem; color: var(--muted); }
 
     .p-amount { display: flex; align-items: baseline; gap: 3px; margin-bottom: 0.4rem; }
     .p-curr {
-      font-family: 'JetBrains Mono', monospace; font-size: 1.1rem;
+      font-family: 'Space Mono', monospace; font-size: 1.1rem;
       color: var(--muted); align-self: flex-start; padding-top: 0.45rem;
     }
     .p-num {
@@ -540,7 +603,7 @@
 
     .p-includes { border-top: 1px solid var(--border); padding-top: 1.5rem; }
     .p-includes-label {
-      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; font-weight: 500;
+      font-family: 'Space Mono', monospace; font-size: 0.65rem; font-weight: 700;
       text-transform: uppercase; letter-spacing: 1.5px; color: var(--faint); margin-bottom: 0.85rem;
     }
     .p-includes ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
@@ -580,7 +643,7 @@
     }
     .enquire-card:hover { border-color: var(--border-lit); }
     .enquire-info { flex: 1; }
-    .enquire-tier { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--faint); margin-bottom: 0.35rem; }
+    .enquire-tier { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--faint); margin-bottom: 0.35rem; }
     .enquire-card h4 { font-family: 'Raleway', sans-serif; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.4rem; }
     .enquire-card p { font-size: 0.8rem; color: var(--muted); font-weight: 300; line-height: 1.6; }
     .enquire-btn {
@@ -612,9 +675,8 @@
       background: var(--bg-3); border: 1px solid var(--border); border-radius: 7px;
       padding: 0.45rem 0.7rem; display: flex; align-items: center; gap: 5px; margin-bottom: 0.75rem;
     }
-    .wb-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
     .wb-url {
-      flex: 1; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+      flex: 1; font-family: 'Space Mono', monospace; font-size: 0.65rem;
       color: var(--muted); margin-left: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
     .work-thumb {
@@ -627,7 +689,7 @@
       content: 'Preview coming soon';
       position: absolute; inset: 0;
       display: flex; align-items: center; justify-content: center;
-      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 1px;
+      font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 1px;
       color: var(--faint);
       background: linear-gradient(135deg, rgba(0,102,255,0.08), rgba(124,58,234,0.08));
     }
@@ -639,7 +701,7 @@
     .work-name { font-family: 'Raleway', sans-serif; font-weight: 500; font-size: 1rem; color: var(--white); margin-bottom: 0.2rem; letter-spacing: -0.2px; }
     .work-desc { font-size: 0.8rem; color: var(--muted); font-weight: 300; }
     .work-link {
-      font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; font-weight: 500;
+      font-family: 'Space Mono', monospace; font-size: 0.78rem; font-weight: 700;
       color: var(--blue); white-space: nowrap; flex-shrink: 0;
     }
     .work-footnote { text-align: center; font-size: 0.875rem; color: var(--muted); font-weight: 300; margin-top: 1rem; }
@@ -672,10 +734,13 @@
       display: flex; align-items: center; gap: 6px;
       border-bottom: 1px solid var(--border);
     }
-    .wr-bar .wb-dot { width: 9px; height: 9px; border-radius: 50%; }
     .wr-bar .wb-url {
-      font-family: 'JetBrains Mono', monospace; font-size: 0.66rem;
-      color: var(--muted); margin-left: 10px; letter-spacing: 0.5px;
+      font-family: 'Space Mono', monospace; font-size: 0.66rem;
+      color: var(--muted); letter-spacing: 0.5px;
+    }
+    .bar-lock {
+      width: 11px; height: 11px; flex-shrink: 0;
+      color: var(--muted); opacity: 0.8;
     }
 
     /* The self-browsing window: tall screenshot slowly scrolls inside a fixed frame */
@@ -692,12 +757,12 @@
     .wr-frame:hover .wr-shot { animation-play-state: paused; }
 
     .wr-info h3 {
-      font-family: 'Raleway', sans-serif; font-weight: 600;
+      font-family: 'Clash Display', 'Raleway', sans-serif; font-weight: 600;
       font-size: 1.7rem; letter-spacing: -0.5px; margin-bottom: 0.75rem;
     }
     .wr-info > p { font-size: 0.92rem; color: var(--muted); font-weight: 300; line-height: 1.75; margin-bottom: 1.4rem; }
     .wr-num {
-      font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
       letter-spacing: 3px; color: var(--faint); margin-bottom: 0.75rem;
     }
     .wr-link {
@@ -732,7 +797,7 @@
       opacity: 0.6;
     }
     .wr-meta h3 {
-      font-family: 'Raleway', sans-serif; font-weight: 600;
+      font-family: 'Clash Display', 'Raleway', sans-serif; font-weight: 600;
       font-size: 1.6rem; letter-spacing: -0.5px; margin-bottom: 1rem;
     }
     .wr-meta p { font-size: 0.92rem; color: var(--muted); font-weight: 300; line-height: 1.8; margin-bottom: 1.5rem; }
@@ -769,11 +834,11 @@
     .cap-icon.gradient { background: linear-gradient(135deg, rgba(0,102,255,0.15), rgba(124,58,234,0.15)); border: 1px solid rgba(124,58,234,0.3); }
     .cap-icon.gradient svg { stroke: url(#step-gradient); }
     .cap-tier {
-      font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
+      font-family: 'Space Mono', monospace; font-size: 0.62rem;
       letter-spacing: 2px; text-transform: uppercase; color: var(--faint); margin-bottom: 0.5rem;
     }
     .cap-card h3 {
-      font-family: 'Raleway', sans-serif; font-weight: 600;
+      font-family: 'Clash Display', 'Raleway', sans-serif; font-weight: 600;
       font-size: 1.3rem; margin-bottom: 0.65rem; letter-spacing: -0.3px;
     }
     .cap-card > p { font-size: 0.875rem; color: var(--muted); line-height: 1.7; font-weight: 300; margin-bottom: 1.5rem; }
@@ -790,7 +855,7 @@
     .cap-list a { color: var(--blue); text-decoration: none; }
     .cap-list a:hover { text-decoration: underline; }
     .cap-demo-tag {
-      font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
       letter-spacing: 1px; color: var(--purple); margin-top: 1.25rem;
       text-align: center; animation: bob 1.8s ease infinite;
     }
@@ -822,7 +887,7 @@
     .cap-flip .cap-card { transition: border-color 0.25s; }
     .cap-flip .cap-card:hover { box-shadow: none; }
     .cap-flip-hint {
-      font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
+      font-family: 'Space Mono', monospace; font-size: 0.62rem;
       letter-spacing: 1px; color: var(--faint); margin-top: auto; padding-top: 1rem; text-align: center;
     }
     .cap-clickable { cursor: pointer; }
@@ -831,15 +896,18 @@
       width: 100%; background: var(--bg-2); border: 1px solid var(--border);
       border-radius: 10px; overflow: hidden; margin: 0.5rem 0 1.25rem;
     }
-    .cap-demo-bar { background: var(--bg-3); padding: 0.5rem 0.7rem; display: flex; gap: 5px; border-bottom: 1px solid var(--border); }
-    .cap-demo-bar .wb-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .cap-demo-bar { background: var(--bg-3); padding: 0.5rem 0.7rem; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--border); }
+    .cap-demo-bar .wb-url {
+      font-family: 'Space Mono', monospace; font-size: 0.64rem;
+      color: var(--muted); letter-spacing: 0.5px;
+    }
     .cap-demo-screen { padding: 1rem; min-height: 150px; }
     .cap-thumb { aspect-ratio: 16 / 10; background: var(--bg-3); position: relative; overflow: hidden; }
     .cap-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
     .cap-thumb.no-img::after {
       content: 'Preview coming soon';
       position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 1px; color: var(--faint);
+      font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 1px; color: var(--faint);
       background: linear-gradient(135deg, rgba(0,102,255,0.08), rgba(124,58,234,0.08));
     }
     .cap-back-label {
@@ -886,10 +954,10 @@
     }
     .game-modal-close:hover { border-color: var(--blue); transform: rotate(90deg); }
     .game-modal-eyebrow {
-      font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
       letter-spacing: 2px; text-transform: uppercase; color: var(--purple); margin-bottom: 0.5rem;
     }
-    .game-modal-title { font-family: 'Raleway', sans-serif; font-weight: 600; font-size: 1.6rem; margin-bottom: 0.5rem; }
+    .game-modal-title { font-family: 'Clash Display', 'Raleway', sans-serif; font-weight: 600; font-size: 1.6rem; margin-bottom: 0.5rem; }
     .game-modal-sub { font-size: 0.85rem; color: var(--muted); font-weight: 300; max-width: 340px; margin: 0 auto 1.75rem; line-height: 1.6; }
 
     /* ── CONTACT ── */
@@ -902,13 +970,13 @@
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
     .contact-icon svg { width: 15px; height: 15px; stroke: var(--muted); }
-    .contact-meta p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--faint); font-weight: 400; letter-spacing: 1px; text-transform: uppercase; }
+    .contact-meta p { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--faint); font-weight: 400; letter-spacing: 1px; text-transform: uppercase; }
     .contact-meta a { font-size: 0.9rem; font-weight: 400; color: var(--white); text-decoration: none; transition: color 0.2s; }
     .contact-meta a:hover { color: var(--blue); }
 
     .form-group { margin-bottom: 1.1rem; }
     .f-label {
-      display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+      display: block; font-family: 'Space Mono', monospace; font-size: 0.7rem;
       font-weight: 500; color: var(--muted); margin-bottom: 0.5rem;
       letter-spacing: 1px; text-transform: uppercase;
     }
@@ -974,7 +1042,7 @@
     .footer-links { display: flex; gap: 2rem; }
     .footer-links a { font-size: 0.8rem; color: var(--faint); text-decoration: none; transition: color 0.2s; }
     .footer-links a:hover { color: var(--white); }
-    .footer-copy { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--faint); letter-spacing: 0.5px; }
+    .footer-copy { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--faint); letter-spacing: 0.5px; }
 
     /* ── TIC-TAC-TOE 3000 ── */
     .game-wrap { display: flex; justify-content: center; perspective: 1400px; }
@@ -1032,7 +1100,7 @@
     .game-screen {
       background: radial-gradient(ellipse at 40% 30%, #0d1c30 0%, #0a1628 60%, #081020 100%);
       border-radius: 5px; height: 250px;
-      overflow: hidden; position: relative; font-family: 'JetBrains Mono', monospace;
+      overflow: hidden; position: relative; font-family: 'Space Mono', monospace;
       box-shadow: inset 0 0 30px rgba(0,0,0,0.6);
     }
     .gs-scanlines {
@@ -1077,12 +1145,12 @@
     .gs-result-sub { font-size: 0.52rem; letter-spacing: 1.5px; color: #4a5468; margin-bottom: 12px; }
 
     /* Device label */
-    .game-device-label { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 4px; color: #5566a0; text-transform: uppercase; margin-bottom: 10px; }
+    .game-device-label { text-align: center; font-family: 'Space Mono', monospace; font-size: 0.55rem; letter-spacing: 4px; color: #5566a0; text-transform: uppercase; margin-bottom: 10px; }
 
     /* Game Boy controls */
     .gameboy-controls { display: flex; align-items: center; justify-content: space-between; padding: 4px 10px; margin-bottom: 14px; }
     .gb-meta { display: flex; flex-direction: column; align-items: center; gap: 5px; padding-top: 18px; }
-    .gb-meta-btn { background: #1a2245; border: 1px solid rgba(255,255,255,0.14); border-radius: 100px; color: #8b9bd4; font-family: 'JetBrains Mono', monospace; font-size: 0.42rem; letter-spacing: 1.5px; padding: 4px 11px; cursor: pointer; transition: all 0.15s; width: 56px; text-align: center; font-weight: 500; }
+    .gb-meta-btn { background: #1a2245; border: 1px solid rgba(255,255,255,0.14); border-radius: 100px; color: #8b9bd4; font-family: 'Space Mono', monospace; font-size: 0.42rem; letter-spacing: 1.5px; padding: 4px 11px; cursor: pointer; transition: all 0.15s; width: 56px; text-align: center; font-weight: 700; }
     .gb-meta-btn:hover { color: #fff; border-color: rgba(0,102,255,0.6); background: #22305c; }
     .gb-meta-btn:active { transform: scale(0.92); }
     .gb-dpad { position: relative; width: 72px; height: 72px; flex-shrink: 0; }
@@ -1105,7 +1173,7 @@
     .gb-btn-row { display: flex; gap: 8px; transform: rotate(-20deg); }
     .gb-btn {
       width: 30px; height: 30px; border-radius: 50%; border: none; cursor: pointer;
-      font-family: 'JetBrains Mono', monospace; font-size: 0.52rem; font-weight: 600;
+      font-family: 'Space Mono', monospace; font-size: 0.52rem; font-weight: 600;
       color: rgba(255,255,255,0.95); transition: all 0.12s;
       display: flex; align-items: center; justify-content: center;
       position: relative;
@@ -1129,7 +1197,7 @@
         0 2px 0 #2a0d54;
     }
     .gb-btn.btn-b:hover { box-shadow: inset 0 2px 3px rgba(255,255,255,0.35), inset 0 -3px 5px rgba(0,0,0,0.4), 0 7px 16px rgba(124,58,234,0.6), 0 2px 0 #2a0d54; }
-    .gb-btn-label { font-family: 'JetBrains Mono', monospace; font-size: 0.42rem; color: #8b9bd4; font-weight: 500; letter-spacing: 2px; margin-top: 3px; transform: rotate(20deg); }
+    .gb-btn-label { font-family: 'Space Mono', monospace; font-size: 0.42rem; color: #8b9bd4; font-weight: 700; letter-spacing: 2px; margin-top: 3px; transform: rotate(20deg); }
     .gb-meta-btn {
       box-shadow: inset 0 1px 1px rgba(255,255,255,0.06), 0 2px 3px rgba(0,0,0,0.4);
     }
@@ -1169,7 +1237,6 @@
         scroll-behavior: auto !important;
       }
       .reveal { opacity: 1 !important; transform: none !important; }
-      .marquee-track { animation: none !important; }
       .hero-bg-video { display: none; }
     }
 
@@ -1255,7 +1322,6 @@
       .work-grid { grid-template-columns: 1fr; }
       .wr-view { --wr-h: 300px; }
       .wr-meta { padding: 2rem 1.5rem; }
-      .marquee-item { font-size: 0.66rem; }
       .footer-inner { flex-direction: column; text-align: center; gap: 1.25rem; }
       .footer-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
       /* Game device fits small screens */
@@ -1349,25 +1415,34 @@
   </div>
 </section>
 
-<!-- MARQUEE -->
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <div class="marquee-item">Australian Owned <span class="m-dot"></span></div>
-    <div class="marquee-item">Fast Delivery <span class="m-dot"></span></div>
-    <div class="marquee-item">Mobile First <span class="m-dot"></span></div>
-    <div class="marquee-item">SEO Optimised <span class="m-dot"></span></div>
-    <div class="marquee-item">Your site, handled <span class="m-dot"></span></div>
-    <div class="marquee-item">No Lock-In Contracts <span class="m-dot"></span></div>
-    <div class="marquee-item">Founding Rates <span class="m-dot"></span></div>
-    <div class="marquee-item">Australian Owned <span class="m-dot"></span></div>
-    <div class="marquee-item">Fast Delivery <span class="m-dot"></span></div>
-    <div class="marquee-item">Mobile First <span class="m-dot"></span></div>
-    <div class="marquee-item">SEO Optimised <span class="m-dot"></span></div>
-    <div class="marquee-item">Your site, handled <span class="m-dot"></span></div>
-    <div class="marquee-item">No Lock-In Contracts <span class="m-dot"></span></div>
-    <div class="marquee-item">Founding Rates <span class="m-dot"></span></div>
+<!-- LIVE STATUS STRIP -->
+<section class="status-strip" id="status-strip" aria-label="Live status">
+  <div class="status-scanlines" aria-hidden="true"></div>
+  <div class="status-live" aria-hidden="true">
+    <span class="status-dot"></span>
+    <span class="status-live-text">LIVE</span>
+    <span class="status-clock" id="status-clock">--:--:--</span>
   </div>
-</div>
+  <div class="status-track-wrap" aria-hidden="true">
+    <div class="status-track" id="status-track">
+      <span class="status-item">Australian Owned<span class="s-dot"></span></span>
+      <span class="status-item">Fast Delivery<span class="s-dot"></span></span>
+      <span class="status-item">Mobile First<span class="s-dot"></span></span>
+      <span class="status-item">SEO Optimised<span class="s-dot"></span></span>
+      <span class="status-item">Security-Minded Builds<span class="s-dot"></span></span>
+      <span class="status-item">No Lock-In Contracts<span class="s-dot"></span></span>
+      <span class="status-item">Founding Rates Available<span class="s-dot"></span></span>
+      <span class="status-item">Australian Owned<span class="s-dot"></span></span>
+      <span class="status-item">Fast Delivery<span class="s-dot"></span></span>
+      <span class="status-item">Mobile First<span class="s-dot"></span></span>
+      <span class="status-item">SEO Optimised<span class="s-dot"></span></span>
+      <span class="status-item">Security-Minded Builds<span class="s-dot"></span></span>
+      <span class="status-item">No Lock-In Contracts<span class="s-dot"></span></span>
+      <span class="status-item">Founding Rates Available<span class="s-dot"></span></span>
+    </div>
+  </div>
+  <p class="sr-only">Australian owned. Fast delivery. Mobile first. SEO optimised. Security-minded builds. No lock-in contracts. Founding rates available.</p>
+</section>
 
 <hr class="divide" />
 
@@ -1383,9 +1458,7 @@
   <div class="wr-item reveal">
     <a class="wr-frame" href="https://popcornpasswords.com" target="_blank" rel="noopener noreferrer" aria-label="Visit Popcorn Passwords">
       <div class="wr-bar">
-        <span class="wb-dot" style="background:#ff5f57"></span>
-        <span class="wb-dot" style="background:#febc2e"></span>
-        <span class="wb-dot" style="background:#28c840"></span>
+        <svg class="bar-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
         <span class="wb-url">popcornpasswords.com</span>
       </div>
       <div class="wr-view">
@@ -1406,9 +1479,7 @@
   <div class="wr-item wr-flip reveal">
     <a class="wr-frame" href="https://jellar.io" target="_blank" rel="noopener noreferrer" aria-label="Visit Jellar">
       <div class="wr-bar">
-        <span class="wb-dot" style="background:#ff5f57"></span>
-        <span class="wb-dot" style="background:#febc2e"></span>
-        <span class="wb-dot" style="background:#28c840"></span>
+        <svg class="bar-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
         <span class="wb-url">jellar.io</span>
       </div>
       <div class="wr-view">
@@ -1429,9 +1500,7 @@
   <div class="wr-item reveal">
     <a class="wr-frame" href="https://globefinancial.net" target="_blank" rel="noopener noreferrer" aria-label="Visit Globe Financial">
       <div class="wr-bar">
-        <span class="wb-dot" style="background:#ff5f57"></span>
-        <span class="wb-dot" style="background:#febc2e"></span>
-        <span class="wb-dot" style="background:#28c840"></span>
+        <svg class="bar-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
         <span class="wb-url">globefinancial.net</span>
       </div>
       <div class="wr-view">
@@ -1589,9 +1658,8 @@
           <h3>Globe Financial</h3>
           <div class="cap-demo-browser">
             <div class="cap-demo-bar">
-              <span class="wb-dot" style="background:#ff5f57"></span>
-              <span class="wb-dot" style="background:#febc2e"></span>
-              <span class="wb-dot" style="background:#28c840"></span>
+              <svg class="bar-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+              <span class="wb-url">globefinancial.net</span>
             </div>
             <div class="cap-thumb">
               <img src="/images/work-globe.png" alt="Globe Financial website" width="1280" height="800" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
@@ -1654,9 +1722,8 @@
           <h3>Jellar</h3>
           <div class="cap-demo-browser">
             <div class="cap-demo-bar">
-              <span class="wb-dot" style="background:#ff5f57"></span>
-              <span class="wb-dot" style="background:#febc2e"></span>
-              <span class="wb-dot" style="background:#28c840"></span>
+              <svg class="bar-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+              <span class="wb-url">jellar.io</span>
             </div>
             <div class="cap-thumb">
               <img src="/images/work-jellar.png" alt="Jellar platform" width="1280" height="800" loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" />
@@ -1946,6 +2013,41 @@
 </footer>
 
 <script>
+  // ── Live Status Strip ──
+  (function () {
+    const section = document.getElementById('status-strip');
+    const clockEl = document.getElementById('status-clock');
+    if (!section || !clockEl) return;
+
+    // Real, genuinely live clock — Adelaide time, ticking every second
+    const clockFmt = new Intl.DateTimeFormat('en-AU', {
+      timeZone: 'Australia/Adelaide', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+    });
+    function tickClock() { clockEl.textContent = clockFmt.format(new Date()) + ' ACDT'; }
+    tickClock();
+    setInterval(tickClock, 1000);
+
+    // Simple opacity-only fade as the strip scrolls out of view — no blur, no scale
+    let raf = null;
+    function updateFade() {
+      const rect = section.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const past = -rect.top;
+      const fadeStart = rect.height * 0.5;
+      const fadeRange = vh * 0.3;
+      const progress = Math.max(0, Math.min(1, (past - fadeStart) / fadeRange));
+      section.style.setProperty('--ss-opacity', (1 - progress).toFixed(3));
+      raf = null;
+    }
+    function onScroll() {
+      if (raf) return;
+      raf = requestAnimationFrame(updateFade);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    updateFade();
+  })();
+
   // Mobile nav toggle
   function toggleMobileNav() {
     const links = document.getElementById('nav-links');

@@ -12,12 +12,33 @@
 [[headers]]
   for = "/*"
   [headers.values]
+    # Clickjacking / MIME sniffing / referrer hygiene
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
+    # Force HTTPS for a year on this host and subdomains
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+
+    # Lock down browser features the site never uses
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+
+    # Content Security Policy.
+    # Everything is served from this origin: self-hosted fonts, images, video,
+    # inline styles and inline scripts (the site is a single static file).
+    # form-action 'self' covers the Netlify Forms POST back to /.
+    # Google Analytics (gtag.js) is injected via Netlify snippet injection,
+    # so its domains are explicitly allow-listed here — remove these three
+    # google.com entries from script-src/connect-src/img-src if GA is ever removed.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com; font-src 'self'; media-src 'self'; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://analytics.google.com; form-action 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+
 [[headers]]
   for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/fonts/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
